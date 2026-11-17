@@ -17,7 +17,6 @@ interface Props {
 
 const {
   title = `${brand.namePrefix}${brand.nameSuffix}`,
-  description = brand.tagline,
   forceDark = false,
 } = Astro.props;
 
@@ -48,7 +47,11 @@ const paletteTools = categories.flatMap((c) =>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="generator" content={Astro.generator} />
-    <meta name="description" content={description} />
+    <meta name="description" content="DocTech by FTA - Every tool you need. One private workspace for PDF, Image, and Text utilities." />
+    <meta property="og:title" content="DocTech by FTA" />
+    <meta property="og:description" content="Premium suite of private, in-browser tools designed to feel effortless." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://doc-tech-by-fta.vercel.app/" />
     <meta name="theme-color" content="#f4efe7" />
     <title>{title}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
