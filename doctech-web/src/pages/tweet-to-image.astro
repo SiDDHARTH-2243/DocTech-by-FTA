@@ -1,0 +1,43 @@
+---
+import CenteredTool from "../components/CenteredTool.astro";
+---
+
+<CenteredTool
+  wide
+  title="Tweet to Image Converter"
+  subtitle="Turn any text into a clean, shareable tweet-style image on a colourful background — then download it as a PNG."
+>
+  <div class="lg:grid lg:grid-cols-[1fr_minmax(0,340px)] lg:items-start lg:gap-6">
+    <!-- Preview -->
+    <div class="lg:sticky lg:top-4">
+      <div class="flex min-h-[280px] items-center justify-center overflow-auto rounded-2xl border border-slate-200 bg-slate-100 p-4 dark:border-slate-700 dark:bg-slate-950">
+        <canvas id="tw-canvas" class="max-h-[460px] max-w-full rounded-xl shadow"></canvas>
+      </div>
+    </div>
+
+    <!-- Controls -->
+    <div class="mt-5 space-y-4 lg:mt-0">
+      <textarea id="tw-text" rows="4" placeholder="What's happening?" class="w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-sm dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100">Just shipped something I'm really proud of 🚀</textarea>
+
+      <div class="grid grid-cols-2 gap-3 rounded-2xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900">
+        <label class="block text-sm"><span class="mb-1 block text-xs font-semibold">Name</span><input id="tw-name" type="text" value="Your Name" class="w-full rounded-lg border border-slate-300 bg-white px-2.5 py-1.5 text-sm dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100" /></label>
+        <label class="block text-sm"><span class="mb-1 block text-xs font-semibold">@handle</span><input id="tw-handle" type="text" value="you" class="w-full rounded-lg border border-slate-300 bg-white px-2.5 py-1.5 text-sm dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100" /></label>
+        <label class="block text-sm"><span class="mb-1 block text-xs font-semibold">Theme</span>
+          <select id="tw-theme" class="w-full rounded-lg border border-slate-300 bg-white px-2.5 py-1.5 text-sm dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100"><option value="light">Light</option><option value="dark">Dark</option></select>
+        </label>
+        <label class="block text-sm"><span class="mb-1 block text-xs font-semibold">Font size <span id="tw-size-val" class="text-orange-500">22</span></span><input id="tw-size" type="range" min="16" max="34" value="22" class="w-full accent-orange-500" /></label>
+        <label class="col-span-2 flex items-center gap-2 text-sm"><input id="tw-verified" type="checkbox" checked class="h-4 w-4 accent-sky-500" /> Verified badge</label>
+        <div class="col-span-2">
+          <div class="mb-1.5 text-xs font-semibold">Background</div>
+          <div id="tw-bg" class="flex flex-wrap gap-2"></div>
+        </div>
+      </div>
+
+      <button id="tw-download" type="button" class="w-full rounded-xl bg-orange-500 px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-orange-600">Download PNG</button>
+    </div>
+  </div>
+
+  <script>
+    import "../scripts/tools/tweet-to-image";
+  </script>
+</CenteredTool>

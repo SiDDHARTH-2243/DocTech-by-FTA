@@ -1,0 +1,114 @@
+---
+import CenteredTool from "../components/CenteredTool.astro";
+---
+
+<CenteredTool
+  wide
+  title="Gradient Generator"
+  subtitle="Craft multi-stop linear, radial or conic CSS gradients — drag the stops, pick a preset, then copy the code."
+>
+  <div class="lg:grid lg:grid-cols-[1fr_minmax(0,400px)] lg:items-start lg:gap-6">
+    <!-- LEFT: preview + stop bar + presets (pinned) -->
+    <div class="space-y-5 lg:sticky lg:top-4">
+      <!-- Preview -->
+      <div class="relative">
+        <div id="gr-preview" class="min-h-[260px] rounded-2xl border border-slate-200 dark:border-slate-700"></div>
+        <button
+          id="gr-fullscreen"
+          type="button"
+          class="absolute right-3 top-3 rounded-full border border-white/20 bg-black/30 px-3 py-1.5 text-xs font-semibold text-white backdrop-blur-sm hover:bg-black/50"
+          >⛶ Full screen</button
+        >
+      </div>
+
+      <!-- Stop bar -->
+      <div>
+        <div class="mb-2 flex items-center justify-between">
+          <span class="text-sm font-semibold">Color stops</span>
+          <span class="text-[11px] text-slate-400">Double-click bar to add · drag to move</span>
+        </div>
+        <div class="px-3">
+          <div
+            id="gr-bar"
+            class="relative h-8 touch-none rounded-lg border border-slate-300 dark:border-slate-600"
+          ></div>
+        </div>
+      </div>
+
+      <!-- Presets -->
+      <div>
+        <div class="mb-2 flex items-center justify-between">
+          <span class="text-sm font-semibold">Presets</span>
+          <div class="flex gap-2">
+            <button id="gr-shuffle" type="button" class="rounded-lg border border-slate-300 px-2.5 py-1 text-xs font-semibold text-slate-600 hover:bg-slate-100 dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-800">🎲</button>
+            <button id="gr-reverse" type="button" class="rounded-lg border border-slate-300 px-2.5 py-1 text-xs font-semibold text-slate-600 hover:bg-slate-100 dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-800">⇄ Reverse</button>
+            <button id="gr-reset" type="button" class="rounded-lg border border-slate-300 px-2.5 py-1 text-xs font-semibold text-slate-600 hover:bg-slate-100 dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-800">Reset</button>
+          </div>
+        </div>
+        <div id="gr-presets" class="grid grid-cols-3 gap-2 sm:grid-cols-4"></div>
+      </div>
+    </div>
+
+    <!-- RIGHT: controls + CSS -->
+    <div class="mt-5 space-y-5 lg:mt-0">
+      <div class="space-y-5 rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900">
+        <!-- Type -->
+        <div>
+          <span class="mb-1.5 block text-sm font-semibold">Type</span>
+          <div id="gr-type-group" class="inline-flex rounded-lg border border-slate-300 p-0.5 dark:border-slate-700">
+            <button type="button" data-val="linear" class="rounded-md px-3 py-1 text-xs font-semibold">Linear</button>
+            <button type="button" data-val="radial" class="rounded-md px-3 py-1 text-xs font-semibold">Radial</button>
+            <button type="button" data-val="conic" class="rounded-md px-3 py-1 text-xs font-semibold">Conic</button>
+          </div>
+        </div>
+
+        <!-- Angle -->
+        <div id="gr-angle-wrap">
+          <label class="mb-1.5 block text-sm font-semibold" for="gr-angle">
+            Angle <span id="gr-angle-val" class="text-orange-500">90</span>°
+          </label>
+          <input id="gr-angle" type="range" min="0" max="360" value="90" class="w-full accent-orange-500" />
+        </div>
+
+        <!-- Active stop editor -->
+        <div class="border-t border-slate-100 pt-4 dark:border-slate-800">
+          <div class="mb-3 flex items-center justify-between">
+            <span class="text-sm font-semibold">Selected stop</span>
+            <div class="flex gap-2">
+              <button id="gr-add" type="button" class="rounded-lg bg-orange-500 px-3 py-1 text-xs font-semibold text-white hover:bg-orange-600">+ Add stop</button>
+              <button id="gr-del" type="button" class="rounded-lg border border-slate-300 px-3 py-1 text-xs font-semibold text-slate-600 hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-40 dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-800">Delete</button>
+            </div>
+          </div>
+          <div class="flex items-end gap-4">
+            <div>
+              <label class="mb-1.5 block text-xs font-semibold text-slate-500" for="gr-stop-color">Color</label>
+              <div class="flex items-center gap-2">
+                <input id="gr-stop-color" type="color" value="#f97316" class="h-9 w-12 cursor-pointer rounded border border-slate-300 bg-transparent dark:border-slate-700" />
+                <span id="gr-stop-color-hex" class="font-mono text-xs text-slate-500">#f97316</span>
+              </div>
+            </div>
+            <div class="flex-1">
+              <label class="mb-1.5 block text-xs font-semibold text-slate-500" for="gr-stop-pos">
+                Position <span id="gr-stop-pos-val" class="text-orange-500">0</span>%
+              </label>
+              <input id="gr-stop-pos" type="range" min="0" max="100" value="0" class="w-full accent-orange-500" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CSS output -->
+      <div class="overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-700">
+        <div class="flex items-center justify-between border-b border-slate-200 bg-slate-50 px-4 py-2 dark:border-slate-700 dark:bg-slate-800">
+          <span class="text-xs font-semibold tracking-wide text-slate-400 uppercase">CSS</span>
+          <button id="gr-copy" type="button" class="rounded-lg bg-orange-500 px-3 py-1 text-xs font-semibold text-white hover:bg-orange-600">Copy</button>
+        </div>
+        <pre id="gr-css" class="overflow-x-auto px-4 py-3 font-mono text-xs leading-relaxed dark:text-slate-100"></pre>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    import "../scripts/tools/gradient-generator";
+  </script>
+</CenteredTool>

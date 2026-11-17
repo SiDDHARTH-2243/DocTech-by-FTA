@@ -1,0 +1,40 @@
+---
+import CenteredTool from "../components/CenteredTool.astro";
+---
+
+<CenteredTool
+  title="Color Mixer"
+  subtitle="Mix two colors and get the intermediate color codes — from 2 to 10 steps. Click any swatch to copy."
+>
+  <div class="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900">
+    <div class="grid gap-4 sm:grid-cols-2">
+      <div>
+        <label class="mb-1.5 block text-sm font-semibold" for="mix-a-hex">Color A</label>
+        <div class="flex gap-2">
+          <input id="mix-a-picker" type="color" value="#ef4444" class="h-11 w-14 cursor-pointer rounded-lg border border-slate-300 bg-transparent dark:border-slate-700" />
+          <input id="mix-a-hex" type="text" value="#ef4444" spellcheck="false" class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 font-mono text-sm uppercase focus:border-orange-400 focus:ring-2 focus:ring-orange-200 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:focus:ring-orange-500/30" />
+        </div>
+      </div>
+      <div>
+        <label class="mb-1.5 block text-sm font-semibold" for="mix-b-hex">Color B</label>
+        <div class="flex gap-2">
+          <input id="mix-b-picker" type="color" value="#3b82f6" class="h-11 w-14 cursor-pointer rounded-lg border border-slate-300 bg-transparent dark:border-slate-700" />
+          <input id="mix-b-hex" type="text" value="#3b82f6" spellcheck="false" class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 font-mono text-sm uppercase focus:border-orange-400 focus:ring-2 focus:ring-orange-200 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:focus:ring-orange-500/30" />
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-4 w-56">
+      <label class="mb-1.5 block text-sm font-semibold" for="mix-steps">
+        Steps <span id="mix-steps-val" class="text-orange-500">7</span>
+      </label>
+      <input id="mix-steps" type="range" min="2" max="10" value="7" class="w-full accent-orange-500" />
+    </div>
+
+    <div id="mix-output" class="mt-6 flex gap-2"></div>
+  </div>
+
+  <script>
+    import "../scripts/tools/color-mixer";
+  </script>
+</CenteredTool>

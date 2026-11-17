@@ -1,0 +1,51 @@
+---
+// The "interruption slab" — a deliberate full-bleed break in the homepage tool
+// grid. It is the ONE element allowed to ignore the light/dark design system:
+// it is pitch black in both themes by design, so the arcade detour reads as a
+// different world from the professional utilities around it.
+//
+// Rendered as a grid child (`grid-column: 1 / -1`) so it claims a whole row;
+// landing.ts re-anchors it after the 8th *visible* card and hides it whenever a
+// search or filter is active (a promo has no business inside search results).
+---
+
+<aside class="arcade-slab" aria-label="Typing games">
+  <div class="slab-fx" aria-hidden="true"></div>
+
+  <div class="slab-inner">
+    <div class="slab-copy">
+      <span class="slab-kicker"><span class="slab-dot"></span>ARCADE DETOUR</span>
+      <h2 class="slab-title">System fatigue?<br /><span>Calibrate your keystrokes.</span></h2>
+      <p class="slab-sub">
+        Two cyberpunk typing games, same private in-browser rules as every other tool.
+        Nothing to install. Nothing leaves your machine.
+      </p>
+      <a class="slab-all" href="/arcade">
+        Enter the arcade
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"></path></svg>
+      </a>
+    </div>
+
+    <div class="slab-cards">
+      <a class="slab-card slab-cyan" href="/typing-speed-test">
+        <span class="slab-icon">⌨️</span>
+        <div class="slab-card-body">
+          <span class="slab-kind">TYPING TRIAL</span>
+          <h3>NEUROTYPE</h3>
+          <p>Live WPM, accuracy and consistency — chase your rank.</p>
+        </div>
+        <svg class="slab-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"></path></svg>
+      </a>
+
+      <a class="slab-card slab-magenta" href="/typing-arcade">
+        <span class="slab-icon">🚀</span>
+        <div class="slab-card-body">
+          <span class="slab-kind">ARCADE SHOOTER</span>
+          <h3>VOIDSTRIKE</h3>
+          <p>Type to lock on, type to destroy. Don't let them land.</p>
+        </div>
+        <svg class="slab-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"></path></svg>
+      </a>
+    </div>
+  </div>
+</aside>

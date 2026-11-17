@@ -1,0 +1,75 @@
+---
+import CenteredTool from "../components/CenteredTool.astro";
+---
+
+<CenteredTool
+  wide
+  title="WCAG Contrast Checker"
+  subtitle="Check the contrast ratio between two colors against WCAG 2.1 — AA and AAA for normal text, large text and UI components — with a live preview."
+>
+  <div class="mb-4 flex items-center gap-2">
+    <span class="local-chip">🔒 100% in your browser</span>
+    <span class="text-xs text-slate-400 dark:text-slate-500">WCAG 2.1 · nothing uploaded</span>
+  </div>
+
+  <div class="grid gap-5 lg:grid-cols-2">
+    <div class="space-y-4">
+      <div class="grid grid-cols-2 gap-4">
+        <div class="tool-panel">
+          <label class="field-label" for="ct-fg-text">Text color</label>
+          <div class="flex items-center gap-2">
+            <input id="ct-fg" type="color" value="#4a4a4a" class="h-10 w-12 shrink-0 cursor-pointer rounded-lg border border-slate-200 bg-transparent p-0 dark:border-slate-700" />
+            <input id="ct-fg-text" type="text" spellcheck="false" value="#4a4a4a" class="min-w-0 flex-1 rounded-xl border border-slate-200 bg-slate-50 px-2.5 py-2 font-mono text-xs outline-none focus:border-orange-500 dark:border-slate-700 dark:bg-slate-900/60 dark:text-slate-100" />
+          </div>
+        </div>
+        <div class="tool-panel">
+          <label class="field-label" for="ct-bg-text">Background</label>
+          <div class="flex items-center gap-2">
+            <input id="ct-bg" type="color" value="#ffffff" class="h-10 w-12 shrink-0 cursor-pointer rounded-lg border border-slate-200 bg-transparent p-0 dark:border-slate-700" />
+            <input id="ct-bg-text" type="text" spellcheck="false" value="#ffffff" class="min-w-0 flex-1 rounded-xl border border-slate-200 bg-slate-50 px-2.5 py-2 font-mono text-xs outline-none focus:border-orange-500 dark:border-slate-700 dark:bg-slate-900/60 dark:text-slate-100" />
+          </div>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap items-center justify-center gap-3">
+        <button type="button" id="ct-swap" class="btn-premium-ghost !w-auto px-5">⇅ Swap</button>
+        <button type="button" id="ct-fix" class="btn-premium !w-auto grow" title="Nudge the text color's lightness until it passes AA">✨ Fix to pass AA</button>
+      </div>
+
+      <div id="ct-preview" class="color-preview-ring rounded-3xl p-6" style="background:#ffffff;color:#4a4a4a">
+        <p class="text-2xl font-bold">Large text sample</p>
+        <p class="mt-2 text-sm leading-relaxed">Normal body text — the quick brown fox jumps over the lazy dog. 0123456789. Readable contrast keeps everyone included.</p>
+      </div>
+    </div>
+
+    <div class="space-y-4">
+      <div class="tool-panel text-center">
+        <span class="field-label">Contrast ratio</span>
+        <div id="ct-ratio" class="font-mono text-6xl font-extrabold text-slate-800 tabular-nums dark:text-slate-100">—</div>
+        <div id="ct-ratio-note" class="mt-1 text-sm text-slate-400"></div>
+      </div>
+
+      <div class="tool-panel">
+        <span class="field-label">WCAG 2.1 results</span>
+        <div class="space-y-2.5">
+          {[
+            ["Normal text (AA)", "ct-aan", "≥ 4.5"],
+            ["Normal text (AAA)", "ct-aaan", "≥ 7"],
+            ["Large text (AA)", "ct-aal", "≥ 3"],
+            ["Large text (AAA)", "ct-aaal", "≥ 4.5"],
+            ["UI components (AA)", "ct-ui", "≥ 3"],
+          ].map(([label, id, thr]) => (
+            <div class="flex items-center justify-between gap-3 rounded-xl bg-slate-50 px-3 py-2.5 dark:bg-slate-800/50">
+              <span class="text-sm font-semibold text-slate-600 dark:text-slate-300">{label} <span class="text-xs font-normal text-slate-400">{thr}</span></span>
+              <span id={id} class="rounded-full px-3 py-1 text-xs font-bold">—</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    import "../scripts/tools/contrast-checker";
+  </script>
+</CenteredTool>

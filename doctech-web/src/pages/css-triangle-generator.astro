@@ -1,0 +1,154 @@
+---
+import CenteredTool from "../components/CenteredTool.astro";
+---
+
+<CenteredTool
+  title="CSS Triangle Generator"
+  subtitle="Create pure-CSS triangles using the border trick. Choose directions, customize dimensions and colors, and copy the production-ready code."
+  wide
+>
+  <div class="space-y-5">
+
+    <div class="grid gap-5 lg:grid-cols-[1fr_320px]">
+      
+      <!-- Left column: Preview & Compass -->
+      <div class="space-y-5">
+        
+        <!-- Preview Stage -->
+        <div class="relative overflow-hidden rounded-2xl border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-900">
+          <div class="absolute right-3 top-3 z-10 flex gap-1.5">
+            <button id="tri-bg-toggle" type="button" class="rounded-lg bg-slate-100 px-2.5 py-1 text-[10px] font-semibold text-slate-500 transition-colors hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-400 dark:hover:bg-slate-700" title="Toggle background pattern">
+              Grid
+            </button>
+          </div>
+          <div id="tri-stage" class="flex min-h-[300px] items-center justify-center p-8 transition-colors" style="background-image: radial-gradient(circle, #cbd5e1 1px, transparent 1px); background-size: 20px 20px;">
+            <div id="tri-preview" class="transition-all duration-200"></div>
+          </div>
+        </div>
+
+        <!-- Interactive Direction Compass -->
+        <div class="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-700 dark:bg-slate-900">
+          <div class="mb-4 flex items-center gap-2">
+            <svg class="h-4 w-4 text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7l4-4m0 0l4 4m-4-4v18" /></svg>
+            <span class="text-xs font-bold tracking-wide text-slate-500 uppercase dark:text-slate-400">Direction</span>
+          </div>
+          <div id="tri-compass" class="mx-auto grid max-w-[240px] grid-cols-3 gap-2">
+            <button data-dir="up-left" class="tri-dir-btn aspect-square rounded-xl border-2 border-slate-200 bg-slate-50 p-2 text-slate-400 transition-all hover:border-orange-400 hover:text-orange-500 dark:border-slate-700 dark:bg-slate-800">
+              <svg class="h-full w-full rotate-[-45deg]" fill="currentColor" viewBox="0 0 24 24"><path d="M12 4l8 8h-6v8h-4v-8H4l8-8z"/></svg>
+            </button>
+            <button data-dir="up" class="tri-dir-btn aspect-square rounded-xl border-2 border-orange-500 bg-orange-50 p-2 text-orange-500 shadow-sm shadow-orange-500/20 transition-all dark:bg-orange-500/10">
+              <svg class="h-full w-full" fill="currentColor" viewBox="0 0 24 24"><path d="M12 4l8 8h-6v8h-4v-8H4l8-8z"/></svg>
+            </button>
+            <button data-dir="up-right" class="tri-dir-btn aspect-square rounded-xl border-2 border-slate-200 bg-slate-50 p-2 text-slate-400 transition-all hover:border-orange-400 hover:text-orange-500 dark:border-slate-700 dark:bg-slate-800">
+              <svg class="h-full w-full rotate-[45deg]" fill="currentColor" viewBox="0 0 24 24"><path d="M12 4l8 8h-6v8h-4v-8H4l8-8z"/></svg>
+            </button>
+            <button data-dir="left" class="tri-dir-btn aspect-square rounded-xl border-2 border-slate-200 bg-slate-50 p-2 text-slate-400 transition-all hover:border-orange-400 hover:text-orange-500 dark:border-slate-700 dark:bg-slate-800">
+              <svg class="h-full w-full rotate-[-90deg]" fill="currentColor" viewBox="0 0 24 24"><path d="M12 4l8 8h-6v8h-4v-8H4l8-8z"/></svg>
+            </button>
+            <div class="flex items-center justify-center rounded-xl bg-slate-50 dark:bg-slate-800">
+              <div class="h-3 w-3 rounded-full bg-slate-300 dark:bg-slate-600"></div>
+            </div>
+            <button data-dir="right" class="tri-dir-btn aspect-square rounded-xl border-2 border-slate-200 bg-slate-50 p-2 text-slate-400 transition-all hover:border-orange-400 hover:text-orange-500 dark:border-slate-700 dark:bg-slate-800">
+              <svg class="h-full w-full rotate-[90deg]" fill="currentColor" viewBox="0 0 24 24"><path d="M12 4l8 8h-6v8h-4v-8H4l8-8z"/></svg>
+            </button>
+            <button data-dir="down-left" class="tri-dir-btn aspect-square rounded-xl border-2 border-slate-200 bg-slate-50 p-2 text-slate-400 transition-all hover:border-orange-400 hover:text-orange-500 dark:border-slate-700 dark:bg-slate-800">
+              <svg class="h-full w-full rotate-[-135deg]" fill="currentColor" viewBox="0 0 24 24"><path d="M12 4l8 8h-6v8h-4v-8H4l8-8z"/></svg>
+            </button>
+            <button data-dir="down" class="tri-dir-btn aspect-square rounded-xl border-2 border-slate-200 bg-slate-50 p-2 text-slate-400 transition-all hover:border-orange-400 hover:text-orange-500 dark:border-slate-700 dark:bg-slate-800">
+              <svg class="h-full w-full rotate-[180deg]" fill="currentColor" viewBox="0 0 24 24"><path d="M12 4l8 8h-6v8h-4v-8H4l8-8z"/></svg>
+            </button>
+            <button data-dir="down-right" class="tri-dir-btn aspect-square rounded-xl border-2 border-slate-200 bg-slate-50 p-2 text-slate-400 transition-all hover:border-orange-400 hover:text-orange-500 dark:border-slate-700 dark:bg-slate-800">
+              <svg class="h-full w-full rotate-[135deg]" fill="currentColor" viewBox="0 0 24 24"><path d="M12 4l8 8h-6v8h-4v-8H4l8-8z"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right column: Controls -->
+      <div class="space-y-4">
+        
+        <!-- Type Selection -->
+        <div class="rounded-2xl border border-slate-200 bg-white p-4 dark:border-slate-700 dark:bg-slate-900">
+          <div class="mb-3 flex items-center gap-2">
+            <svg class="h-4 w-4 text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5" /></svg>
+            <span class="text-xs font-bold tracking-wide text-slate-500 uppercase dark:text-slate-400">Type</span>
+          </div>
+          <div class="grid grid-cols-2 gap-2">
+            <label class="flex cursor-pointer items-center justify-center rounded-xl border border-slate-200 bg-slate-50 py-2 transition-colors hover:bg-slate-100 has-[:checked]:border-orange-400 has-[:checked]:bg-orange-50/50 dark:border-slate-700 dark:bg-slate-800 dark:hover:bg-slate-700/80 dark:has-[:checked]:border-orange-500 dark:has-[:checked]:bg-orange-500/10">
+              <input type="radio" name="tri-type" value="equilateral" checked class="peer sr-only" />
+              <span class="text-xs font-semibold text-slate-500 peer-checked:text-orange-600 dark:text-slate-400 dark:peer-checked:text-orange-400">Equilateral</span>
+            </label>
+            <label class="flex cursor-pointer items-center justify-center rounded-xl border border-slate-200 bg-slate-50 py-2 transition-colors hover:bg-slate-100 has-[:checked]:border-orange-400 has-[:checked]:bg-orange-50/50 dark:border-slate-700 dark:bg-slate-800 dark:hover:bg-slate-700/80 dark:has-[:checked]:border-orange-500 dark:has-[:checked]:bg-orange-500/10">
+              <input type="radio" name="tri-type" value="custom" class="peer sr-only" />
+              <span class="text-xs font-semibold text-slate-500 peer-checked:text-orange-600 dark:text-slate-400 dark:peer-checked:text-orange-400">Custom Size</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Dimensions -->
+        <div class="rounded-2xl border border-slate-200 bg-white p-4 dark:border-slate-700 dark:bg-slate-900">
+          <div class="mb-3 flex items-center gap-2">
+            <svg class="h-4 w-4 text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" /></svg>
+            <span class="text-xs font-bold tracking-wide text-slate-500 uppercase dark:text-slate-400">Dimensions</span>
+          </div>
+          <div class="space-y-4">
+            <div>
+              <label class="mb-1.5 flex justify-between text-[10px] font-semibold text-slate-400" for="tri-width">
+                <span>Width</span>
+                <span class="text-orange-500"><span id="tri-width-val">100</span>px</span>
+              </label>
+              <input id="tri-width" type="range" min="10" max="300" value="100" class="w-full accent-orange-500" />
+            </div>
+            <div id="tri-height-wrap" class="hidden">
+              <label class="mb-1.5 flex justify-between text-[10px] font-semibold text-slate-400" for="tri-height">
+                <span>Height</span>
+                <span class="text-orange-500"><span id="tri-height-val">100</span>px</span>
+              </label>
+              <input id="tri-height" type="range" min="10" max="300" value="100" class="w-full accent-orange-500" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Color -->
+        <div class="rounded-2xl border border-slate-200 bg-white p-4 dark:border-slate-700 dark:bg-slate-900">
+          <div class="mb-3 flex items-center gap-2">
+            <svg class="h-4 w-4 text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" /></svg>
+            <span class="text-xs font-bold tracking-wide text-slate-500 uppercase dark:text-slate-400">Color</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <input id="tri-color" type="color" value="#f97316" class="h-10 w-14 cursor-pointer rounded-lg border border-slate-300 bg-transparent p-0.5 dark:border-slate-600" />
+            <span id="tri-color-hex" class="font-mono text-xs font-medium text-slate-600 dark:text-slate-300">#f97316</span>
+          </div>
+          <div class="mt-3 flex flex-wrap gap-2" id="tri-color-presets">
+            <button data-color="#f97316" class="h-6 w-6 rounded-full ring-2 ring-transparent transition-transform hover:scale-110 hover:ring-slate-200 dark:hover:ring-slate-700" style="background:#f97316"></button>
+            <button data-color="#3b82f6" class="h-6 w-6 rounded-full ring-2 ring-transparent transition-transform hover:scale-110 hover:ring-slate-200 dark:hover:ring-slate-700" style="background:#3b82f6"></button>
+            <button data-color="#10b981" class="h-6 w-6 rounded-full ring-2 ring-transparent transition-transform hover:scale-110 hover:ring-slate-200 dark:hover:ring-slate-700" style="background:#10b981"></button>
+            <button data-color="#8b5cf6" class="h-6 w-6 rounded-full ring-2 ring-transparent transition-transform hover:scale-110 hover:ring-slate-200 dark:hover:ring-slate-700" style="background:#8b5cf6"></button>
+            <button data-color="#ec4899" class="h-6 w-6 rounded-full ring-2 ring-transparent transition-transform hover:scale-110 hover:ring-slate-200 dark:hover:ring-slate-700" style="background:#ec4899"></button>
+            <button data-color="#1e293b" class="h-6 w-6 rounded-full ring-2 ring-transparent transition-transform hover:scale-110 hover:ring-slate-200 dark:hover:ring-slate-700" style="background:#1e293b"></button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ═══ Code Output ═══ -->
+    <div class="overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-700">
+      <div class="flex items-center justify-between border-b border-slate-200 bg-slate-50 px-4 py-2 dark:border-slate-700 dark:bg-slate-800">
+        <div class="flex items-center gap-3">
+          <span class="text-xs font-semibold tracking-wide text-slate-400 uppercase">CSS Output</span>
+          <div class="flex gap-1">
+            <button data-format="css" class="tri-format-btn rounded-md bg-orange-500 px-2 py-0.5 text-[10px] font-semibold text-white">CSS Class</button>
+            <button data-format="tailwind" class="tri-format-btn rounded-md border border-slate-300 px-2 py-0.5 text-[10px] font-semibold text-slate-500 hover:bg-slate-100 dark:border-slate-600 dark:text-slate-400">Tailwind</button>
+          </div>
+        </div>
+        <button id="tri-copy" type="button" class="rounded-lg bg-orange-500 px-3 py-1 text-xs font-semibold text-white transition-colors hover:bg-orange-600">Copy</button>
+      </div>
+      <pre id="tri-css" class="overflow-x-auto px-4 py-3 font-mono text-sm leading-relaxed dark:text-slate-100"></pre>
+    </div>
+  </div>
+
+  <script>
+    import "../scripts/tools/css-triangle-generator";
+  </script>
+</CenteredTool>

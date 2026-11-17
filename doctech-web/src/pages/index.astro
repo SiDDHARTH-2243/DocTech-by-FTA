@@ -1,0 +1,258 @@
+---
+import Layout from "../layouts/Layout.astro";
+import ArcadeSlab from "../components/ArcadeSlab.astro";
+import { brand, categories, catColor } from "../config/site";
+
+const readyCats = categories.filter((c) => c.tools.length > 0);
+
+// The games live behind their own /arcade route and are promoted by the slab +
+// navbar link, so they're kept out of the professional utility grids here. They
+// stay in the registry (site.ts remains the single source of truth), which means
+// ⌘K and the sidebar still find them — that's discoverability, not clutter.
+const ARCADE_CAT = "games";
+const utilityCats = readyCats.filter((c) => c.id !== ARCADE_CAT);
+
+const allTools = utilityCats.flatMap((c) =>
+  c.tools.filter((t) => t.ready).map((t) => ({ ...t, catLabel: c.label, catId: c.id })),
+);
+// Headline count covers the whole suite (⌘K genuinely searches all of it).
+const totalTools = readyCats.flatMap((c) => c.tools.filter((t) => t.ready)).length;
+
+// Where the slab interrupts the grid: after the 8th card ≈ two desktop rows.
+const SLAB_AFTER = 7;
+
+const POPULAR = new Set(["merge", "split", "imgcompress", "imgresize", "imgcrop", "imgconvert", "case", "counter", "palette", "hex2rgba", "boxshadow", "gradient", "glass", "ytthumb", "tweetgen", "whatsapp", "password", "qrcode"]);
+const NEW = new Set(["ytthumb", "ogmeta", "tweet2img", "igfilters", "imgdownload", "tweetcount", "socialresize", "tweetgen", "whatsapp", "imessage", "igdm", "igpost", "igstory", "adrevenue", "pfpmaker", "hashtags", "imgcensor", "svgblob", "svgpattern", "password", "listrandom", "qrcode", "barcode", "uuid", "randnum", "wheel", "hash", "dice", "timer", "bmi", "age"]);
+
+const catBlurb: Record<string, string> = {
+  pdf: "Merge, split, convert & secure",
+  image: "Compress, resize, filter & create",
+  text: "Count, convert, clean & format",
+  color: "Palettes, conversion & shades",
+  css: "Shadows, gradients, loaders & more",
+  social: "Mockups, downloaders & generators",
+  coding: "Formatters & dev utilities",
+  games: "Fun little browser games",
+  misc: "Passwords, QR, timers & randomizers",
+};
+---
+
+<Layout title={`${brand.namePrefix}${brand.nameSuffix} — Every tool. One private workspace.`}>
+  <div class="kivo-landing">
+    <div class="ambient ambient-one"></div>
+    <div class="ambient ambient-two"></div>
+
+    <!-- Hero -->
+    <section class="hero container">
+      <div class="hero-copy">
+        <a class="eyebrow" href="#tools">
+          <span class="pulse-dot"></span>
+          {totalTools}+ tools. No installs. No nonsense.
+          <svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg>
+        </a>
+        <h1>Every tool you need.<br /><span>One private workspace.</span></h1>
+        <p class="hero-subtitle">
+          Compress, convert, generate and get things done with a premium suite of
+          private, in-browser tools designed to feel effortless.
+        </p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#tools">
+            Explore all tools
+            <svg viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg>
+          </a>
+          <button class="button button-secondary search-trigger" type="button">
+            <svg viewBox="0 0 24 24"><path d="m21 21-4.35-4.35m1.35-5.65a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"/></svg>
+            Find a tool
+            <kbd>⌘ K</kbd>
+          </button>
+        </div>
+        <div class="hero-proof">
+          <div class="avatar-stack" aria-hidden="true"><span>MK</span><span>JD</span><span>AS</span><span>+</span></div>
+          <div>
+            <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
+            <p>Trusted by <strong>40,000+</strong> productive people</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-visual" aria-hidden="true">
+        <div class="orbit orbit-one"></div>
+        <div class="orbit orbit-two"></div>
+        <div class="floating-chip chip-pdf"><span class="mini-icon coral">PDF</span><span><strong>PDF toolkit</strong><small>14 powerful tools</small></span></div>
+        <div class="floating-chip chip-image"><span class="mini-icon violet">IMG</span><span><strong>Image studio</strong><small>Smart optimization</small></span></div>
+        <div class="floating-chip chip-spark"><span class="mini-icon amber">✦</span><span><strong>100% private</strong><small>Runs in your browser</small></span></div>
+        <div class="app-window">
+          <div class="window-topbar">
+            <div class="window-dots"><span></span><span></span><span></span></div>
+            <div class="window-address">doctech.app/image-compressor</div>
+            <span class="mock-preview-badge">Preview</span>
+          </div>
+          <div class="window-body">
+            <div class="window-sidebar"><div class="sidebar-logo"></div><span class="active"></span><span></span><span></span><span></span><span></span></div>
+            <div class="window-content">
+              <span class="mock-kicker">IMAGE TOOLS</span>
+              <h3>Compress images</h3>
+              <p>Smaller files. Same beautiful quality.</p>
+              <div class="drop-zone">
+                <div class="upload-icon"><svg viewBox="0 0 24 24"><path d="M12 16V4m0 0L7 9m5-5 5 5M5 14v5h14v-5"/></svg></div>
+                <strong>Drop your files here</strong>
+                <span>Runs in your browser</span>
+              </div>
+              <div class="file-row">
+                <div class="file-thumb"></div>
+                <div class="file-meta"><strong>brand-cover.png</strong><span>2.8 MB</span></div>
+                <div class="progress"><span></span></div>
+                <span class="saving">−74%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Benefits -->
+    <section class="logo-strip" aria-label="Benefits">
+      <div class="container logo-strip-inner">
+        <p>Built for work that moves fast</p>
+        <div class="benefit"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="m9 12 2 2 4-4"/></svg> Private by default</div>
+        <div class="benefit"><svg viewBox="0 0 24 24"><path d="m13 2-9 12h7l-1 8 9-12h-7l1-8Z"/></svg> Blazing fast</div>
+        <div class="benefit"><svg viewBox="0 0 24 24"><path d="M20 16.6A5 5 0 0 0 18 7a7 7 0 0 0-13.7 2A4 4 0 0 0 5 17h4m3-5v9m0-9-3 3m3-3 3 3"/></svg> No installation</div>
+        <div class="benefit"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.4 2.5 3.6 5.5 3.6 9s-1.2 6.5-3.6 9c-2.4-2.5-3.6-5.5-3.6-9S9.6 5.5 12 3Z"/></svg> Works everywhere</div>
+      </div>
+    </section>
+
+    <!-- Categories -->
+    <section class="section container" id="categories">
+      <div class="section-heading">
+        <div><span class="section-kicker">YOUR DIGITAL TOOLBELT</span><h2>Built for every kind of task.</h2></div>
+        <p>From a five-second fix to a full creative workflow, find the right tool without hunting through menus.</p>
+      </div>
+      <div class="category-grid">
+        {utilityCats.map((c) => (
+          <article class="category-card" data-category={c.label} style={`--cat-color:${catColor(c.id).color};--cat-soft:${catColor(c.id).soft}`}>
+            <div class="category-icon">{c.icon}</div>
+            <span class="category-arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></span>
+            <h3>{c.label}</h3>
+            <p>{c.tools.filter((t) => t.ready).length} {c.tools.filter((t) => t.ready).length === 1 ? "tool" : "tools"} · {catBlurb[c.id] ?? "Handy utilities"}</p>
+            <span class="category-decoration"></span>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <!-- Tools -->
+    <section class="section tools-section" id="tools">
+      <div class="container">
+        <div class="section-heading tools-heading">
+          <div><span class="section-kicker">ALL TOOLS</span><h2>Your favorites, one click away.</h2></div>
+          <a class="text-link" href="#tools">Browse the full collection <svg viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a>
+        </div>
+
+        <div class="tool-controls">
+          <label class="tool-search">
+            <svg viewBox="0 0 24 24"><path d="m21 21-4.35-4.35m1.35-5.65a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"/></svg>
+            <input type="search" id="toolSearch" placeholder={`Search ${totalTools}+ tools...`} autocomplete="off" />
+            <kbd>/</kbd>
+          </label>
+          <div class="filter-tabs" id="filterTabs" aria-label="Filter tools">
+            <button class="active" data-filter="Popular">Popular</button>
+            <button data-filter="New">New</button>
+            <button data-filter="Favorites">Favorites <span id="favoriteCount">0</span></button>
+            <button data-filter="All">All tools</button>
+          </div>
+          <div class="view-toggle" id="viewToggle" aria-label="Change layout">
+            <button class="active" data-view="grid" type="button" aria-label="Grid view">
+              <svg viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.5"/></svg>
+              <span>Grid</span>
+            </button>
+            <button data-view="list" type="button" aria-label="List view">
+              <svg viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3.5 6h.01M3.5 12h.01M3.5 18h.01"/></svg>
+              <span>List</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="tool-grid" id="toolGrid">
+          {allTools.map((t, i) => (
+            <>
+            <a
+              href={t.href}
+              class="tool-card"
+              data-cat={t.catLabel}
+              data-name={t.name.toLowerCase()}
+              data-desc={(t.description ?? "").toLowerCase()}
+              data-popular={POPULAR.has(t.id) ? "true" : "false"}
+              data-new={NEW.has(t.id) ? "true" : "false"}
+              style={`--tool-soft:${catColor(t.catId).soft};--tool-color:${catColor(t.catId).color}`}
+            >
+              <div class="tool-top">
+                <div class="tool-icon">{t.icon}</div>
+                <button class="favorite-button" data-favorite={t.name} type="button" aria-label="Toggle favorite">
+                  <svg viewBox="0 0 24 24"><path d="m12 2.5 3 6.1 6.7 1-4.9 4.7 1.2 6.7-6-3.2L6 21l1.2-6.7-4.9-4.7 6.7-1 3-6.1Z"/></svg>
+                </button>
+              </div>
+              <h3>{t.name}</h3>
+              <p>{t.description}</p>
+              {NEW.has(t.id) ? <span class="tool-badge">NEW</span> : POPULAR.has(t.id) ? <span class="tool-badge">POPULAR</span> : null}
+            </a>
+            {i === SLAB_AFTER && <ArcadeSlab />}
+            </>
+          ))}
+        </div>
+        <div class="empty-state" id="emptyState" hidden>
+          <span>⌕</span><h3>No tool found</h3><p>Try a different name or category.</p>
+          <button class="button button-secondary" id="clearSearch" type="button">Clear search</button>
+        </div>
+        <button class="button button-secondary load-more" id="loadMore" type="button">Show all tools <span id="toolTotal"></span></button>
+      </div>
+    </section>
+
+    <!-- Why -->
+    <section class="section container" id="why">
+      <div class="center-heading">
+        <span class="section-kicker">WHY {brand.namePrefix.toUpperCase()}{brand.nameSuffix.toUpperCase()}</span>
+        <h2>Quietly powerful. Refreshingly simple.</h2>
+        <p>Good tools should disappear into the work. Every detail is designed to keep you moving.</p>
+      </div>
+      <div class="reason-grid">
+        <article>
+          <span class="reason-number">01</span>
+          <div class="reason-icon orange"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="m9 12 2 2 4-4"/></svg></div>
+          <h3>Your files stay yours.</h3>
+          <p>Almost everything runs locally in your browser. We don't peek, profile, or keep your work.</p>
+        </article>
+        <article>
+          <span class="reason-number">02</span>
+          <div class="reason-icon blue"><svg viewBox="0 0 24 24"><path d="m13 2-9 12h7l-1 8 9-12h-7l1-8Z"/></svg></div>
+          <h3>Fast means actually fast.</h3>
+          <p>No bloated dashboards or waiting rooms. Open the tool, finish the task, move on.</p>
+        </article>
+        <article>
+          <span class="reason-number">03</span>
+          <div class="reason-icon purple"><svg viewBox="0 0 24 24"><path d="M12 3v18M3 12h18"/><circle cx="12" cy="12" r="9"/></svg></div>
+          <h3>One place. Every device.</h3>
+          <p>A consistent, responsive workspace that feels at home on desktop, tablet, and mobile.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- About FutureTech Automation -->
+    <section class="final-cta container">
+      <div class="cta-orb"></div>
+      <span class="section-kicker light">ABOUT FUTURETECH AUTOMATION</span>
+      <h2>Built by FutureTech Automation.</h2>
+      <p>FutureTech Automation is a multidisciplinary engineering company delivering end-to-end hardware &amp; software — from circuit design to final assembly. Whether you're a final-year student needing a ready-to-submit project or a professional needing custom automation, we turn complex ideas into reliable, real-world technology.</p>
+      <div class="fta-tags">
+        <span class="fta-tag">Electronics</span>
+        <span class="fta-tag">Mechatronics</span>
+        <span class="fta-tag">IoT</span>
+        <span class="fta-tag">AI-driven systems</span>
+      </div>
+      <a class="button button-white" href="https://futuretechautomation.in/" target="_blank" rel="noopener noreferrer">Visit FutureTech Automation <svg viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a>
+    </section>
+  </div>
+
+  <script>
+    import "../scripts/landing";
+  </script>
+</Layout>

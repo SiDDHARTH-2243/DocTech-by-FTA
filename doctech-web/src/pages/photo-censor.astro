@@ -1,0 +1,77 @@
+---
+import ToolPage from "../components/ToolPage.astro";
+import PremiumDropzone from "../components/PremiumDropzone.astro";
+---
+
+<ToolPage
+  title="Photo Censor"
+  subtitle="Hide faces or sensitive info by dragging over an image to pixelate, blur or black-bar it. Nothing leaves your browser."
+>
+  <PremiumDropzone
+    dropId="cen-drop"
+    inputId="cen-input"
+    accept="image/png,image/jpeg,image/webp,image/bmp"
+    formats={["JPG", "PNG", "WEBP"]}
+    icon="🚫"
+    title="Drop your image to censor"
+    hint="or click to browse from your device"
+  />
+
+  <div id="cen-work" class="hidden space-y-4">
+    <div class="flex min-h-[260px] items-center justify-center overflow-auto rounded-3xl border border-slate-200 bg-slate-100 p-3 shadow-sm dark:border-slate-800 dark:bg-slate-950">
+      <canvas id="cen-canvas" class="max-h-[440px] max-w-full cursor-crosshair touch-none rounded-lg"></canvas>
+    </div>
+
+    <div class="tool-panel grid gap-5 sm:grid-cols-2">
+      <div>
+        <label class="field-label" for="cen-mode">Censor style</label>
+        <div class="relative">
+          <select id="cen-mode" class="w-full appearance-none rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-semibold text-slate-700 outline-none transition-all focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10 dark:border-slate-700 dark:bg-slate-800/50 dark:text-slate-200 dark:focus:border-orange-500">
+            <option value="pixelate">Pixelate</option>
+            <option value="blur">Blur</option>
+            <option value="black">Black bar</option>
+          </select>
+          <div class="pointer-events-none absolute inset-y-0 right-4 flex items-center">
+            <svg class="h-4 w-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </div>
+        </div>
+      </div>
+      <div id="cen-strength-wrap">
+        <div class="mb-2 flex items-center justify-between">
+          <span class="text-xs font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400">Strength</span>
+          <span class="rounded-md bg-orange-100 px-2 py-0.5 text-xs font-bold text-orange-700 dark:bg-orange-500/20 dark:text-orange-400"><span id="cen-strength-val">12</span></span>
+        </div>
+        <input id="cen-strength" type="range" min="4" max="40" value="12" class="h-2 w-full cursor-pointer appearance-none rounded-full bg-slate-200 accent-orange-500 outline-none dark:bg-slate-700" />
+      </div>
+      <p class="text-xs text-slate-500 sm:col-span-2 dark:text-slate-400">Drag a rectangle over the image to censor that area. Add as many as you like.</p>
+    </div>
+  </div>
+
+  <div slot="rail" class="flex flex-col gap-5">
+    <div class="tool-panel">
+      <div class="mb-4 flex items-center justify-between">
+        <h3 class="font-bold text-slate-800 dark:text-slate-100">Photo Censor</h3>
+        <span class="local-badge">⚡ Local</span>
+      </div>
+      <dl class="space-y-3 text-sm">
+        <div class="flex items-center justify-between"><dt class="text-slate-500 dark:text-slate-400">Areas</dt><dd id="cen-count" class="font-mono font-semibold text-orange-500">0</dd></div>
+      </dl>
+      <div class="mt-4 flex gap-2">
+        <button id="cen-undo" type="button" class="flex-1 rounded-lg border border-slate-200 px-3 py-2 text-xs font-bold text-slate-600 transition-colors hover:border-orange-400 hover:text-orange-600 dark:border-slate-700 dark:text-slate-300 dark:hover:text-orange-400">Undo</button>
+        <button id="cen-clear" type="button" class="flex-1 rounded-lg border border-slate-200 px-3 py-2 text-xs font-bold text-slate-600 transition-colors hover:border-orange-400 hover:text-orange-600 dark:border-slate-700 dark:text-slate-300 dark:hover:text-orange-400">Clear</button>
+      </div>
+    </div>
+
+    <div class="space-y-3">
+      <button id="cen-download" type="button" disabled class="btn-premium">
+        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+        Download
+      </button>
+      <button id="cen-reset" type="button" class="btn-premium-ghost hidden">Choose another image</button>
+    </div>
+  </div>
+
+  <script>
+    import "../scripts/tools/photo-censor";
+  </script>
+</ToolPage>

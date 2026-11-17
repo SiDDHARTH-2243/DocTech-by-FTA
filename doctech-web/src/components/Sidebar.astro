@@ -1,0 +1,88 @@
+---
+import { brand, categories } from "../config/site";
+import Logo from "./Logo.astro";
+
+// Normalize the current path (strip trailing slash) for active-link matching.
+const current = Astro.url.pathname.replace(/\/$/, "") || "/";
+---
+
+<aside
+  class="sticky top-0 hidden h-screen w-64 shrink-0 flex-col overflow-y-auto border-r border-slate-200 bg-white px-4 py-5 md:flex dark:border-slate-800 dark:bg-slate-900"
+>
+  <!-- Brand -->
+  <a href="/" class="mb-6 flex items-center gap-2 px-2">
+    <Logo />
+    <span class="text-xl font-extrabold tracking-tight">
+      {brand.namePrefix}<span class="text-orange-500">{brand.nameSuffix}</span>
+    </span>
+    <span
+      class="rounded bg-orange-100 px-1.5 py-0.5 text-[10px] font-bold tracking-wider text-orange-600 dark:bg-orange-500/15 dark:text-orange-400"
+    >
+      {brand.badge}
+    </span>
+  </a>
+
+  <nav class="flex flex-col gap-5">
+    {
+      categories.map((cat) => (
+        <div>
+          <p class="mb-1.5 flex items-center gap-1.5 px-2 text-[11px] font-semibold tracking-wider text-slate-400 uppercase dark:text-slate-500">
+            <span>{cat.icon}</span>
+            {cat.label}
+          </p>
+
+          {cat.tools.length === 0 ? (
+            <p class="px-2 text-xs text-slate-300 italic dark:text-slate-600">
+              Coming soon
+            </p>
+          ) : (
+            <ul class="flex flex-col gap-0.5">
+              {cat.tools.map((tool) => {
+                const isActive =
+                  current === tool.href.replace(/\/$/, "");
+                if (!tool.ready) {
+                  return (
+                    <li>
+                      <span
+                        class="flex cursor-not-allowed items-center gap-2.5 rounded-md px-2 py-1.5 text-sm text-slate-300 dark:text-slate-600"
+                        title="Coming soon"
+                      >
+                        <span class="w-4 text-center">{tool.icon}</span>
+                        {tool.name}
+                      </span>
+                    </li>
+                  );
+                }
+                return (
+                  <li>
+                    <a
+                      href={tool.href}
+                      aria-current={isActive ? "page" : undefined}
+                      class:list={[
+                        "flex items-center gap-2.5 rounded-md px-2 py-1.5 text-sm transition-colors",
+                        isActive
+                          ? "bg-orange-50 font-semibold text-orange-600 dark:bg-orange-500/10 dark:text-orange-400"
+                          : "text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800",
+                      ]}
+                    >
+                      <span class="w-4 text-center">{tool.icon}</span>
+                      {tool.name}
+                      {tool.engine === "cloud" && (
+                        <span
+                          class="ml-auto text-[10px] text-slate-400 dark:text-slate-500"
+                          title="Processed on the server"
+                        >
+                          ☁️
+                        </span>
+                      )}
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
+          )}
+        </div>
+      ))
+    }
+  </nav>
+</aside>

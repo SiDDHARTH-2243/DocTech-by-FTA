@@ -1,0 +1,31 @@
+---
+import CenteredTool from "../components/CenteredTool.astro";
+---
+
+<CenteredTool
+  title="Variable Name Case Converter"
+  subtitle="Turn any label or identifier into every programming case at once — camelCase, PascalCase, snake_case, CONSTANT_CASE, kebab-case and more. Click any result to copy."
+>
+  <div class="space-y-5">
+    <div class="tool-panel">
+      <label class="field-label" for="case-in">Input</label>
+      <textarea
+        id="case-in"
+        rows="2"
+        spellcheck="false"
+        placeholder="user profile image URL"
+        class="w-full resize-y rounded-2xl border border-slate-200 bg-slate-50 px-3 py-2.5 font-mono text-sm outline-none transition-all focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10 dark:border-slate-700 dark:bg-slate-900/60 dark:text-slate-100"
+      ></textarea>
+      <p class="mt-2 text-xs text-slate-500 dark:text-slate-400">
+        Detects word boundaries from spaces, punctuation, <code class="font-mono">camelCase</code>,
+        <code class="font-mono">PascalCase</code>, acronyms and digits.
+      </p>
+    </div>
+
+    <div id="case-out" class="grid gap-2.5 sm:grid-cols-2"></div>
+  </div>
+
+  <script>
+    import "../scripts/tools/variable-case-converter";
+  </script>
+</CenteredTool>

@@ -1,0 +1,57 @@
+---
+import ToolPage from "../components/ToolPage.astro";
+import PremiumDropzone from "../components/PremiumDropzone.astro";
+---
+
+<ToolPage
+  title="Image to Base64"
+  subtitle="Encode an image as a Base64 data URI with ready-to-paste CSS and HTML snippets. All local — nothing is uploaded."
+>
+  <PremiumDropzone
+    dropId="b64-drop"
+    inputId="b64-input"
+    accept="image/png,image/jpeg,image/webp,image/gif,image/svg+xml,image/bmp,image/avif"
+    formats={["PNG", "JPG", "WEBP", "GIF", "SVG"]}
+    icon="🧬"
+    title="Drop your image to encode"
+    hint="or click to browse from your device"
+  />
+
+  <div id="b64-work" class="hidden space-y-4">
+    <div class="preview-stage min-h-[160px]">
+      <img id="b64-preview" alt="preview" class="max-h-[260px] max-w-full rounded-lg object-contain" />
+    </div>
+
+    {[
+      ["b64-out", "Data URI", "b64-copy-out"],
+      ["b64-css", "CSS", "b64-copy-css"],
+      ["b64-img", "HTML", "b64-copy-img"],
+    ].map(([id, label, btn]) => (
+      <div class="overflow-hidden rounded-3xl border border-slate-200 shadow-sm dark:border-slate-800">
+        <div class="flex items-center justify-between border-b border-slate-200 bg-slate-50 px-4 py-2.5 dark:border-slate-800 dark:bg-slate-800/60">
+          <span class="text-xs font-semibold tracking-wide text-slate-400 uppercase">{label}</span>
+          <button id={btn} type="button" class="rounded-lg bg-orange-500 px-3 py-1 text-xs font-bold text-white shadow-sm shadow-orange-500/30 transition-all hover:-translate-y-0.5 hover:bg-orange-600">Copy</button>
+        </div>
+        <pre id={id} class="max-h-40 overflow-auto bg-white px-4 py-3 font-mono text-xs break-all whitespace-pre-wrap dark:bg-slate-900 dark:text-slate-100"></pre>
+      </div>
+    ))}
+  </div>
+
+  <div slot="rail" class="flex flex-col gap-5">
+    <div class="tool-panel">
+      <div class="mb-4 flex items-center justify-between">
+        <h3 class="font-bold text-slate-800 dark:text-slate-100">Base64</h3>
+        <span class="local-badge">⚡ Local</span>
+      </div>
+      <dl class="space-y-3 text-sm">
+        <div class="flex items-center justify-between"><dt class="text-slate-500 dark:text-slate-400">File</dt><dd id="b64-fname" class="max-w-[10rem] truncate font-mono text-xs font-semibold">—</dd></div>
+        <div class="flex items-center justify-between"><dt class="text-slate-500 dark:text-slate-400">Base64 size</dt><dd id="b64-size" class="font-mono font-semibold text-orange-500">—</dd></div>
+      </dl>
+      <button id="b64-reset" type="button" class="btn-premium-ghost mt-4 hidden">Choose another image</button>
+    </div>
+  </div>
+
+  <script>
+    import "../scripts/tools/image-to-base64";
+  </script>
+</ToolPage>

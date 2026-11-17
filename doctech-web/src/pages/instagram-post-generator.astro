@@ -1,0 +1,33 @@
+---
+import CenteredTool from "../components/CenteredTool.astro";
+---
+
+<CenteredTool
+  wide
+  title="Instagram Post Generator"
+  subtitle="Create a realistic Instagram feed post — photo, caption, likes and a verified badge — then download it as an image."
+>
+  <div class="lg:grid lg:grid-cols-[1fr_minmax(0,360px)] lg:items-start lg:gap-6">
+    <div class="lg:sticky lg:top-4">
+      <div class="flex justify-center overflow-auto rounded-2xl border border-slate-200 bg-slate-100 p-4 dark:border-slate-700 dark:bg-slate-950">
+        <canvas id="igp-canvas" class="max-h-[600px] max-w-full rounded-xl shadow"></canvas>
+      </div>
+    </div>
+    <div class="mt-5 space-y-4 lg:mt-0">
+      <div class="grid grid-cols-2 gap-3 rounded-2xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900">
+        <label class="block text-sm"><span class="mb-1 block text-xs font-semibold">Username</span><input id="igp-username" type="text" value="wanderlust" class="w-full rounded-lg border border-slate-300 bg-white px-2.5 py-1.5 text-sm dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100" /></label>
+        <label class="block text-sm"><span class="mb-1 block text-xs font-semibold">Theme</span><select id="igp-theme" class="w-full rounded-lg border border-slate-300 bg-white px-2.5 py-1.5 text-sm dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100"><option value="light">Light</option><option value="dark">Dark</option></select></label>
+        <label class="block text-sm"><span class="mb-1 block text-xs font-semibold">Likes</span><input id="igp-likes" type="number" min="0" value="2438" class="w-full rounded-lg border border-slate-300 bg-white px-2.5 py-1.5 text-sm dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100" /></label>
+        <label class="flex items-center gap-2 pt-5 text-sm"><input id="igp-verified" type="checkbox" class="h-4 w-4 accent-sky-500" /> Verified</label>
+        <label class="block text-sm"><span class="mb-1 block text-xs font-semibold">Avatar</span><input id="igp-avatar" type="file" accept="image/*" class="w-full text-xs text-slate-500 file:mr-2 file:rounded-md file:border-0 file:bg-slate-200 file:px-2 file:py-1 file:text-xs dark:text-slate-400 dark:file:bg-slate-700" /></label>
+        <label class="block text-sm"><span class="mb-1 block text-xs font-semibold">Photo</span><input id="igp-image" type="file" accept="image/*" class="w-full text-xs text-slate-500 file:mr-2 file:rounded-md file:border-0 file:bg-slate-200 file:px-2 file:py-1 file:text-xs dark:text-slate-400 dark:file:bg-slate-700" /></label>
+        <label class="col-span-2 block text-sm"><span class="mb-1 block text-xs font-semibold">Caption</span><textarea id="igp-caption" rows="2" class="w-full rounded-lg border border-slate-300 bg-white px-2.5 py-1.5 text-sm dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100">Golden hour never misses ✨ #travel #sunset</textarea></label>
+      </div>
+      <button id="igp-download" type="button" class="w-full rounded-xl bg-orange-500 px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-orange-600">Download PNG</button>
+    </div>
+  </div>
+
+  <script>
+    import "../scripts/tools/instagram-post-generator";
+  </script>
+</CenteredTool>

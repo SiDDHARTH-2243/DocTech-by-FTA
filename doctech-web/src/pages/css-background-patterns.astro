@@ -1,0 +1,126 @@
+---
+import CenteredTool from "../components/CenteredTool.astro";
+---
+
+<CenteredTool
+  title="CSS Background Patterns"
+  subtitle="Browse 80+ pure-CSS background patterns, customize colors & size, and copy production-ready CSS."
+  wide
+>
+  <!-- Header badges -->
+  <div class="mb-5 flex flex-wrap items-center gap-3">
+    <span class="inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-orange-500/10 to-amber-500/10 px-3 py-1 text-xs font-bold tracking-wide text-orange-600 ring-1 ring-orange-500/20 dark:from-orange-500/20 dark:to-amber-500/20 dark:text-orange-400 dark:ring-orange-400/30">
+      <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>
+      80+ Patterns
+    </span>
+    <span class="text-xs text-slate-400 dark:text-slate-500">Pure CSS · No images · Copy & paste ready</span>
+  </div>
+
+  <!-- Search + filter bar -->
+  <div class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center">
+    <div class="relative flex-1">
+      <svg class="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+      <input
+        id="bp-search"
+        type="text"
+        placeholder="Search patterns…"
+        class="w-full rounded-xl border border-slate-200 bg-white py-2.5 pl-10 pr-4 text-sm outline-none transition-all focus:border-orange-400 focus:ring-2 focus:ring-orange-500/20 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:focus:border-orange-500"
+      />
+    </div>
+    <span id="bp-count" class="text-xs font-medium text-slate-400 dark:text-slate-500"></span>
+  </div>
+
+  <!-- Category tabs -->
+  <div id="bp-tabs" class="mb-5 flex flex-wrap gap-2 overflow-x-auto pb-1"></div>
+
+  <!-- Pattern grid -->
+  <div id="bp-grid" class="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4"></div>
+
+  <!-- Empty state -->
+  <div id="bp-empty" class="hidden py-16 text-center">
+    <svg class="mx-auto mb-3 h-10 w-10 text-slate-300 dark:text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+    <p class="text-sm font-medium text-slate-400 dark:text-slate-500">No patterns match your search</p>
+  </div>
+
+  <!-- ═══ Customize / Export modal ═══ -->
+  <div id="bp-modal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/50 p-4 backdrop-blur-sm">
+    <div class="grid max-h-[92vh] w-full max-w-3xl grid-cols-1 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl md:grid-cols-2 dark:border-slate-700 dark:bg-slate-900">
+      <!-- Preview side -->
+      <div class="relative min-h-[240px] md:min-h-full">
+        <div id="bp-modal-preview" class="absolute inset-0"></div>
+        <!-- Pattern name + category overlay -->
+        <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/60 to-transparent px-4 pb-3 pt-8">
+          <h3 id="bp-modal-title" class="text-base font-bold text-white"></h3>
+          <span id="bp-modal-category" class="text-xs font-medium text-white/70"></span>
+        </div>
+      </div>
+
+      <!-- Control & export side -->
+      <div class="flex max-h-[92vh] flex-col overflow-y-auto p-5">
+        <div class="mb-5 flex items-center justify-between">
+          <h4 class="text-sm font-bold tracking-wide text-slate-500 uppercase dark:text-slate-400">Customize</h4>
+          <button id="bp-modal-close" type="button" aria-label="Close" class="rounded-lg px-2 py-1 text-lg text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-700 dark:hover:bg-slate-800">✕</button>
+        </div>
+
+        <div class="grid grid-cols-2 gap-x-4 gap-y-4">
+          <!-- Pattern Color -->
+          <div>
+            <label class="mb-1.5 block text-xs font-semibold" for="bp-m-color">Pattern Color</label>
+            <div class="flex items-center gap-2">
+              <input id="bp-m-color" type="color" value="#f97316" class="h-9 w-12 cursor-pointer rounded-lg border border-slate-300 bg-transparent dark:border-slate-700" />
+              <span id="bp-m-color-hex" class="font-mono text-xs text-slate-500 dark:text-slate-400">#f97316</span>
+            </div>
+          </div>
+          <!-- Background Color -->
+          <div>
+            <label class="mb-1.5 block text-xs font-semibold" for="bp-m-bg">Background Color</label>
+            <div class="flex items-center gap-2">
+              <input id="bp-m-bg" type="color" value="#ffffff" class="h-9 w-12 cursor-pointer rounded-lg border border-slate-300 bg-transparent dark:border-slate-700" />
+              <span id="bp-m-bg-hex" class="font-mono text-xs text-slate-500 dark:text-slate-400">#ffffff</span>
+            </div>
+          </div>
+          <!-- Tile Size -->
+          <div>
+            <label class="mb-1.5 block text-xs font-semibold" for="bp-m-size">
+              Tile Size <span id="bp-m-size-val" class="text-orange-500">24</span>px
+            </label>
+            <input id="bp-m-size" type="range" min="8" max="80" value="24" class="w-full accent-orange-500" />
+          </div>
+          <!-- Opacity -->
+          <div>
+            <label class="mb-1.5 block text-xs font-semibold" for="bp-m-opacity">
+              Opacity <span id="bp-m-opacity-val" class="text-orange-500">100</span>%
+            </label>
+            <input id="bp-m-opacity" type="range" min="5" max="100" step="5" value="100" class="w-full accent-orange-500" />
+          </div>
+        </div>
+
+        <!-- Quick presets row -->
+        <div class="mt-4">
+          <p class="mb-2 text-xs font-semibold text-slate-500 dark:text-slate-400">Quick Presets</p>
+          <div class="flex flex-wrap gap-1.5" id="bp-presets">
+            <button data-preset="light" class="rounded-lg border border-slate-200 px-2.5 py-1 text-xs font-medium text-slate-600 transition-colors hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800">Light</button>
+            <button data-preset="dark" class="rounded-lg border border-slate-200 px-2.5 py-1 text-xs font-medium text-slate-600 transition-colors hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800">Dark</button>
+            <button data-preset="vibrant" class="rounded-lg border border-slate-200 px-2.5 py-1 text-xs font-medium text-slate-600 transition-colors hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800">Vibrant</button>
+            <button data-preset="subtle" class="rounded-lg border border-slate-200 px-2.5 py-1 text-xs font-medium text-slate-600 transition-colors hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800">Subtle</button>
+            <button data-preset="warm" class="rounded-lg border border-slate-200 px-2.5 py-1 text-xs font-medium text-slate-600 transition-colors hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800">Warm</button>
+            <button data-preset="cool" class="rounded-lg border border-slate-200 px-2.5 py-1 text-xs font-medium text-slate-600 transition-colors hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800">Cool</button>
+          </div>
+        </div>
+
+        <!-- CSS output -->
+        <div class="mt-5 overflow-hidden rounded-xl border border-slate-200 dark:border-slate-700">
+          <div class="flex items-center justify-between border-b border-slate-200 bg-slate-50 px-4 py-2 dark:border-slate-700 dark:bg-slate-800">
+            <span class="text-[11px] font-semibold tracking-wide text-slate-400 uppercase">CSS</span>
+            <button id="bp-m-copy" type="button" class="rounded-lg bg-orange-500 px-3 py-1 text-xs font-semibold text-white transition-colors hover:bg-orange-600">Copy CSS</button>
+          </div>
+          <pre id="bp-m-css" class="max-h-48 overflow-auto px-4 py-3 font-mono text-xs leading-relaxed dark:text-slate-100"></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    import "../scripts/tools/css-background-patterns";
+  </script>
+</CenteredTool>

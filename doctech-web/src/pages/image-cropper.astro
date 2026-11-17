@@ -1,0 +1,61 @@
+---
+import ToolPage from "../components/ToolPage.astro";
+import PremiumDropzone from "../components/PremiumDropzone.astro";
+---
+
+<ToolPage
+  title="Image Cropper"
+  subtitle="Drag the crop box to trim an image, with free or fixed aspect ratios. Cropping happens entirely in your browser."
+>
+  <PremiumDropzone
+    dropId="crp-drop"
+    inputId="crp-input"
+    accept="image/png,image/jpeg,image/webp,image/bmp"
+    formats={["JPG", "PNG", "WEBP"]}
+    icon="✂️"
+    title="Drop your image to crop"
+    hint="or click to browse from your device"
+  />
+
+  <div id="crp-work" class="hidden space-y-4">
+    <!-- Aspect presets -->
+    <div id="crp-aspects" class="flex flex-wrap gap-2">
+      {["Free", "1:1", "4:3", "16:9", "3:2", "2:3"].map((a) => (
+        <button type="button" data-aspect={a} class="rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-bold text-slate-600 transition-colors hover:border-orange-400 hover:text-orange-600 dark:border-slate-700 dark:text-slate-300 dark:hover:text-orange-400">{a}</button>
+      ))}
+    </div>
+
+    <!-- Crop stage -->
+    <div class="flex min-h-[280px] items-center justify-center rounded-3xl border border-slate-200 bg-slate-100 p-3 shadow-sm select-none dark:border-slate-800 dark:bg-slate-950">
+      <div id="crp-wrap" class="relative inline-block overflow-hidden leading-none">
+        <img id="crp-img" alt="to crop" class="block max-h-[440px] max-w-full" draggable="false" />
+        <div id="crp-box" class="absolute cursor-move border border-white/90" style="box-shadow:0 0 0 9999px rgba(0,0,0,.45)"></div>
+      </div>
+    </div>
+  </div>
+
+  <div slot="rail" class="flex flex-col gap-5">
+    <div class="tool-panel">
+      <div class="mb-4 flex items-center justify-between">
+        <h3 class="font-bold text-slate-800 dark:text-slate-100">Crop</h3>
+        <span class="local-badge">⚡ Local</span>
+      </div>
+      <dl class="space-y-3 text-sm">
+        <div class="flex items-center justify-between"><dt class="text-slate-500 dark:text-slate-400">Original</dt><dd id="crp-orig" class="font-mono font-semibold">—</dd></div>
+        <div class="flex items-center justify-between"><dt class="text-slate-500 dark:text-slate-400">Crop size</dt><dd id="crp-dims" class="font-mono font-semibold text-orange-500">—</dd></div>
+      </dl>
+    </div>
+
+    <div class="space-y-3">
+      <button id="crp-download" type="button" disabled class="btn-premium">
+        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+        Crop &amp; Download
+      </button>
+      <button id="crp-reset" type="button" class="btn-premium-ghost hidden">Choose another image</button>
+    </div>
+  </div>
+
+  <script>
+    import "../scripts/tools/image-cropper";
+  </script>
+</ToolPage>

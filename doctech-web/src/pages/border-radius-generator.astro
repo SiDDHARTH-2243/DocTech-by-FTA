@@ -1,0 +1,109 @@
+---
+import CenteredTool from "../components/CenteredTool.astro";
+---
+
+<CenteredTool
+  wide
+  title="Border Radius Generator"
+  subtitle="Drag the edge handles to shape elliptical corners and organic blobs, or start from a preset — then copy the CSS."
+>
+  <div class="lg:grid lg:grid-cols-[1fr_minmax(0,380px)] lg:items-start lg:gap-6">
+    <!-- LEFT: interactive preview + presets + how-to (pinned) -->
+    <div class="space-y-5 lg:sticky lg:top-4">
+      <div id="br-stage" class="flex min-h-[320px] items-center justify-center rounded-2xl border border-slate-200 bg-slate-50 p-10 dark:border-slate-800 dark:bg-slate-900">
+        <div id="br-wrap" class="relative"></div>
+      </div>
+
+      <!-- Presets -->
+      <div>
+        <div class="mb-2 flex items-center justify-between">
+          <span class="text-sm font-semibold">Shape presets</span>
+          <div class="flex gap-2">
+            <button id="br-shuffle" type="button" class="rounded-lg border border-slate-300 px-2.5 py-1 text-xs font-semibold text-slate-600 hover:bg-slate-100 dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-800">🎲 Blob</button>
+            <button id="br-reset" type="button" class="rounded-lg border border-slate-300 px-2.5 py-1 text-xs font-semibold text-slate-600 hover:bg-slate-100 dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-800">Reset</button>
+          </div>
+        </div>
+        <div id="br-presets" class="grid grid-cols-4 gap-2 sm:grid-cols-5"></div>
+      </div>
+
+      <!-- How to use -->
+      <div class="rounded-2xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900">
+        <p class="mb-1 text-sm font-semibold">How to use</p>
+        <ol class="list-decimal space-y-1.5 pl-4 text-xs text-slate-600 dark:text-slate-300">
+          <li><strong>Drag the round handles</strong> on the shape's edges — top/bottom handles set each corner's horizontal radius, left/right handles set the vertical radius.</li>
+          <li>Two different radii on a corner make it <strong>elliptical</strong>; mixing all eight makes an <strong>organic blob</strong>.</li>
+          <li><strong>Link</strong> keeps all four corners equal; turn it off to shape each corner on its own.</li>
+          <li>Switch <strong>% / px</strong> — % gives resolution-independent blobs, px gives fixed corners.</li>
+          <li>Hit <strong>🎲 Blob</strong> for a random shape, then <strong>Copy</strong> the CSS.</li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- RIGHT: controls + CSS -->
+    <div class="mt-5 space-y-5 lg:mt-0">
+      <div class="space-y-5 rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900">
+        <!-- Unit + Link -->
+        <div class="flex items-center justify-between">
+          <div>
+            <span class="mb-1.5 block text-sm font-semibold">Unit</span>
+            <div id="br-unit-group" class="inline-flex rounded-lg border border-slate-300 p-0.5 dark:border-slate-700">
+              <button type="button" data-val="%" class="rounded-md px-3 py-1 text-xs font-semibold">%</button>
+              <button type="button" data-val="px" class="rounded-md px-3 py-1 text-xs font-semibold">px</button>
+            </div>
+          </div>
+          <div>
+            <span class="mb-1.5 block text-sm font-semibold">Corners</span>
+            <button id="br-link" type="button" aria-pressed="true" class="rounded-lg bg-orange-500 px-3 py-1.5 text-xs font-semibold text-white">🔗 Linked</button>
+          </div>
+        </div>
+
+        <!-- Per-corner editor -->
+        <div class="grid grid-cols-2 gap-3 border-t border-slate-100 pt-4 dark:border-slate-800">
+          {
+            [
+              ["tl", "Top-left"],
+              ["tr", "Top-right"],
+              ["bl", "Bottom-left"],
+              ["br", "Bottom-right"],
+            ].map(([k, label]) => (
+              <div class="rounded-xl border border-slate-200 p-2.5 dark:border-slate-700">
+                <div class="mb-1.5 text-[11px] font-semibold text-slate-500">{label}</div>
+                <div class="flex items-center gap-2">
+                  <label class="flex items-center gap-1 text-[11px] text-slate-400">
+                    X
+                    <input id={`br-${k}-x`} type="number" min="0" value="30" class="w-14 rounded border border-slate-300 bg-white px-1.5 py-1 text-xs dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100" />
+                  </label>
+                  <label class="flex items-center gap-1 text-[11px] text-slate-400">
+                    Y
+                    <input id={`br-${k}-y`} type="number" min="0" value="30" class="w-14 rounded border border-slate-300 bg-white px-1.5 py-1 text-xs dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100" />
+                  </label>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+
+        <!-- Preview size -->
+        <div class="border-t border-slate-100 pt-4 dark:border-slate-800">
+          <label class="mb-1.5 block text-sm font-semibold" for="br-size">
+            Preview size <span id="br-size-val" class="text-orange-500">240</span>px
+          </label>
+          <input id="br-size" type="range" min="160" max="300" value="240" class="w-full accent-orange-500" />
+        </div>
+      </div>
+
+      <!-- CSS output -->
+      <div class="overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-700">
+        <div class="flex items-center justify-between border-b border-slate-200 bg-slate-50 px-4 py-2 dark:border-slate-700 dark:bg-slate-800">
+          <span class="text-xs font-semibold tracking-wide text-slate-400 uppercase">CSS</span>
+          <button id="br-copy" type="button" class="rounded-lg bg-orange-500 px-3 py-1 text-xs font-semibold text-white hover:bg-orange-600">Copy</button>
+        </div>
+        <pre id="br-css" class="overflow-x-auto px-4 py-3 font-mono text-sm dark:text-slate-100"></pre>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    import "../scripts/tools/border-radius-generator";
+  </script>
+</CenteredTool>

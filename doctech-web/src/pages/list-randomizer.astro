@@ -1,0 +1,44 @@
+---
+import CenteredTool from "../components/CenteredTool.astro";
+---
+
+<CenteredTool
+  wide
+  title="List Randomizer"
+  subtitle="Shuffle a list into a random order or pick random items — one entry per line, with fair crypto-backed randomness."
+>
+  <div class="lg:grid lg:grid-cols-2 lg:gap-6">
+    <!-- Input -->
+    <div class="tool-panel">
+      <label class="field-label" for="lr-input">Your list (one item per line)</label>
+      <textarea id="lr-input" rows="12" placeholder={"Alice\nBob\nCharlie\nDana"} class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm outline-none transition-all focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10 dark:border-slate-700 dark:bg-slate-800/50 dark:text-slate-100"></textarea>
+
+      <div class="mt-4 grid grid-cols-2 gap-3">
+        <label class="flex items-center gap-2 text-sm font-medium"><input id="lr-blanks" type="checkbox" checked class="accent-orange-500" /> Ignore blank lines</label>
+        <label class="flex items-center gap-2 text-sm font-medium"><input id="lr-dedupe" type="checkbox" class="accent-orange-500" /> Remove duplicates</label>
+      </div>
+
+      <div class="mt-4 flex items-end gap-4">
+        <div class="w-40">
+          <label class="field-label" for="lr-pick">Pick how many <span class="normal-case text-slate-400">(0 = all)</span></label>
+          <input id="lr-pick" type="number" min="0" value="0" class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm font-semibold dark:border-slate-700 dark:bg-slate-800/50 dark:text-slate-100" />
+        </div>
+        <button id="lr-run" type="button" class="btn-premium !w-auto grow">🔀 Randomize</button>
+      </div>
+    </div>
+
+    <!-- Output -->
+    <div class="tool-panel mt-5 lg:mt-0">
+      <div class="mb-2 flex items-center justify-between">
+        <h3 class="font-bold text-slate-800 dark:text-slate-100">Result</h3>
+        <span id="lr-count" class="local-badge">0 items</span>
+      </div>
+      <ol id="lr-output" class="min-h-[240px] list-decimal space-y-1 rounded-xl bg-slate-50 py-3 pr-3 pl-8 text-sm dark:bg-slate-800/50 dark:text-slate-100"></ol>
+      <button id="lr-copy" type="button" class="btn-premium-ghost mt-4">Copy result</button>
+    </div>
+  </div>
+
+  <script>
+    import "../scripts/tools/list-randomizer";
+  </script>
+</CenteredTool>

@@ -1,0 +1,83 @@
+---
+import CenteredTool from "../components/CenteredTool.astro";
+---
+
+<CenteredTool
+  wide
+  forceDark
+  title="VOIDSTRIKE"
+  subtitle="// arcade mode — hostiles drop from the void, each tagged with a word. Type the first letter to lock on, finish the word to destroy it. Let one reach your hull and it's over."
+>
+  <div id="va" class="va">
+    {/* ── HUD ────────────────────────────────────────────────────────────── */}
+    <div class="va-hud">
+      <div class="va-stat"><span class="va-k">SCORE</span><span id="va-score" class="va-v va-v-lg">0</span></div>
+      <div class="va-stat"><span class="va-k">WAVE</span><span id="va-wave" class="va-v">1</span></div>
+      <div class="va-stat"><span class="va-k">COMBO</span><span id="va-combo" class="va-v va-v-amber">×1</span></div>
+      <div class="va-stat"><span class="va-k">WPM</span><span id="va-wpm" class="va-v">0</span></div>
+      <div class="va-stat"><span class="va-k">ACC</span><span id="va-acc" class="va-v">100%</span></div>
+      <button type="button" id="va-sound" class="va-sound" aria-pressed="true" title="Toggle sound">♪ <span id="va-sound-label">sound</span></button>
+    </div>
+
+    {/* ── Arena ──────────────────────────────────────────────────────────── */}
+    <div id="va-arena" class="va-arena">
+      <canvas id="va-canvas" class="va-canvas"></canvas>
+      <div class="va-fx" aria-hidden="true"></div>
+      <i class="va-corner va-tl"></i><i class="va-corner va-tr"></i>
+      <i class="va-corner va-bl"></i><i class="va-corner va-br"></i>
+
+      {/* title / idle */}
+      <div id="va-title" class="va-screen">
+        <div class="va-logo" data-text="VOIDSTRIKE">VOIDSTRIKE</div>
+        <p class="va-tag">ORBITAL DEFENCE // TYPE TO FIRE</p>
+        <ul class="va-rules">
+          <li><b>1.</b> Type an enemy's <b>first letter</b> to lock on</li>
+          <li><b>2.</b> Keep typing to shoot its letters away</li>
+          <li><b>3.</b> Finish the word and it detonates</li>
+          <li><b>4.</b> One hostile reaching your hull ends the run</li>
+        </ul>
+        <button type="button" id="va-start" class="va-btn va-btn-primary">▶ LAUNCH</button>
+        <p class="va-hint">or press any letter · <kbd>Esc</kbd> pauses</p>
+        <p class="va-best">HIGH SCORE <span id="va-best-idle">0</span></p>
+      </div>
+
+      {/* paused */}
+      <div id="va-pause" class="va-screen hidden">
+        <div class="va-paused">PAUSED</div>
+        <p class="va-hint">press <kbd>Esc</kbd> to resume</p>
+      </div>
+
+      {/* game over */}
+      <div id="va-over" class="va-screen hidden">
+        <div class="va-over-title" data-text="HULL BREACH">HULL BREACH</div>
+        <p id="va-over-sub" class="va-tag">run terminated</p>
+        <div class="va-final">
+          <span class="va-k">FINAL SCORE</span>
+          <span id="va-final-score" class="va-final-num">0</span>
+          <span id="va-final-best" class="va-best"></span>
+        </div>
+        <div class="va-grid">
+          {[
+            ["Wave", "va-o-wave"],
+            ["Kills", "va-o-kills"],
+            ["Accuracy", "va-o-acc"],
+            ["WPM", "va-o-wpm"],
+            ["Best combo", "va-o-combo"],
+            ["Survived", "va-o-time"],
+          ].map(([label, id]) => (
+            <div class="va-cell"><span class="va-k">{label}</span><span id={id} class="va-v">—</span></div>
+          ))}
+        </div>
+        <button type="button" id="va-retry" class="va-btn va-btn-primary">↻ RE-ENGAGE</button>
+      </div>
+    </div>
+
+    <p class="va-foot">
+      <kbd>A–Z</kbd> fire · <kbd>Esc</kbd> pause · <kbd>Tab</kbd> restart — runs entirely in your browser
+    </p>
+  </div>
+
+  <script>
+    import "../scripts/tools/typing-arcade";
+  </script>
+</CenteredTool>

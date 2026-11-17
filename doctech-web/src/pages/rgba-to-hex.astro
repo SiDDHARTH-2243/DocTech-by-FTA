@@ -1,0 +1,64 @@
+---
+import CenteredTool from "../components/CenteredTool.astro";
+---
+
+<CenteredTool
+  title="RGBA to HEX Converter"
+  subtitle="Convert RGBA color values to an alpha-supported 6- or 8-digit HEX code."
+>
+  <div class="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900">
+    <div class="grid grid-cols-3 gap-4">
+      {
+        (["R", "G", "B"] as const).map((ch) => (
+          <div>
+            <label class="mb-1.5 block text-sm font-semibold" for={`r2h-${ch}`}>
+              {ch}
+            </label>
+            <input
+              id={`r2h-${ch}`}
+              type="number"
+              min="0"
+              max="255"
+              value={ch === "R" ? "249" : ch === "G" ? "115" : "22"}
+              class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm focus:border-orange-400 focus:ring-2 focus:ring-orange-200 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:focus:ring-orange-500/30"
+            />
+            <input id={`r2h-${ch}-range`} type="range" min="0" max="255" value={ch === "R" ? "249" : ch === "G" ? "115" : "22"} class="mt-2 w-full accent-orange-500" />
+          </div>
+        ))
+      }
+    </div>
+
+    <div class="mt-4">
+      <label class="mb-1.5 block text-sm font-semibold" for="r2h-A">
+        Alpha <span id="r2h-A-val" class="text-orange-500">1</span>
+      </label>
+      <input id="r2h-A" type="range" min="0" max="1" step="0.01" value="1" class="w-full accent-orange-500" />
+    </div>
+
+    <div
+      class="mt-5 h-24 w-full rounded-xl border border-slate-200 dark:border-slate-700"
+      style="background-image:linear-gradient(45deg,#ccc 25%,transparent 25%),linear-gradient(-45deg,#ccc 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#ccc 75%),linear-gradient(-45deg,transparent 75%,#ccc 75%);background-size:16px 16px;background-position:0 0,0 8px,8px -8px,-8px 0;"
+    >
+      <div id="r2h-swatch" class="h-full w-full rounded-xl"></div>
+    </div>
+
+    <div class="mt-5 flex items-center justify-between gap-3 rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 dark:border-slate-700 dark:bg-slate-800">
+      <div>
+        <div class="text-xs font-semibold text-slate-400 uppercase">HEX</div>
+        <code id="r2h-hex" class="font-mono text-xl font-bold">#F97316</code>
+      </div>
+      <button
+        id="r2h-copy"
+        type="button"
+        class="rounded-xl bg-orange-500 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-orange-600"
+      >
+        Copy
+      </button>
+    </div>
+    <p id="r2h-rgba" class="mt-2 text-center font-mono text-xs text-slate-400"></p>
+  </div>
+
+  <script>
+    import "../scripts/tools/rgba-to-hex";
+  </script>
+</CenteredTool>

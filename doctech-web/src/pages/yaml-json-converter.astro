@@ -1,0 +1,38 @@
+---
+import CenteredTool from "../components/CenteredTool.astro";
+import CodePane from "../components/CodePane.astro";
+---
+
+<CenteredTool
+  wide
+  title="YAML ⇄ JSON Converter"
+  subtitle="Convert YAML to JSON and back, with located parse errors and configurable indentation. Handy for config files, CI pipelines and Kubernetes manifests."
+>
+  <div class="space-y-5">
+    <div class="tool-panel">
+      <div class="flex flex-wrap items-center gap-4">
+        <div class="inline-flex rounded-xl border border-slate-200 p-1 dark:border-slate-700">
+          <button type="button" data-mode="y2j" class="yj-mode rounded-lg px-4 py-1.5 text-sm font-bold transition-colors" aria-pressed="true">YAML → JSON</button>
+          <button type="button" data-mode="j2y" class="yj-mode rounded-lg px-4 py-1.5 text-sm font-bold transition-colors" aria-pressed="false">JSON → YAML</button>
+        </div>
+        <div>
+          <label class="field-label" for="yj-indent">Indent</label>
+          <select id="yj-indent" class="rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm outline-none focus:border-orange-500 dark:border-slate-700 dark:bg-slate-800/50 dark:text-slate-100">
+            <option value="2" selected>2 spaces</option>
+            <option value="4">4 spaces</option>
+          </select>
+        </div>
+        <button type="button" id="yj-swap" class="ml-auto rounded-xl border border-slate-200 px-4 py-2 text-sm font-bold text-slate-600 transition-colors hover:bg-slate-100 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800">⇅ Swap sides</button>
+      </div>
+    </div>
+
+    <div class="grid gap-5 lg:grid-cols-2">
+      <CodePane id="yj-in" label="Input" language="yaml" rows={18} actions={["sample", "upload", "clear"]} counts />
+      <CodePane id="yj-out" label="Output" variant="output" language="json" rows={18} actions={["copy", "download"]} counts />
+    </div>
+  </div>
+
+  <script>
+    import "../scripts/tools/yaml-json-converter";
+  </script>
+</CenteredTool>

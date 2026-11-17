@@ -1,0 +1,148 @@
+---
+import ToolPage from "../components/ToolPage.astro";
+---
+
+<ToolPage
+  title="Image Compressor"
+  subtitle="Shrink JPG, PNG or WebP file size with an adjustable quality slider. Everything runs locally in your browser."
+>
+  <!-- Dropzone -->
+  <label
+    id="cmp-drop"
+    for="cmp-input"
+    class="group relative flex cursor-pointer flex-col items-center justify-center gap-4 overflow-hidden rounded-3xl border-2 border-dashed border-slate-300/70 bg-gradient-to-b from-slate-50 to-slate-100/50 px-8 py-24 text-center transition-all duration-300 hover:border-orange-500 hover:bg-orange-50/50 dark:border-slate-700 dark:from-slate-900/80 dark:to-slate-800/50 dark:hover:border-orange-500/50 dark:hover:bg-slate-800/80"
+  >
+    <div class="absolute inset-0 bg-[radial-gradient(slate-300_1px,transparent_1px)] [background-size:16px_16px] opacity-20 dark:bg-[radial-gradient(slate-600_1px,transparent_1px)]"></div>
+    <div class="relative flex h-20 w-20 items-center justify-center rounded-2xl bg-white shadow-xl shadow-slate-200/50 transition-transform duration-300 group-hover:-translate-y-1 group-hover:scale-105 dark:bg-slate-800 dark:shadow-slate-900/50">
+      <svg class="h-10 w-10 text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/>
+      </svg>
+    </div>
+    <div class="relative z-10 space-y-1">
+      <p class="text-xl font-bold text-slate-700 dark:text-slate-200">Drop your image here</p>
+      <p class="text-sm font-medium text-slate-500 dark:text-slate-400">or click to browse from your device</p>
+    </div>
+    <div class="relative z-10 mt-2 flex gap-2">
+      <span class="rounded-lg bg-white/60 px-3 py-1 text-xs font-semibold text-slate-600 shadow-sm backdrop-blur-md dark:bg-slate-800/60 dark:text-slate-300">JPG</span>
+      <span class="rounded-lg bg-white/60 px-3 py-1 text-xs font-semibold text-slate-600 shadow-sm backdrop-blur-md dark:bg-slate-800/60 dark:text-slate-300">PNG</span>
+      <span class="rounded-lg bg-white/60 px-3 py-1 text-xs font-semibold text-slate-600 shadow-sm backdrop-blur-md dark:bg-slate-800/60 dark:text-slate-300">WEBP</span>
+    </div>
+    <input id="cmp-input" type="file" accept="image/png,image/jpeg,image/webp" class="hidden" />
+  </label>
+
+  <!-- Workspace -->
+  <div id="cmp-work" class="hidden">
+    <!-- Preview / Compare Slider -->
+    <div class="relative flex-1 overflow-hidden rounded-3xl border border-slate-200 bg-[repeating-conic-gradient(#e2e8f0_0_25%,transparent_0_50%)] bg-[length:20px_20px] dark:border-slate-800 dark:bg-[repeating-conic-gradient(#1e293b_0_25%,transparent_0_50%)]">
+      <div id="cmp-compare-container" class="relative flex h-[400px] w-full select-none items-center justify-center overflow-hidden lg:h-[600px]">
+        <!-- Original Image -->
+        <img id="cmp-preview-orig" alt="Original" class="pointer-events-none absolute h-full w-full object-contain" />
+        
+        <!-- Compressed Image (Clipped) -->
+        <div id="cmp-compare-clip" class="absolute inset-0 overflow-hidden" style="clip-path: inset(0 50% 0 0)">
+          <img id="cmp-preview" alt="Compressed" class="pointer-events-none absolute h-full w-full object-contain" />
+        </div>
+
+        <!-- Slider Handle -->
+        <div id="cmp-slider-handle" class="absolute inset-y-0 left-1/2 flex w-[2px] -translate-x-1/2 cursor-ew-resize items-center justify-center bg-white shadow-[0_0_10px_rgba(0,0,0,0.5)] transition-transform hover:scale-x-150">
+          <div class="flex h-10 w-10 items-center justify-center rounded-full bg-white shadow-xl ring-1 ring-slate-900/5">
+            <svg class="h-5 w-5 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M8 9l-3 3 3 3m8-6l3 3-3 3" />
+            </svg>
+          </div>
+        </div>
+
+        <!-- Badges -->
+        <div class="pointer-events-none absolute inset-x-4 top-4 flex justify-between">
+          <span class="rounded-full bg-black/60 px-3 py-1 text-xs font-semibold text-white shadow-lg backdrop-blur-md">Original</span>
+          <span class="rounded-full bg-orange-500/90 px-3 py-1 text-xs font-semibold text-white shadow-lg shadow-orange-500/20 backdrop-blur-md">Compressed</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Rail: Controls & Stats -->
+  <div slot="rail" class="flex flex-col gap-5">
+    <!-- Settings -->
+    <div class="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+      <div class="mb-5 flex items-center justify-between">
+        <h3 class="font-bold text-slate-800 dark:text-slate-100">Settings</h3>
+        <span class="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-emerald-600 dark:bg-emerald-500/10 dark:text-emerald-400">Local</span>
+      </div>
+
+      <div class="space-y-5">
+        <div>
+          <label class="mb-2 block text-xs font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400" for="cmp-format">Output Format</label>
+          <div class="relative">
+            <select id="cmp-format" class="w-full appearance-none rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-semibold text-slate-700 outline-none transition-all focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10 dark:border-slate-700 dark:bg-slate-800/50 dark:text-slate-200 dark:focus:border-orange-500">
+              <option value="image/jpeg">JPEG (Best compatibility)</option>
+              <option value="image/webp">WebP (Best compression)</option>
+              <option value="image/png">PNG (Lossless)</option>
+            </select>
+            <div class="pointer-events-none absolute inset-y-0 right-4 flex items-center">
+              <svg class="h-4 w-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="mb-2 flex items-center justify-between">
+            <label class="text-xs font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400" for="cmp-quality">Quality</label>
+            <span class="rounded-md bg-orange-100 px-2 py-0.5 text-xs font-bold text-orange-700 dark:bg-orange-500/20 dark:text-orange-400"><span id="cmp-quality-val">80</span>%</span>
+          </div>
+          <input id="cmp-quality" type="range" min="1" max="100" value="80" class="h-2 w-full cursor-pointer appearance-none rounded-full bg-slate-200 accent-orange-500 outline-none dark:bg-slate-700" />
+          <div class="mt-1.5 flex justify-between text-[10px] font-medium text-slate-400">
+            <span>Smaller file</span>
+            <span>Better quality</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stats Card -->
+    <div class="relative overflow-hidden rounded-3xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+      <div class="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-transparent opacity-0 transition-opacity duration-500" id="cmp-savings-bg"></div>
+      
+      <div class="relative z-10 flex flex-col items-center justify-center pb-5 pt-2">
+        <div class="text-xs font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400" id="cmp-saved-label">You saved</div>
+        <div class="mt-1 flex items-baseline gap-1">
+          <span id="cmp-saved-pct" class="text-4xl font-extrabold text-emerald-500">0%</span>
+        </div>
+        <div id="cmp-saved-size" class="mt-1 text-sm font-semibold text-emerald-600/80 dark:text-emerald-400/80">0 KB</div>
+      </div>
+
+      <div class="relative z-10 space-y-3 border-t border-slate-100 pt-4 dark:border-slate-800">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <div class="h-2 w-2 rounded-full bg-slate-300 dark:bg-slate-600"></div>
+            <span class="text-sm font-medium text-slate-500 dark:text-slate-400">Original</span>
+          </div>
+          <span id="cmp-orig" class="font-mono text-sm font-bold text-slate-700 dark:text-slate-200">—</span>
+        </div>
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <div class="h-2 w-2 rounded-full bg-orange-500 shadow-[0_0_8px_rgba(249,115,22,0.5)]"></div>
+            <span class="text-sm font-medium text-slate-500 dark:text-slate-400">Compressed</span>
+          </div>
+          <span id="cmp-new" class="font-mono text-sm font-bold text-slate-700 dark:text-slate-200">—</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="space-y-3">
+      <button id="cmp-download" type="button" disabled class="group relative flex w-full items-center justify-center gap-2 overflow-hidden rounded-2xl bg-orange-500 px-4 py-4 text-sm font-bold text-white shadow-lg shadow-orange-500/30 transition-all hover:-translate-y-0.5 hover:shadow-orange-500/40 active:translate-y-0 disabled:pointer-events-none disabled:bg-slate-200 disabled:text-slate-400 disabled:shadow-none dark:disabled:bg-slate-800 dark:disabled:text-slate-600">
+        <svg class="h-5 w-5 transition-transform group-hover:scale-110" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+        Download Image
+        <div class="absolute inset-0 -translate-x-full bg-white/20 transition-transform duration-500 ease-in-out group-hover:translate-x-full"></div>
+      </button>
+      <button id="cmp-reset" type="button" class="hidden w-full rounded-2xl border border-slate-200 bg-transparent px-4 py-3.5 text-sm font-bold text-slate-600 transition-colors hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800">
+        Compress Another
+      </button>
+    </div>
+  </div>
+
+  <script>
+    import "../scripts/tools/image-compressor";
+  </script>
+</ToolPage>

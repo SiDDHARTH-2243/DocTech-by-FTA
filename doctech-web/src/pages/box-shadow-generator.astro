@@ -1,0 +1,236 @@
+---
+import CenteredTool from "../components/CenteredTool.astro";
+---
+
+<CenteredTool
+  wide
+  title="Box Shadow Generator"
+  subtitle="Stack multiple shadow layers, tune each one, pick from curated presets — then copy the full CSS."
+>
+  <div class="lg:grid lg:grid-cols-[1fr_minmax(0,440px)] lg:items-start lg:gap-6">
+    <!-- LEFT: preview + presets -->
+    <div class="space-y-5 lg:sticky lg:top-4">
+      <!-- Preview stage -->
+      <div
+        id="bs-stage"
+        class="flex min-h-[320px] items-center justify-center rounded-2xl transition-colors"
+        style="background:#e2e8f0"
+      >
+        <div
+          id="bs-preview"
+          class="flex items-center justify-center transition-all duration-200"
+          style="width:180px;height:180px;background:#ffffff;border-radius:16px"
+        ></div>
+      </div>
+
+      <!-- Element / canvas toolbar -->
+      <div
+        class="flex flex-wrap items-center gap-x-6 gap-y-3 rounded-2xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900"
+      >
+        <div>
+          <span class="mb-1 block text-xs font-semibold text-slate-500"
+            >Shape</span
+          >
+          <div
+            id="bs-shape-group"
+            class="inline-flex rounded-lg border border-slate-300 p-0.5 dark:border-slate-700"
+          >
+            <button
+              type="button"
+              data-val="square"
+              class="rounded-md px-2.5 py-1 text-xs font-semibold">Square</button
+            >
+            <button
+              type="button"
+              data-val="rounded"
+              class="rounded-md px-2.5 py-1 text-xs font-semibold">Rounded</button
+            >
+            <button
+              type="button"
+              data-val="circle"
+              class="rounded-md px-2.5 py-1 text-xs font-semibold">Circle</button
+            >
+            <button
+              type="button"
+              data-val="pill"
+              class="rounded-md px-2.5 py-1 text-xs font-semibold">Pill</button
+            >
+          </div>
+        </div>
+        <div>
+          <label
+            class="mb-1 block text-xs font-semibold text-slate-500"
+            for="bs-el-color">Element</label
+          >
+          <div class="flex items-center gap-2">
+            <input
+              id="bs-el-color"
+              type="color"
+              value="#ffffff"
+              class="h-9 w-12 cursor-pointer rounded border border-slate-300 bg-transparent dark:border-slate-700"
+            />
+            <span
+              id="bs-el-color-hex"
+              class="font-mono text-xs text-slate-500"
+              >#ffffff</span
+            >
+          </div>
+        </div>
+        <div>
+          <label
+            class="mb-1 block text-xs font-semibold text-slate-500"
+            for="bs-canvas">Canvas</label
+          >
+          <div class="flex items-center gap-2">
+            <input
+              id="bs-canvas"
+              type="color"
+              value="#e2e8f0"
+              class="h-9 w-12 cursor-pointer rounded border border-slate-300 bg-transparent dark:border-slate-700"
+            />
+            <span
+              id="bs-canvas-hex"
+              class="font-mono text-xs text-slate-500"
+              >#e2e8f0</span
+            >
+          </div>
+        </div>
+      </div>
+
+      <!-- Presets -->
+      <div>
+        <div class="mb-2 flex items-center justify-between">
+          <span class="text-sm font-semibold">Presets</span>
+          <div class="flex gap-2">
+            <button
+              id="bs-shuffle"
+              type="button"
+              class="rounded-lg border border-slate-300 px-3 py-1 text-xs font-semibold text-slate-600 hover:bg-slate-100 dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-800"
+              >🎲 Shuffle</button
+            >
+            <button
+              id="bs-reset"
+              type="button"
+              class="rounded-lg border border-slate-300 px-3 py-1 text-xs font-semibold text-slate-600 hover:bg-slate-100 dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-800"
+              >Reset</button
+            >
+          </div>
+        </div>
+        <div
+          id="bs-presets"
+          class="grid grid-cols-3 gap-3 sm:grid-cols-4"
+        ></div>
+      </div>
+    </div>
+
+    <!-- RIGHT: layers + editor + code -->
+    <div class="mt-5 space-y-5 lg:mt-0">
+      <!-- Layers manager -->
+      <div
+        class="rounded-2xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900"
+      >
+        <div class="mb-3 flex items-center justify-between">
+          <span class="text-sm font-semibold">Shadow Layers</span>
+          <button
+            id="bs-add"
+            type="button"
+            class="rounded-lg bg-orange-500 px-3 py-1 text-xs font-semibold text-white transition-colors hover:bg-orange-600"
+            >+ Add Layer</button
+          >
+        </div>
+        <div id="bs-layers" class="space-y-2"></div>
+      </div>
+
+      <!-- Active layer editor -->
+      <div
+        class="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900"
+      >
+        <div class="mb-4 flex items-center justify-between">
+          <span class="text-sm font-semibold"
+            >Editing <span id="bs-active-name" class="text-orange-500"
+              >Layer 1</span
+            ></span
+          >
+          <label class="flex items-center gap-2 text-xs font-medium">
+            <input id="bs-inset" type="checkbox" class="accent-orange-500" /> Inset
+          </label>
+        </div>
+        <div class="grid gap-4 sm:grid-cols-2">
+          {
+            [
+              ["bs-x", "Offset X", -80, 80, 0, "px"],
+              ["bs-y", "Offset Y", -80, 80, 10, "px"],
+              ["bs-blur", "Blur", 0, 120, 20, "px"],
+              ["bs-spread", "Spread", -50, 50, 0, "px"],
+              ["bs-alpha", "Opacity", 0, 100, 22, "%"],
+            ].map(([id, label, min, max, val, unit]) => (
+              <div>
+                <label class="mb-1.5 block text-sm font-semibold" for={id}>
+                  {label}{" "}
+                  <span id={`${id}-val`} class="text-orange-500">
+                    {val}
+                  </span>
+                  {unit}
+                </label>
+                <input
+                  id={id}
+                  type="range"
+                  min={min}
+                  max={max}
+                  value={val}
+                  class="w-full accent-orange-500"
+                />
+              </div>
+            ))
+          }
+          <div>
+            <label class="mb-1.5 block text-sm font-semibold" for="bs-layer-color"
+              >Shadow Color</label
+            >
+            <div class="flex items-center gap-2">
+              <input
+                id="bs-layer-color"
+                type="color"
+                value="#0f172a"
+                class="h-9 w-12 cursor-pointer rounded border border-slate-300 bg-transparent dark:border-slate-700"
+              />
+              <span
+                id="bs-layer-color-hex"
+                class="font-mono text-xs text-slate-500"
+                >#0f172a</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CSS output -->
+      <div
+        class="overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-700"
+      >
+        <div
+          class="flex items-center justify-between border-b border-slate-200 bg-slate-50 px-4 py-2 dark:border-slate-700 dark:bg-slate-800"
+        >
+          <span
+            class="text-xs font-semibold tracking-wide text-slate-400 uppercase"
+            >CSS</span
+          >
+          <button
+            id="bs-copy"
+            type="button"
+            class="rounded-lg bg-orange-500 px-3 py-1 text-xs font-semibold text-white transition-colors hover:bg-orange-600"
+            >Copy</button
+          >
+        </div>
+        <pre
+          id="bs-css"
+          class="overflow-x-auto px-4 py-3 font-mono text-xs leading-relaxed dark:text-slate-100"
+        ></pre>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    import "../scripts/tools/box-shadow-generator";
+  </script>
+</CenteredTool>

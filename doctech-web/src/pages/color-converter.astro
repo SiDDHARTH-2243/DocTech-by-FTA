@@ -1,0 +1,50 @@
+---
+import CenteredTool from "../components/CenteredTool.astro";
+---
+
+<CenteredTool
+  wide
+  title="Color Converter & Picker"
+  subtitle="Pick a color and get every format at once — HEX, RGB, HSL, HSV, CMYK and the nearest CSS name. Paste any format to convert. Click any value to copy."
+>
+  <div class="mb-4 flex items-center gap-2">
+    <span class="local-chip">🔒 100% in your browser</span>
+    <span class="text-xs text-slate-400 dark:text-slate-500">nothing is uploaded</span>
+  </div>
+
+  <div class="grid gap-5 lg:grid-cols-[320px_1fr]">
+    <div class="min-w-0 space-y-4">
+      <div class="alpha-check overflow-hidden rounded-3xl">
+        <div id="cc-preview" class="color-preview-ring flex h-40 items-end justify-between p-4" style="background:#ff5c1a">
+          <span id="cc-preview-name" class="rounded-full bg-black/25 px-2.5 py-1 text-xs font-bold text-white backdrop-blur-sm"></span>
+        </div>
+      </div>
+
+      <div class="tool-panel space-y-4">
+        <div class="flex items-center gap-3">
+          <input id="cc-native" type="color" value="#ff5c1a" class="h-12 w-14 shrink-0 cursor-pointer rounded-lg border border-slate-200 bg-transparent p-0 dark:border-slate-700" />
+          <input id="cc-text" type="text" spellcheck="false" value="#ff5c1a" class="min-w-0 flex-1 rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 font-mono text-sm outline-none transition-all focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10 dark:border-slate-700 dark:bg-slate-900/60 dark:text-slate-100" />
+        </div>
+        <div>
+          <label class="field-label flex items-center justify-between" for="cc-alpha">
+            <span>Alpha</span><span id="cc-alpha-val" class="font-mono text-slate-500">100%</span>
+          </label>
+          <input id="cc-alpha" type="range" min="0" max="100" value="100" class="w-full accent-orange-500" />
+        </div>
+        <button type="button" id="cc-random" class="btn-premium-ghost">🎲 Random color</button>
+      </div>
+    </div>
+
+    <div class="tool-panel flex min-w-0 flex-col">
+      <div class="mb-1 flex items-center justify-between">
+        <span class="field-label !mb-0">Formats <span class="font-normal normal-case text-slate-400">— click any to copy</span></span>
+      </div>
+      <div id="cc-formats" class="divide-y divide-slate-100 dark:divide-slate-800"></div>
+      <button type="button" id="cc-copy-all" class="btn-premium mt-4">Copy all formats</button>
+    </div>
+  </div>
+
+  <script>
+    import "../scripts/tools/color-converter";
+  </script>
+</CenteredTool>

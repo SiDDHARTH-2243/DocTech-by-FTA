@@ -1,0 +1,84 @@
+---
+import CenteredTool from "../components/CenteredTool.astro";
+import CodePane from "../components/CodePane.astro";
+---
+
+<CenteredTool
+  wide
+  title="JSON Formatter & Validator"
+  subtitle="Beautify, minify and validate JSON with precise error locations, key sorting and a collapsible tree view — entirely in your browser."
+>
+  <div class="space-y-5">
+    <div class="tool-panel">
+      <div class="flex flex-wrap items-end gap-4">
+        <div>
+          <label class="field-label" for="jf-indent">Indent</label>
+          <select id="jf-indent" class="rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm outline-none focus:border-orange-500 dark:border-slate-700 dark:bg-slate-800/50 dark:text-slate-100">
+            <option value="2" selected>2 spaces</option>
+            <option value="4">4 spaces</option>
+            <option value="tab">Tab</option>
+          </select>
+        </div>
+
+        <label class="flex cursor-pointer items-center gap-2 pb-2 text-sm font-semibold text-slate-600 dark:text-slate-300">
+          <input type="checkbox" id="jf-sort" class="h-4 w-4 accent-orange-500" />
+          Sort keys A→Z
+        </label>
+
+        <div class="ml-auto flex flex-wrap gap-2">
+          <button type="button" id="jf-format" class="rounded-xl bg-orange-500 px-4 py-2 text-sm font-bold text-white transition-colors hover:bg-orange-600">Beautify</button>
+          <button type="button" id="jf-minify" class="rounded-xl border border-slate-200 px-4 py-2 text-sm font-bold text-slate-600 transition-colors hover:bg-slate-100 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800">Minify</button>
+          <button type="button" id="jf-tree" class="rounded-xl border border-slate-200 px-4 py-2 text-sm font-bold text-slate-600 transition-colors hover:bg-slate-100 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800" aria-pressed="false">Tree view</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid gap-5 lg:grid-cols-2">
+      <CodePane
+        id="jf-in"
+        label="Input JSON"
+        placeholder={'{ "hello": "world" }'}
+        rows={18}
+        actions={["sample", "upload", "clear"]}
+        accept=".json,.txt"
+        counts
+      />
+      <div>
+        <CodePane
+          id="jf-out"
+          label="Result"
+          variant="output"
+          language="json"
+          rows={18}
+          actions={["copy", "download"]}
+          counts
+        />
+        <div id="jf-treewrap" class="mt-2 hidden overflow-auto rounded-2xl border border-slate-200 bg-slate-50 p-3 font-mono text-xs dark:border-slate-700 dark:bg-slate-900/60" style="max-height:22.5rem">
+          <div id="jf-treeroot"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tool-panel">
+      <span class="field-label">Document stats</span>
+      <div id="jf-stats" class="grid grid-cols-2 gap-3 sm:grid-cols-5">
+        {[
+          ["Nodes", "jf-s-nodes"],
+          ["Objects", "jf-s-objects"],
+          ["Arrays", "jf-s-arrays"],
+          ["Keys", "jf-s-keys"],
+          ["Max depth", "jf-s-depth"],
+        ].map(([label, id]) => (
+          <div class="rounded-xl bg-slate-50 px-3 py-2.5 dark:bg-slate-800/50">
+            <div class="text-[11px] font-bold uppercase tracking-wide text-slate-400">{label}</div>
+            <div id={id} class="font-mono text-lg font-bold text-slate-700 dark:text-slate-100">—</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <script>
+    import "../scripts/tools/json-formatter";
+  </script>
+</CenteredTool>

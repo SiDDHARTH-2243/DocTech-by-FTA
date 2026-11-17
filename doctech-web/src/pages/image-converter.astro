@@ -1,0 +1,73 @@
+---
+import ToolPage from "../components/ToolPage.astro";
+import PremiumDropzone from "../components/PremiumDropzone.astro";
+---
+
+<ToolPage
+  title="Image Converter"
+  subtitle="Convert between PNG, JPG and WebP with an optional quality slider. Fully in-browser — your image never leaves your device."
+>
+  <PremiumDropzone
+    dropId="cnv-drop"
+    inputId="cnv-input"
+    accept="image/png,image/jpeg,image/webp,image/bmp,image/gif,image/avif"
+    formats={["PNG", "JPG", "WEBP", "BMP", "GIF"]}
+    icon="🔄"
+    title="Drop your image to convert"
+    hint="or click to browse from your device"
+  />
+
+  <div id="cnv-work" class="hidden space-y-4">
+    <div class="preview-stage min-h-[260px]">
+      <img id="cnv-preview" alt="preview" class="max-h-[420px] max-w-full rounded-lg object-contain" />
+    </div>
+
+    <div class="tool-panel grid gap-5 sm:grid-cols-2">
+      <div>
+        <label class="field-label" for="cnv-format">Convert to</label>
+        <div class="relative">
+          <select id="cnv-format" class="w-full appearance-none rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-semibold text-slate-700 outline-none transition-all focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10 dark:border-slate-700 dark:bg-slate-800/50 dark:text-slate-200 dark:focus:border-orange-500">
+            <option value="image/png">PNG (lossless)</option>
+            <option value="image/jpeg">JPG</option>
+            <option value="image/webp">WebP</option>
+          </select>
+          <div class="pointer-events-none absolute inset-y-0 right-4 flex items-center">
+            <svg class="h-4 w-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </div>
+        </div>
+      </div>
+      <div id="cnv-quality-wrap">
+        <div class="mb-2 flex items-center justify-between">
+          <span class="text-xs font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400">Quality</span>
+          <span class="rounded-md bg-orange-100 px-2 py-0.5 text-xs font-bold text-orange-700 dark:bg-orange-500/20 dark:text-orange-400"><span id="cnv-quality-val">90</span>%</span>
+        </div>
+        <input id="cnv-quality" type="range" min="10" max="100" value="90" class="h-2 w-full cursor-pointer appearance-none rounded-full bg-slate-200 accent-orange-500 outline-none dark:bg-slate-700" />
+      </div>
+    </div>
+  </div>
+
+  <div slot="rail" class="flex flex-col gap-5">
+    <div class="tool-panel">
+      <div class="mb-4 flex items-center justify-between">
+        <h3 class="font-bold text-slate-800 dark:text-slate-100">Convert</h3>
+        <span class="local-badge">⚡ Local</span>
+      </div>
+      <dl class="space-y-3 text-sm">
+        <div class="flex items-center justify-between"><dt class="text-slate-500 dark:text-slate-400">Source</dt><dd id="cnv-orig" class="font-mono font-semibold">—</dd></div>
+        <div class="flex items-center justify-between"><dt class="text-slate-500 dark:text-slate-400">Output</dt><dd id="cnv-new" class="font-mono font-semibold text-orange-500">—</dd></div>
+      </dl>
+    </div>
+
+    <div class="space-y-3">
+      <button id="cnv-download" type="button" disabled class="btn-premium">
+        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+        Download
+      </button>
+      <button id="cnv-reset" type="button" class="btn-premium-ghost hidden">Choose another image</button>
+    </div>
+  </div>
+
+  <script>
+    import "../scripts/tools/image-converter";
+  </script>
+</ToolPage>

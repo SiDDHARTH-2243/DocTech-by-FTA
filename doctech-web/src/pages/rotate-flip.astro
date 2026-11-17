@@ -1,0 +1,66 @@
+---
+import ToolPage from "../components/ToolPage.astro";
+import PremiumDropzone from "../components/PremiumDropzone.astro";
+---
+
+<ToolPage
+  title="Rotate & Flip Image"
+  subtitle="Rotate by 90° steps or any angle, and flip horizontally or vertically. Processed in your browser — no upload."
+>
+  <PremiumDropzone
+    dropId="rot-drop"
+    inputId="rot-input"
+    accept="image/png,image/jpeg,image/webp,image/bmp"
+    formats={["JPG", "PNG", "WEBP"]}
+    icon="🔁"
+    title="Drop your image here"
+    hint="or click to browse from your device"
+  />
+
+  <div id="rot-work" class="hidden space-y-4">
+    <div class="preview-stage min-h-[280px]">
+      <canvas id="rot-canvas" class="max-h-[440px] max-w-full rounded-lg object-contain"></canvas>
+    </div>
+
+    <div class="tool-panel">
+      <div class="flex flex-wrap gap-2">
+        <button id="rot-left" type="button" class="rounded-lg border border-slate-200 px-3 py-2 text-sm font-bold text-slate-700 transition-colors hover:border-orange-400 hover:text-orange-600 dark:border-slate-700 dark:text-slate-200 dark:hover:text-orange-400">↺ Rotate left</button>
+        <button id="rot-right" type="button" class="rounded-lg border border-slate-200 px-3 py-2 text-sm font-bold text-slate-700 transition-colors hover:border-orange-400 hover:text-orange-600 dark:border-slate-700 dark:text-slate-200 dark:hover:text-orange-400">↻ Rotate right</button>
+        <button id="rot-fliph" type="button" class="rounded-lg border border-slate-200 px-3 py-2 text-sm font-bold text-slate-700 transition-colors hover:border-orange-400 hover:text-orange-600 dark:border-slate-700 dark:text-slate-200 dark:hover:text-orange-400">⇆ Flip H</button>
+        <button id="rot-flipv" type="button" class="rounded-lg border border-slate-200 px-3 py-2 text-sm font-bold text-slate-700 transition-colors hover:border-orange-400 hover:text-orange-600 dark:border-slate-700 dark:text-slate-200 dark:hover:text-orange-400">⇅ Flip V</button>
+        <button id="rot-reset-tx" type="button" class="rounded-lg border border-slate-200 px-3 py-2 text-sm font-bold text-slate-700 transition-colors hover:border-orange-400 hover:text-orange-600 dark:border-slate-700 dark:text-slate-200 dark:hover:text-orange-400">↺ Reset</button>
+      </div>
+      <div class="mt-5">
+        <div class="mb-2 flex items-center justify-between">
+          <span class="text-xs font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400">Fine angle</span>
+          <span class="rounded-md bg-orange-100 px-2 py-0.5 text-xs font-bold text-orange-700 dark:bg-orange-500/20 dark:text-orange-400"><span id="rot-angle-val">0</span>°</span>
+        </div>
+        <input id="rot-angle" type="range" min="-180" max="180" value="0" class="h-2 w-full cursor-pointer appearance-none rounded-full bg-slate-200 accent-orange-500 outline-none dark:bg-slate-700" />
+      </div>
+    </div>
+  </div>
+
+  <div slot="rail" class="flex flex-col gap-5">
+    <div class="tool-panel">
+      <div class="mb-4 flex items-center justify-between">
+        <h3 class="font-bold text-slate-800 dark:text-slate-100">Rotate &amp; Flip</h3>
+        <span class="local-badge">⚡ Local</span>
+      </div>
+      <dl class="space-y-3 text-sm">
+        <div class="flex items-center justify-between"><dt class="text-slate-500 dark:text-slate-400">Output</dt><dd id="rot-dims" class="font-mono font-semibold text-orange-500">—</dd></div>
+      </dl>
+    </div>
+
+    <div class="space-y-3">
+      <button id="rot-download" type="button" disabled class="btn-premium">
+        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+        Download
+      </button>
+      <button id="rot-reset" type="button" class="btn-premium-ghost hidden">Choose another image</button>
+    </div>
+  </div>
+
+  <script>
+    import "../scripts/tools/rotate-flip";
+  </script>
+</ToolPage>

@@ -1,0 +1,53 @@
+---
+import CenteredTool from "../components/CenteredTool.astro";
+---
+
+<CenteredTool
+  title="AI Color Palette Generator"
+  subtitle="Craft perfect color palettes effortlessly. Pick a harmony and seed, lock the colors you like, and regenerate the rest (or press Space)."
+>
+  <div class="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900">
+    <div class="flex flex-wrap items-end gap-4">
+      <div>
+        <label class="mb-1.5 block text-sm font-semibold" for="pal-mode">Harmony</label>
+        <select
+          id="pal-mode"
+          class="rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100"
+        >
+          <option value="analogous">Analogous</option>
+          <option value="monochromatic">Monochromatic</option>
+          <option value="complementary">Complementary</option>
+          <option value="triadic">Triadic</option>
+          <option value="tetradic">Tetradic</option>
+        </select>
+      </div>
+      <div>
+        <label class="mb-1.5 block text-sm font-semibold" for="pal-seed">Seed</label>
+        <input id="pal-seed" type="color" value="#f97316" class="h-11 w-14 cursor-pointer rounded-lg border border-slate-300 bg-transparent dark:border-slate-700" />
+      </div>
+      <button
+        id="pal-random"
+        type="button"
+        class="rounded-xl border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 transition-colors hover:bg-slate-100 dark:border-slate-600 dark:text-slate-200 dark:hover:bg-slate-800"
+      >
+        🎲 Random seed
+      </button>
+      <button
+        id="pal-generate"
+        type="button"
+        class="rounded-xl bg-orange-500 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-orange-600"
+      >
+        Generate
+      </button>
+    </div>
+
+    <div id="pal-strip" class="mt-6 grid grid-cols-5 gap-2"></div>
+    <p class="mt-3 text-center text-xs text-slate-400">
+      Tip: press <kbd class="rounded border border-slate-300 px-1 dark:border-slate-600">Space</kbd> to regenerate unlocked colors.
+    </p>
+  </div>
+
+  <script>
+    import "../scripts/tools/color-palette-generator";
+  </script>
+</CenteredTool>

@@ -1,0 +1,35 @@
+---
+// Shared chrome for a single tool page: Layout + two-column grid + header.
+// Default slot = workhorse content (and the page's <script>); `rail` slot = right rail.
+import Layout from "../layouts/Layout.astro";
+
+interface Props {
+  title: string;
+  subtitle: string;
+  pageTitle?: string;
+}
+
+const { title, subtitle, pageTitle } = Astro.props;
+---
+
+<Layout title={pageTitle ?? `${title} — DocTech`} description={subtitle}>
+  <div class="tool-shell">
+    <div class="grid gap-6 lg:grid-cols-[1fr_18rem]">
+      <section class="min-w-0">
+        <header class="mb-5">
+          <a href="/" class="tool-back" aria-label="Back to all tools">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+            <span>Back to tools</span>
+          </a>
+          <h1 class="text-2xl font-extrabold tracking-tight">{title}</h1>
+          <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">{subtitle}</p>
+        </header>
+        <slot />
+      </section>
+
+      <aside class="lg:sticky lg:top-24 lg:self-start">
+        <slot name="rail" />
+      </aside>
+    </div>
+  </div>
+</Layout>

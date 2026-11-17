@@ -1,0 +1,80 @@
+---
+import CenteredTool from "../components/CenteredTool.astro";
+---
+
+<CenteredTool
+  title="CSS Clip Path Generator"
+  subtitle="Clip an image with any shape, drag the anchor points to fine-tune it, and copy the CSS."
+>
+  <div class="space-y-5">
+    <!-- Top control row: shape + dimensions -->
+    <div class="flex flex-wrap items-end gap-4 rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900">
+      <div class="min-w-[180px] flex-1">
+        <label class="mb-1.5 block text-sm font-semibold" for="cp-shape">Shape</label>
+        <select id="cp-shape" class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100"></select>
+      </div>
+      <div class="w-40">
+        <label class="mb-1.5 block text-sm font-semibold" for="cp-w">Width <span id="cp-w-val" class="text-orange-500">320</span>px</label>
+        <input id="cp-w" type="range" min="160" max="520" value="320" class="w-full accent-orange-500" />
+      </div>
+      <div class="w-40">
+        <label class="mb-1.5 block text-sm font-semibold" for="cp-h">Height <span id="cp-h-val" class="text-orange-500">280</span>px</label>
+        <input id="cp-h" type="range" min="160" max="420" value="280" class="w-full accent-orange-500" />
+      </div>
+    </div>
+
+    <!-- Preview canvas -->
+    <div class="grid min-h-[320px] place-items-center overflow-auto rounded-2xl border border-slate-200 bg-slate-100 p-6 dark:border-slate-800 dark:bg-slate-950">
+      <div id="cp-stage" class="relative shrink-0" style="width:320px;height:280px">
+        <div id="cp-dim" class="pointer-events-none absolute inset-0 bg-cover bg-center opacity-20"></div>
+        <div id="cp-clip" class="absolute inset-0 bg-cover bg-center"></div>
+        <svg
+          id="cp-svg"
+          viewBox="0 0 100 100"
+          preserveAspectRatio="none"
+          class="absolute inset-0 h-full w-full"
+          style="overflow:visible;touch-action:none"
+        >
+          <rect id="cp-bbox" x="0" y="0" width="100" height="100" fill="none" stroke="#ffffff" stroke-width="0.4" stroke-dasharray="2 2" vector-effect="non-scaling-stroke" />
+          <polygon id="cp-outline" fill="none" stroke="#f97316" stroke-width="1.5" vector-effect="non-scaling-stroke" />
+          <g id="cp-handles"></g>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Action row -->
+    <div class="flex flex-wrap items-center justify-between gap-3">
+      <button id="cp-shuffle" type="button" class="rounded-lg bg-orange-500 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-orange-600">🖼️ Shuffle Image</button>
+      <div class="flex flex-wrap items-center gap-4">
+        <label class="flex items-center gap-2 text-sm font-medium">
+          <input id="cp-custombg" type="checkbox" class="accent-orange-500" /> Custom Background
+          <input id="cp-bgcolor" type="color" value="#f97316" class="ml-1 hidden h-7 w-9 cursor-pointer rounded border border-slate-300 bg-transparent dark:border-slate-700" />
+        </label>
+        <label class="flex items-center gap-2 text-sm font-medium">
+          <input id="cp-outside" type="checkbox" checked class="accent-orange-500" /> Show Outside
+        </label>
+        <label class="flex items-center gap-2 text-sm font-medium">
+          <input id="cp-guides" type="checkbox" class="accent-orange-500" /> Hide Guides
+        </label>
+      </div>
+    </div>
+
+    <!-- Reset (centered) -->
+    <div class="flex justify-center">
+      <button id="cp-reset" type="button" class="rounded-lg border border-slate-300 px-5 py-2 text-sm font-semibold text-slate-700 transition-colors hover:bg-slate-100 dark:border-slate-600 dark:text-slate-200 dark:hover:bg-slate-800">↺ Reset</button>
+    </div>
+
+    <!-- CSS output -->
+    <div class="overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-700">
+      <div class="flex items-center justify-between border-b border-slate-200 bg-slate-50 px-4 py-2 dark:border-slate-700 dark:bg-slate-800">
+        <span class="text-xs font-semibold tracking-wide text-slate-400 uppercase">CSS</span>
+        <button id="cp-copy" type="button" class="rounded-lg bg-orange-500 px-3 py-1 text-xs font-semibold text-white hover:bg-orange-600">Copy</button>
+      </div>
+      <pre id="cp-css" class="overflow-x-auto px-4 py-3 font-mono text-sm dark:text-slate-100"></pre>
+    </div>
+  </div>
+
+  <script>
+    import "../scripts/tools/clip-path-generator";
+  </script>
+</CenteredTool>

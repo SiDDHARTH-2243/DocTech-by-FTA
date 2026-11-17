@@ -1,0 +1,47 @@
+---
+import CenteredTool from "../components/CenteredTool.astro";
+import CodePane from "../components/CodePane.astro";
+---
+
+<CenteredTool
+  wide
+  title="CSV ⇄ JSON Converter"
+  subtitle="Convert CSV to JSON and back — RFC-4180 aware (quoted fields, embedded commas and newlines), with delimiter auto-detection and typed values."
+>
+  <div class="space-y-5">
+    <div class="tool-panel">
+      <div class="flex flex-wrap items-center gap-4">
+        <div class="inline-flex rounded-xl border border-slate-200 p-1 dark:border-slate-700">
+          <button type="button" data-mode="c2j" class="cj-mode rounded-lg px-4 py-1.5 text-sm font-bold transition-colors" aria-pressed="true">CSV → JSON</button>
+          <button type="button" data-mode="j2c" class="cj-mode rounded-lg px-4 py-1.5 text-sm font-bold transition-colors" aria-pressed="false">JSON → CSV</button>
+        </div>
+        <div>
+          <label class="field-label" for="cj-delim">Delimiter</label>
+          <select id="cj-delim" class="rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm outline-none focus:border-orange-500 dark:border-slate-700 dark:bg-slate-800/50 dark:text-slate-100">
+            <option value="auto" selected>Auto-detect</option>
+            <option value=",">Comma</option>
+            <option value=";">Semicolon</option>
+            <option value="\t">Tab</option>
+            <option value="|">Pipe</option>
+          </select>
+        </div>
+        <label class="flex cursor-pointer items-center gap-2 pt-5 text-sm font-semibold text-slate-600 dark:text-slate-300">
+          <input type="checkbox" id="cj-header" class="h-4 w-4 accent-orange-500" checked /> First row is a header
+        </label>
+        <label id="cj-typed-wrap" class="flex cursor-pointer items-center gap-2 pt-5 text-sm font-semibold text-slate-600 dark:text-slate-300">
+          <input type="checkbox" id="cj-typed" class="h-4 w-4 accent-orange-500" checked /> Infer numbers / booleans
+        </label>
+        <button type="button" id="cj-swap" class="ml-auto rounded-xl border border-slate-200 px-4 py-2 text-sm font-bold text-slate-600 transition-colors hover:bg-slate-100 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800">⇅ Swap sides</button>
+      </div>
+    </div>
+
+    <div class="grid gap-5 lg:grid-cols-2">
+      <CodePane id="cj-in" label="CSV" placeholder="name,age&#10;Ada,36" rows={18} actions={["sample", "upload", "clear"]} counts />
+      <CodePane id="cj-out" label="JSON" variant="output" language="json" rows={18} actions={["copy", "download"]} counts />
+    </div>
+  </div>
+
+  <script>
+    import "../scripts/tools/csv-json-converter";
+  </script>
+</CenteredTool>

@@ -1,0 +1,48 @@
+---
+import CenteredTool from "../components/CenteredTool.astro";
+---
+
+<CenteredTool
+  title="Multiple Whitespace Remover"
+  subtitle="Remove extra whitespace and line breaks and clear unwanted characters from your text."
+>
+  <div class="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900">
+    <textarea
+      id="ws-input"
+      rows="6"
+      placeholder="Paste messy text here…"
+      class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm focus:border-orange-400 focus:ring-2 focus:ring-orange-200 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:focus:ring-orange-500/30"
+    ></textarea>
+
+    <div class="mt-4 grid grid-cols-1 gap-2 sm:grid-cols-2">
+      {
+        [
+          ["ws-collapse", "Collapse multiple spaces", true],
+          ["ws-trim", "Trim each line", true],
+          ["ws-empty", "Remove empty lines", false],
+          ["ws-breaks", "Remove all line breaks", false],
+          ["ws-special", "Remove special / invisible chars", true],
+        ].map(([id, label, checked]) => (
+          <label class="flex items-center gap-2 text-sm font-medium">
+            <input id={id} type="checkbox" checked={checked as boolean} class="accent-orange-500" />
+            {label}
+          </label>
+        ))
+      }
+    </div>
+
+    <textarea
+      id="ws-output"
+      rows="6"
+      readonly
+      class="mt-4 w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-800/50 dark:text-slate-100"
+    ></textarea>
+    <button id="ws-copy" type="button" class="mt-3 rounded-xl bg-orange-500 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-orange-600">
+      Copy result
+    </button>
+  </div>
+
+  <script>
+    import "../scripts/tools/whitespace-remover";
+  </script>
+</CenteredTool>

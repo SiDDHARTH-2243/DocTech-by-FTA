@@ -1,0 +1,38 @@
+---
+import CenteredTool from "../components/CenteredTool.astro";
+---
+
+<CenteredTool
+  title="Bionic Reading Converter"
+  subtitle="Convert your text into Bionic Reading mode — bolded word-starts guide your eyes so you read faster."
+>
+  <div class="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900">
+    <textarea
+      id="br-input"
+      rows="6"
+      placeholder="Type or paste your text here…"
+      class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm focus:border-orange-400 focus:ring-2 focus:ring-orange-200 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:focus:ring-orange-500/30"
+    >Bionic reading highlights the most concrete parts of words. This guides your eyes through text so your brain can complete the words on its own.</textarea>
+
+    <div class="mt-4 w-60">
+      <label class="mb-1.5 block text-sm font-semibold" for="br-fixation">
+        Fixation strength <span id="br-fixation-val" class="text-orange-500">50%</span>
+      </label>
+      <input id="br-fixation" type="range" min="20" max="80" step="10" value="50" class="w-full accent-orange-500" />
+    </div>
+
+    <div
+      id="br-output"
+      class="mt-4 min-h-24 rounded-lg border border-slate-200 bg-slate-50 px-4 py-3 text-base leading-relaxed dark:border-slate-700 dark:bg-slate-800/50 dark:text-slate-100"
+    >
+    </div>
+    <div class="mt-3 flex gap-2">
+      <button id="br-copy-text" type="button" class="rounded-xl bg-orange-500 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-orange-600">Copy text</button>
+      <button id="br-copy-html" type="button" class="rounded-xl border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 transition-colors hover:bg-slate-100 dark:border-slate-600 dark:text-slate-200 dark:hover:bg-slate-800">Copy HTML</button>
+    </div>
+  </div>
+
+  <script>
+    import "../scripts/tools/bionic-reading";
+  </script>
+</CenteredTool>

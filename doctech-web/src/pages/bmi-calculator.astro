@@ -1,0 +1,41 @@
+---
+import CenteredTool from "../components/CenteredTool.astro";
+---
+
+<CenteredTool
+  title="BMI Calculator"
+  subtitle="Calculate your Body Mass Index in metric or imperial units and see your health category instantly."
+>
+  <div class="space-y-5">
+    <div class="tool-panel space-y-5">
+      <div>
+        <label class="field-label" for="bmi-unit">Units</label>
+        <select id="bmi-unit" class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm font-semibold dark:border-slate-700 dark:bg-slate-800/50 dark:text-slate-100">
+          <option value="metric" selected>Metric (cm, kg)</option>
+          <option value="imperial">Imperial (ft/in, lb)</option>
+        </select>
+      </div>
+
+      <div id="bmi-metric" class="grid grid-cols-2 gap-4">
+        <div><label class="field-label" for="bmi-h-cm">Height (cm)</label><input id="bmi-h-cm" type="number" min="0" value="170" class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm font-semibold dark:border-slate-700 dark:bg-slate-800/50 dark:text-slate-100" /></div>
+        <div><label class="field-label" for="bmi-w-kg">Weight (kg)</label><input id="bmi-w-kg" type="number" min="0" value="65" class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm font-semibold dark:border-slate-700 dark:bg-slate-800/50 dark:text-slate-100" /></div>
+      </div>
+
+      <div id="bmi-imperial" class="hidden grid-cols-3 gap-4">
+        <div><label class="field-label" for="bmi-h-ft">Height (ft)</label><input id="bmi-h-ft" type="number" min="0" value="5" class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm font-semibold dark:border-slate-700 dark:bg-slate-800/50 dark:text-slate-100" /></div>
+        <div><label class="field-label" for="bmi-h-in">(in)</label><input id="bmi-h-in" type="number" min="0" max="11" value="7" class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm font-semibold dark:border-slate-700 dark:bg-slate-800/50 dark:text-slate-100" /></div>
+        <div><label class="field-label" for="bmi-w-lb">Weight (lb)</label><input id="bmi-w-lb" type="number" min="0" value="143" class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm font-semibold dark:border-slate-700 dark:bg-slate-800/50 dark:text-slate-100" /></div>
+      </div>
+    </div>
+
+    <div class="tool-panel flex flex-col items-center gap-2 py-8">
+      <div class="text-xs font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400">Your BMI</div>
+      <div id="bmi-value" class="text-6xl font-black text-orange-500">—</div>
+      <div id="bmi-cat" class="text-lg font-bold">—</div>
+    </div>
+  </div>
+
+  <script>
+    import "../scripts/tools/bmi-calculator";
+  </script>
+</CenteredTool>

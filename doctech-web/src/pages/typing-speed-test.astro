@@ -1,0 +1,157 @@
+---
+import CenteredTool from "../components/CenteredTool.astro";
+---
+
+<CenteredTool
+  wide
+  forceDark
+  title="NEUROTYPE"
+  subtitle="// jack in. type fast. don't flatline. — a cyberpunk typing trial with live WPM, combo overclocking, accuracy and a full telemetry readout. all offline."
+>
+  {/* ── Boot sequence (removed by the engine after the intro) ──────────────── */}
+  <div id="tt-boot" class="tt-boot" aria-hidden="true">
+    <div class="tt-boot-inner">
+      <div class="tt-boot-title" data-text="NEUROTYPE">NEUROTYPE</div>
+      <div class="tt-boot-sub">NEURAL TYPING INTERFACE v2.077</div>
+      <pre id="tt-boot-log" class="tt-boot-log"></pre>
+      <div class="tt-boot-track"><div id="tt-boot-bar" class="tt-boot-bar"></div></div>
+      <div class="tt-boot-skip">[ click or press any key to skip ]</div>
+    </div>
+  </div>
+
+  {/* ── Ambient background FX (fixed, behind everything) ───────────────────── */}
+  <div id="tt-bg" class="tt-bg" aria-hidden="true">
+    <div class="tt-grid"></div>
+    <div class="tt-scanlines"></div>
+    <div class="tt-vignette"></div>
+  </div>
+
+  {/* ── Screen flash / glitch layer for hits and errors ────────────────────── */}
+  <div id="tt-flash" class="tt-flash" aria-hidden="true"></div>
+
+  <div id="tt" class="tt-cyber space-y-5">
+    {/* ── Config bar ─────────────────────────────────────────────────────── */}
+    <div class="tt-panel tt-config">
+      <div class="tt-config-row">
+        <div class="tt-group">
+          <button type="button" data-opt="punctuation" class="tt-opt" aria-pressed="false"><span class="tt-sym">@</span> punctuation</button>
+          <button type="button" data-opt="numbers" class="tt-opt" aria-pressed="false"><span class="tt-sym">#</span> numbers</button>
+        </div>
+
+        <span class="tt-div"></span>
+
+        <div class="tt-group">
+          {["time", "words", "quote"].map((m) => (
+            <button type="button" data-mode={m} class="tt-mode" aria-pressed={m === "time" ? "true" : "false"}>{m}</button>
+          ))}
+        </div>
+
+        <span class="tt-div"></span>
+
+        <div id="tt-values" class="tt-group"></div>
+
+        <span class="tt-div tt-div-flex"></span>
+
+        <button type="button" id="tt-sound" class="tt-opt tt-sound" aria-pressed="true" title="Toggle sound"><span class="tt-sym">♪</span> <span id="tt-sound-label">sound</span></button>
+      </div>
+    </div>
+
+    {/* ── Live readout ───────────────────────────────────────────────────── */}
+    <div class="tt-live-row">
+      <div id="tt-live" class="tt-live"><span id="tt-timer">30</span></div>
+      <div id="tt-live-wpm" class="tt-live-wpm"><span id="tt-wpm-now">0</span><span class="tt-unit">WPM</span></div>
+    </div>
+
+    {/* ── Typing surface ─────────────────────────────────────────────────── */}
+    <div id="tt-stage" class="tt-stage">
+      <i class="tt-corner tt-corner-tl"></i><i class="tt-corner tt-corner-tr"></i>
+      <i class="tt-corner tt-corner-bl"></i><i class="tt-corner tt-corner-br"></i>
+
+      {/* combo HUD */}
+      <div id="tt-combo" class="tt-combo">
+        <span class="tt-combo-x">×</span><span id="tt-combo-val">0</span>
+        <span id="tt-combo-tag" class="tt-combo-tag">COMBO</span>
+      </div>
+
+      <div id="tt-viewport" class="tt-viewport" tabindex="0">
+        <div id="tt-caret" class="tt-caret"></div>
+        <div id="tt-words" class="tt-words"></div>
+      </div>
+
+      <div id="tt-veil" class="tt-veil">
+        <span class="tt-veil-tag">▚ CLICK OR PRESS ANY KEY TO JACK IN ▞</span>
+      </div>
+
+      <input id="tt-capture" class="tt-capture" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" aria-hidden="true" tabindex="-1" />
+    </div>
+
+    <div class="tt-controls">
+      <button type="button" id="tt-restart" class="tt-btn" title="Tab">↻ RESTART</button>
+    </div>
+
+    <p class="tt-hint">
+      <kbd>Tab</kbd> restart · <kbd>Esc</kbd> disconnect · first keystroke boots the clock
+    </p>
+
+    {/* ── Results ────────────────────────────────────────────────────────── */}
+    <div id="tt-results" class="hidden space-y-5">
+      {/* rank banner */}
+      <div class="tt-rank-banner">
+        <div class="tt-rank-label">RANK ACHIEVED</div>
+        <div id="tt-r-rank" class="tt-rank" data-text="">—</div>
+        <div id="tt-r-rank-sub" class="tt-rank-sub"></div>
+      </div>
+
+      <div class="tt-result-grid">
+        <div class="tt-hero">
+          <div class="tt-hero-label">WPM <span class="tt-flav">// throughput</span></div>
+          <div id="tt-r-wpm" class="tt-hero-num">0</div>
+          <div id="tt-r-best" class="tt-hero-best"></div>
+        </div>
+
+        <div class="tt-stat-grid">
+          {[
+            ["Accuracy", "tt-r-acc", "// integrity"],
+            ["Consistency", "tt-r-con", "// stability"],
+            ["Raw WPM", "tt-r-raw", "// gross"],
+            ["Time", "tt-r-time", "// uptime"],
+          ].map(([label, id, flav]) => (
+            <div class="tt-stat">
+              <div class="tt-stat-label">{label} <span class="tt-flav">{flav}</span></div>
+              <div id={id} class="tt-stat-num">—</div>
+            </div>
+          ))}
+          <div class="tt-stat tt-stat-wide">
+            <div class="tt-stat-label">Characters <span class="tt-flav">// correct · wrong · extra · missed</span></div>
+            <div id="tt-r-chars" class="tt-stat-chars"></div>
+          </div>
+          <div class="tt-stat tt-stat-wide">
+            <div class="tt-stat-label">Peak combo <span class="tt-flav">// max overclock</span></div>
+            <div id="tt-r-combo" class="tt-stat-num tt-combo-num">×0</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tt-panel">
+        <div class="tt-graph-head">
+          <span class="tt-graph-title">SPEED TELEMETRY</span>
+          <div class="tt-legend">
+            <span><i class="tt-leg tt-leg-net"></i>WPM</span>
+            <span><i class="tt-leg tt-leg-raw"></i>Raw</span>
+            <span><i class="tt-leg tt-leg-err"></i>Errors</span>
+          </div>
+        </div>
+        <div id="tt-graph" class="tt-graph"></div>
+      </div>
+
+      <div class="tt-controls">
+        <button type="button" id="tt-again" class="tt-btn tt-btn-primary">NEXT RUN →</button>
+        <button type="button" id="tt-repeat" class="tt-btn">RETRY SAME</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    import "../scripts/tools/typing-speed-test";
+  </script>
+</CenteredTool>

@@ -1,0 +1,87 @@
+---
+// The Arcade — a deliberate detour away from the professional utility grids.
+// Houses only the typing games, and is theme-locked to dark like the games
+// themselves so the whole route shares one uninterrupted neon aesthetic.
+import Layout from "../layouts/Layout.astro";
+
+const games = [
+  {
+    href: "/typing-speed-test",
+    codename: "NEUROTYPE",
+    kind: "TYPING TRIAL",
+    icon: "⌨️",
+    tagline: "How fast are you, really?",
+    blurb:
+      "A precision typing test with live WPM, accuracy and consistency tracking, an animated caret and a full telemetry graph. Chase your rank from FLATLINE to SINGULARITY.",
+    specs: ["Time · words · quote modes", "Combo overclock system", "Personal-best tracking"],
+    accent: "cyan",
+  },
+  {
+    href: "/typing-arcade",
+    codename: "VOIDSTRIKE",
+    kind: "ARCADE SHOOTER",
+    icon: "🚀",
+    tagline: "Your keyboard is the weapon.",
+    blurb:
+      "Hostiles drop from the void, each tagged with a word. Type the first letter to lock on, finish the word to detonate. Let one reach your hull and the run is over.",
+    specs: ["Lock-on targeting", "Escalating waves", "High-score chase"],
+    accent: "magenta",
+  },
+];
+---
+
+<Layout
+  forceDark
+  title="The Arcade — DocTech"
+  description="Take a break. Two cyberpunk typing games: NEUROTYPE, a precision typing trial, and VOIDSTRIKE, an arcade typing shooter."
+>
+  <div class="arc">
+    <div class="arc-bg" aria-hidden="true">
+      <div class="arc-grid"></div>
+      <div class="arc-scan"></div>
+    </div>
+
+    <div class="arc-shell">
+      <a href="/" class="tool-back" aria-label="Back to all tools">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18l-6-6 6-6"></path></svg>
+        <span>Back to tools</span>
+      </a>
+
+      <header class="arc-hero">
+        <span class="arc-kicker">[ ARCADE ]</span>
+        <h1 class="arc-title" data-text="TAKE A BREAK">TAKE A BREAK</h1>
+        <p class="arc-sub">
+          Two games that turn typing practice into something you actually want to do.
+          No installs, no accounts, no uploads — same as everything else here.
+        </p>
+      </header>
+
+      <div class="arc-cards">
+        {games.map((g) => (
+          <a href={g.href} class={`arc-card arc-${g.accent}`}>
+            <div class="arc-card-top">
+              <span class="arc-icon">{g.icon}</span>
+              <span class="arc-kind">{g.kind}</span>
+            </div>
+            <h2 class="arc-name">{g.codename}</h2>
+            <p class="arc-tag">{g.tagline}</p>
+            <p class="arc-blurb">{g.blurb}</p>
+            <ul class="arc-specs">
+              {g.specs.map((s) => (
+                <li>{s}</li>
+              ))}
+            </ul>
+            <span class="arc-cta">
+              LAUNCH
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"></path></svg>
+            </span>
+          </a>
+        ))}
+      </div>
+
+      <p class="arc-foot">
+        Done playing? <a href="/#tools">Head back to the tools →</a>
+      </p>
+    </div>
+  </div>
+</Layout>

@@ -1,0 +1,59 @@
+---
+import CenteredTool from "../components/CenteredTool.astro";
+---
+
+<CenteredTool
+  wide
+  title="Text Repeater"
+  subtitle="Repeat any text as many times as you need, with a chosen separator and optional line numbering. Handy for test data, filler and boilerplate."
+>
+  <div class="mb-4 flex items-center gap-2">
+    <span class="local-chip">🔒 100% in your browser</span>
+    <span id="tr-stats" class="text-xs text-slate-400 dark:text-slate-500">—</span>
+  </div>
+
+  <div class="space-y-5">
+    <div class="tool-panel">
+      <div class="flex flex-wrap items-end gap-x-6 gap-y-3">
+        <div class="w-32">
+          <label class="field-label" for="tr-count">Repeat</label>
+          <input id="tr-count" type="number" min="1" max="100000" value="10" class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm font-semibold outline-none focus:border-orange-500 dark:border-slate-700 dark:bg-slate-800/50 dark:text-slate-100" />
+        </div>
+        <div>
+          <label class="field-label" for="tr-sep">Separator</label>
+          <select id="tr-sep" class="rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm outline-none focus:border-orange-500 dark:border-slate-700 dark:bg-slate-800/50 dark:text-slate-100">
+            <option value="\n">New line</option>
+            <option value=" ">Space</option>
+            <option value=", ">Comma</option>
+            <option value="">None</option>
+            <option value="custom">Custom…</option>
+          </select>
+        </div>
+        <div id="tr-custom-wrap" class="hidden">
+          <label class="field-label" for="tr-custom">Custom separator</label>
+          <input id="tr-custom" type="text" value=" | " class="w-32 rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 font-mono text-sm outline-none focus:border-orange-500 dark:border-slate-700 dark:bg-slate-800/50 dark:text-slate-100" />
+        </div>
+        <label class="flex cursor-pointer items-center gap-2 pb-2.5 text-sm font-semibold text-slate-600 dark:text-slate-300"><input type="checkbox" id="tr-num" class="h-4 w-4 accent-orange-500" /> Number each line</label>
+      </div>
+    </div>
+
+    <div class="grid gap-5 lg:grid-cols-2">
+      <div class="tool-panel flex min-w-0 flex-col">
+        <label class="field-label" for="tr-in">Text to repeat</label>
+        <textarea id="tr-in" rows="6" spellcheck="false" placeholder="Type something to repeat…" class="w-full resize-y rounded-xl border border-slate-200 bg-slate-50 px-3 py-3 font-mono text-sm leading-6 outline-none transition-all focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10 dark:border-slate-700 dark:bg-slate-900/60 dark:text-slate-100"></textarea>
+      </div>
+      <div class="tool-panel flex min-w-0 flex-col">
+        <label class="field-label" for="tr-out">Output</label>
+        <textarea id="tr-out" rows="6" readonly class="w-full flex-1 resize-y rounded-xl border border-slate-200 bg-slate-50 px-3 py-3 font-mono text-sm leading-6 outline-none dark:border-slate-700 dark:bg-slate-900/60 dark:text-slate-100"></textarea>
+        <div class="mt-4 grid grid-cols-2 gap-3">
+          <button type="button" id="tr-copy" class="btn-premium">Copy output</button>
+          <button type="button" id="tr-download" class="btn-premium-ghost">Download .txt</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    import "../scripts/tools/text-repeater";
+  </script>
+</CenteredTool>

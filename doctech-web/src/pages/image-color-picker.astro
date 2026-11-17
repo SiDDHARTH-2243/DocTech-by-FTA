@@ -1,0 +1,55 @@
+---
+import ToolPage from "../components/ToolPage.astro";
+import PremiumDropzone from "../components/PremiumDropzone.astro";
+---
+
+<ToolPage
+  title="Image Color Picker"
+  subtitle="Hover over an image to inspect any pixel and click to pick its color. Get HEX, RGB and HSL — all in your browser."
+>
+  <PremiumDropzone
+    dropId="pick-drop"
+    inputId="pick-input"
+    accept="image/png,image/jpeg,image/webp,image/bmp,image/gif"
+    formats={["JPG", "PNG", "WEBP"]}
+    icon="🎯"
+    title="Drop your image here"
+    hint="or click to browse from your device"
+  />
+
+  <div id="pick-work" class="hidden space-y-4">
+    <!-- Live hover readout -->
+    <div class="flex items-center gap-3 rounded-3xl border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+      <span id="pick-hover-sw" class="h-11 w-11 shrink-0 rounded-xl border border-slate-200 shadow-inner dark:border-slate-700"></span>
+      <div class="font-mono text-sm">
+        <div id="pick-hover-hex" class="font-semibold">Hover the image…</div>
+        <div id="pick-hover-rgb" class="text-xs text-slate-400"></div>
+      </div>
+    </div>
+
+    <div class="flex min-h-[240px] items-center justify-center overflow-auto rounded-3xl border border-slate-200 bg-slate-100 p-3 shadow-sm dark:border-slate-800 dark:bg-slate-950">
+      <canvas id="pick-canvas" class="max-h-[440px] max-w-full cursor-crosshair rounded-lg"></canvas>
+    </div>
+
+    <div id="pick-picked-wrap" class="tool-panel hidden">
+      <div class="mb-3 font-bold text-slate-800 dark:text-slate-100">Picked colors <span class="text-xs font-normal text-slate-400">(click to copy)</span></div>
+      <div id="pick-list" class="grid grid-cols-2 gap-2 sm:grid-cols-4"></div>
+    </div>
+  </div>
+
+  <div slot="rail" class="flex flex-col gap-5">
+    <div class="tool-panel">
+      <div class="mb-3 flex items-center justify-between">
+        <h3 class="font-bold text-slate-800 dark:text-slate-100">Color Picker</h3>
+        <span class="local-badge">⚡ Local</span>
+      </div>
+      <p class="text-xs text-slate-500 dark:text-slate-400">Move over the image to inspect a pixel, then click to save the color.</p>
+      <button id="pick-clear" type="button" class="btn-premium-ghost mt-4 hidden">Clear picked</button>
+      <button id="pick-reset" type="button" class="btn-premium-ghost mt-2 hidden">Choose another image</button>
+    </div>
+  </div>
+
+  <script>
+    import "../scripts/tools/image-color-picker";
+  </script>
+</ToolPage>

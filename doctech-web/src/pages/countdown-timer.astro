@@ -1,0 +1,48 @@
+---
+import CenteredTool from "../components/CenteredTool.astro";
+---
+
+<CenteredTool
+  wide
+  title="Countdown & Pomodoro Timer"
+  subtitle="A focus (Pomodoro) timer to work in sprints, plus a countdown to any date and time — right in your browser."
+>
+  <div class="lg:grid lg:grid-cols-2 lg:gap-6">
+    <!-- Pomodoro -->
+    <div class="tool-panel flex flex-col items-center gap-5">
+      <h3 class="self-start font-bold text-slate-800 dark:text-slate-100">Pomodoro</h3>
+      <div id="pomo-phase" class="local-badge">Work</div>
+      <div id="pomo-display" class="font-mono text-6xl font-black tabular-nums text-slate-800 dark:text-slate-100">25:00</div>
+      <div class="flex gap-3">
+        <button id="pomo-start" type="button" class="btn-premium !w-auto px-8">Start</button>
+        <button id="pomo-reset" type="button" class="btn-premium-ghost !w-auto px-6">Reset</button>
+      </div>
+      <div class="flex gap-4">
+        <div class="w-24">
+          <label class="field-label" for="pomo-work">Work min</label>
+          <input id="pomo-work" type="number" min="1" max="120" value="25" class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm font-semibold dark:border-slate-700 dark:bg-slate-800/50 dark:text-slate-100" />
+        </div>
+        <div class="w-24">
+          <label class="field-label" for="pomo-break">Break min</label>
+          <input id="pomo-break" type="number" min="1" max="60" value="5" class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm font-semibold dark:border-slate-700 dark:bg-slate-800/50 dark:text-slate-100" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Countdown -->
+    <div class="tool-panel mt-5 flex flex-col items-center gap-5 lg:mt-0">
+      <h3 class="self-start font-bold text-slate-800 dark:text-slate-100">Countdown</h3>
+      <div id="cd-display" class="font-mono text-4xl font-black tabular-nums text-slate-800 dark:text-slate-100">—</div>
+      <div class="w-full">
+        <label class="field-label" for="cd-target">Target date &amp; time</label>
+        <input id="cd-target" type="datetime-local" class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm font-semibold dark:border-slate-700 dark:bg-slate-800/50 dark:text-slate-100" />
+      </div>
+      <button id="cd-start" type="button" class="btn-premium !w-auto px-8">Start countdown</button>
+      <div id="cd-done" class="hidden text-center text-lg font-extrabold text-orange-500">⏰ Time's up!</div>
+    </div>
+  </div>
+
+  <script>
+    import "../scripts/tools/countdown-timer";
+  </script>
+</CenteredTool>

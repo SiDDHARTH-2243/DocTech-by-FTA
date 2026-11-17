@@ -1,0 +1,51 @@
+---
+import CenteredTool from "../components/CenteredTool.astro";
+---
+
+<CenteredTool
+  wide
+  title="Tailwind Shade Scale Generator"
+  subtitle="Turn one brand color into a full 50–950 shade scale, ready to paste into your Tailwind config or as CSS custom properties. Click any shade to copy."
+>
+  <div class="mb-4 flex items-center gap-2">
+    <span class="local-chip">🔒 100% in your browser</span>
+    <span class="text-xs text-slate-400 dark:text-slate-500">Tailwind · CSS vars · SCSS</span>
+  </div>
+
+  <div class="space-y-5">
+    <div class="tool-panel">
+      <div class="flex flex-wrap items-end gap-4">
+        <div>
+          <label class="field-label" for="tw-name">Color name</label>
+          <input id="tw-name" type="text" spellcheck="false" value="brand" class="w-40 rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 font-mono text-sm outline-none focus:border-orange-500 dark:border-slate-700 dark:bg-slate-900/60 dark:text-slate-100" />
+        </div>
+        <div class="min-w-[200px] flex-1">
+          <label class="field-label" for="tw-hex">Base color</label>
+          <div class="flex items-center gap-2">
+            <input id="tw-picker" type="color" value="#ff5c1a" class="h-11 w-14 shrink-0 cursor-pointer rounded-lg border border-slate-200 bg-transparent p-0 dark:border-slate-700" />
+            <input id="tw-hex" type="text" spellcheck="false" value="#ff5c1a" class="min-w-0 flex-1 rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 font-mono text-sm outline-none focus:border-orange-500 dark:border-slate-700 dark:bg-slate-900/60 dark:text-slate-100" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="tw-scale" class="grid grid-cols-3 gap-2 sm:grid-cols-6 lg:grid-cols-11"></div>
+
+    <div class="tool-panel">
+      <div class="mb-2 flex items-center justify-between">
+        <span class="field-label !mb-0">Export</span>
+        <div class="inline-flex rounded-xl border border-slate-200 p-1 dark:border-slate-700">
+          <button type="button" data-fmt="tailwind" class="tw-fmt rounded-lg px-3 py-1 text-xs font-bold transition-colors" aria-pressed="true">Tailwind</button>
+          <button type="button" data-fmt="css" class="tw-fmt rounded-lg px-3 py-1 text-xs font-bold transition-colors" aria-pressed="false">CSS vars</button>
+          <button type="button" data-fmt="scss" class="tw-fmt rounded-lg px-3 py-1 text-xs font-bold transition-colors" aria-pressed="false">SCSS</button>
+        </div>
+      </div>
+      <pre class="overflow-auto rounded-xl bg-slate-50 p-3 dark:bg-slate-900/60"><code id="tw-export" class="font-mono text-xs text-slate-800 dark:text-slate-100"></code></pre>
+      <button type="button" id="tw-copy" class="btn-premium mt-3">Copy export</button>
+    </div>
+  </div>
+
+  <script>
+    import "../scripts/tools/tailwind-shade-generator";
+  </script>
+</CenteredTool>

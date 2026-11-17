@@ -1,0 +1,33 @@
+---
+// Centered single-column chrome for utility tools (no file dropzone / rail).
+// Default slot = tool content (and the page's <script>).
+import Layout from "../layouts/Layout.astro";
+
+interface Props {
+  title: string;
+  subtitle: string;
+  pageTitle?: string;
+  /** Use a wider container (max-w-5xl) for tools with side-by-side layouts. */
+  wide?: boolean;
+  /** Lock the whole page (navbar included) to dark mode — see Layout. */
+  forceDark?: boolean;
+}
+
+const { title, subtitle, pageTitle, wide, forceDark } = Astro.props;
+---
+
+<Layout title={pageTitle ?? `${title} — DocTech`} description={subtitle} forceDark={forceDark}>
+  <div class="tool-shell">
+    <div class:list={["mx-auto", wide ? "max-w-5xl" : "max-w-3xl"]}>
+      <header class="mb-6">
+        <a href="/" class="tool-back" aria-label="Back to all tools">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+          <span>Back to tools</span>
+        </a>
+        <h1 class="text-2xl font-extrabold tracking-tight">{title}</h1>
+        <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">{subtitle}</p>
+      </header>
+      <slot />
+    </div>
+  </div>
+</Layout>

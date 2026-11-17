@@ -1,0 +1,173 @@
+---
+import CenteredTool from "../components/CenteredTool.astro";
+---
+
+<CenteredTool
+  wide
+  title="Flexbox Playground"
+  subtitle="Visually design flexbox layouts — tweak container & per-item properties, pick from presets, and export production CSS."
+>
+  <div class="lg:grid lg:grid-cols-[1fr_minmax(0,420px)] lg:items-start lg:gap-6">
+    <!-- LEFT: preview + presets -->
+    <div class="space-y-4 lg:sticky lg:top-4">
+      <!-- Preview stage -->
+      <div
+        id="fx-stage"
+        class="relative min-h-[340px] rounded-2xl border border-slate-200 bg-slate-50 p-3 dark:border-slate-700 dark:bg-slate-900"
+      >
+        <div
+          id="fx-preview"
+          class="flex min-h-[316px] rounded-xl transition-all"
+        ></div>
+      </div>
+
+      <!-- Item toolbar -->
+      <div class="flex flex-wrap items-center justify-between gap-3 px-1">
+        <span class="text-xs text-slate-500">
+          <span id="fx-count-label" class="font-semibold text-orange-500">5</span> items ·
+          click an item to edit its properties
+        </span>
+        <div class="flex gap-2">
+          <button
+            id="fx-add-item"
+            type="button"
+            class="rounded-lg bg-orange-500 px-3 py-1 text-xs font-semibold text-white transition-colors hover:bg-orange-600"
+          >+ Add Item</button>
+          <button
+            id="fx-remove-item"
+            type="button"
+            class="rounded-lg border border-slate-300 px-3 py-1 text-xs font-semibold text-slate-600 transition-colors hover:bg-slate-100 dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-800"
+          >− Remove</button>
+        </div>
+      </div>
+
+      <!-- Presets -->
+      <div>
+        <div class="mb-2 flex items-center justify-between">
+          <span class="text-sm font-semibold">Layout Presets</span>
+          <div class="flex gap-2">
+            <button
+              id="fx-shuffle"
+              type="button"
+              class="rounded-lg border border-slate-300 px-3 py-1 text-xs font-semibold text-slate-600 hover:bg-slate-100 dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-800"
+            >🎲 Shuffle</button>
+            <button
+              id="fx-reset"
+              type="button"
+              class="rounded-lg border border-slate-300 px-3 py-1 text-xs font-semibold text-slate-600 hover:bg-slate-100 dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-800"
+            >Reset</button>
+          </div>
+        </div>
+        <div id="fx-presets" class="grid grid-cols-3 gap-2 sm:grid-cols-4"></div>
+      </div>
+
+      <!-- How to use -->
+      <div class="rounded-2xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900">
+        <p class="mb-1 text-sm font-semibold">How to use</p>
+        <ol class="list-decimal space-y-1.5 pl-4 text-xs text-slate-600 dark:text-slate-300">
+          <li>Adjust <strong>container properties</strong> (direction, justify, align, wrap, gap) in the right panel.</li>
+          <li><strong>Click any item</strong> in the preview to select it — then tune its individual flex properties (grow, shrink, basis, order, align-self).</li>
+          <li>Use <strong>+ Add</strong> / <strong>− Remove</strong> to manage items, or pick a <strong>preset</strong> for common layouts.</li>
+          <li>Hit <strong>Copy</strong> to grab production-ready CSS (or switch to the HTML tab for the full snippet).</li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- RIGHT: controls + code -->
+    <div class="mt-5 space-y-5 lg:mt-0">
+      <!-- Container properties -->
+      <div class="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900">
+        <span class="mb-4 block text-sm font-semibold">Container</span>
+        <div class="grid gap-4 sm:grid-cols-2">
+          {
+            [
+              ["fx-direction", "flex-direction", ["row", "row-reverse", "column", "column-reverse"], "row"],
+              ["fx-justify", "justify-content", ["flex-start", "center", "flex-end", "space-between", "space-around", "space-evenly"], "flex-start"],
+              ["fx-align", "align-items", ["stretch", "flex-start", "center", "flex-end", "baseline"], "stretch"],
+              ["fx-align-content", "align-content", ["stretch", "flex-start", "center", "flex-end", "space-between", "space-around"], "stretch"],
+              ["fx-wrap", "flex-wrap", ["nowrap", "wrap", "wrap-reverse"], "wrap"],
+            ].map(([id, label, opts, def]) => (
+              <div>
+                <label class="mb-1.5 block text-sm font-semibold" for={id}>{label}</label>
+                <select id={id} class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100">
+                  {(opts as string[]).map((o) => <option value={o} selected={o === def}>{o}</option>)}
+                </select>
+              </div>
+            ))
+          }
+          <div>
+            <label class="mb-1.5 block text-sm font-semibold" for="fx-gap">gap <span id="fx-gap-val" class="text-orange-500">12</span>px</label>
+            <input id="fx-gap" type="range" min="0" max="48" value="12" class="w-full accent-orange-500" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Per-item properties (shown when an item is selected) -->
+      <div id="fx-item-panel" class="hidden rounded-2xl border border-orange-300 bg-orange-50/50 p-5 dark:border-orange-500/30 dark:bg-orange-500/5">
+        <div class="mb-4 flex items-center justify-between">
+          <span class="text-sm font-semibold">Item <span id="fx-item-name" class="text-orange-500">1</span></span>
+          <button id="fx-deselect" type="button" class="rounded-md border border-slate-300 px-2 py-0.5 text-xs font-semibold text-slate-500 hover:bg-slate-100 dark:border-slate-600 dark:text-slate-400 dark:hover:bg-slate-800">Deselect</button>
+        </div>
+        <div class="grid gap-4 sm:grid-cols-2">
+          <div>
+            <label class="mb-1.5 block text-sm font-semibold" for="fx-item-order">order <span id="fx-item-order-val" class="text-orange-500">0</span></label>
+            <input id="fx-item-order" type="range" min="-5" max="10" value="0" class="w-full accent-orange-500" />
+          </div>
+          <div>
+            <label class="mb-1.5 block text-sm font-semibold" for="fx-item-grow">flex-grow <span id="fx-item-grow-val" class="text-orange-500">0</span></label>
+            <input id="fx-item-grow" type="range" min="0" max="10" value="0" class="w-full accent-orange-500" />
+          </div>
+          <div>
+            <label class="mb-1.5 block text-sm font-semibold" for="fx-item-shrink">flex-shrink <span id="fx-item-shrink-val" class="text-orange-500">1</span></label>
+            <input id="fx-item-shrink" type="range" min="0" max="10" value="1" class="w-full accent-orange-500" />
+          </div>
+          <div>
+            <label class="mb-1.5 block text-sm font-semibold" for="fx-item-basis">flex-basis</label>
+            <select id="fx-item-basis" class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100">
+              <option value="auto" selected>auto</option>
+              <option value="0">0</option>
+              <option value="50px">50px</option>
+              <option value="100px">100px</option>
+              <option value="150px">150px</option>
+              <option value="200px">200px</option>
+              <option value="25%">25%</option>
+              <option value="33.33%">33.33%</option>
+              <option value="50%">50%</option>
+            </select>
+          </div>
+          <div class="sm:col-span-2">
+            <label class="mb-1.5 block text-sm font-semibold" for="fx-item-align-self">align-self</label>
+            <select id="fx-item-align-self" class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100">
+              <option value="auto" selected>auto</option>
+              <option value="flex-start">flex-start</option>
+              <option value="center">center</option>
+              <option value="flex-end">flex-end</option>
+              <option value="stretch">stretch</option>
+              <option value="baseline">baseline</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- CSS output -->
+      <div class="overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-700">
+        <div class="flex items-center justify-between border-b border-slate-200 bg-slate-50 px-4 py-2 dark:border-slate-700 dark:bg-slate-800">
+          <div class="flex gap-2">
+            <button id="fx-tab-css" type="button" class="rounded-md px-2.5 py-1 text-xs font-semibold bg-orange-500 text-white">CSS</button>
+            <button id="fx-tab-html" type="button" class="rounded-md px-2.5 py-1 text-xs font-semibold text-slate-500 hover:text-slate-700 dark:text-slate-400">HTML</button>
+          </div>
+          <button
+            id="fx-copy"
+            type="button"
+            class="rounded-lg bg-orange-500 px-3 py-1 text-xs font-semibold text-white transition-colors hover:bg-orange-600"
+          >Copy</button>
+        </div>
+        <pre id="fx-css" class="overflow-x-auto px-4 py-3 font-mono text-xs leading-relaxed dark:text-slate-100"></pre>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    import "../scripts/tools/flexbox-playground";
+  </script>
+</CenteredTool>

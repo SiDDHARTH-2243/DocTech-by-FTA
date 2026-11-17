@@ -1,0 +1,107 @@
+---
+// Reusable code pane for the Coding Tools category.
+//
+// Two variants share one frame so input/output columns line up visually:
+//   variant="editor" → editable <textarea> with a synced line-number gutter
+//   variant="output" → read-only highlighted <pre><code> with the same gutter
+//
+// Markup only. Behaviour (gutter sync, counts, copy/download/clear/upload) is
+// wired by lib/codepane.ts → initPane(id), which derives child ids from `id`.
+interface Props {
+  id: string;
+  label: string;
+  variant?: "editor" | "output";
+  placeholder?: string;
+  /** highlight.js language name for output panes ("json", "xml", …). */
+  language?: string;
+  rows?: number;
+  /** Toolbar buttons to render. */
+  actions?: ("copy" | "download" | "clear" | "upload" | "sample")[];
+  /** Accept string for the upload button's hidden file input. */
+  accept?: string;
+  /** Show the "chars · lines · bytes" counter under the pane. */
+  counts?: boolean;
+  value?: string;
+}
+
+const {
+  id,
+  label,
+  variant = "editor",
+  placeholder = "",
+  language = "plaintext",
+  rows = 14,
+  actions = [],
+  accept = ".txt,.json,.js,.ts,.css,.html,.xml,.csv,.md",
+  counts = true,
+  value = "",
+} = Astro.props;
+
+const btn =
+  "rounded-lg border border-slate-200 px-2.5 py-1 text-xs font-semibold text-slate-600 transition-colors hover:bg-slate-100 hover:text-slate-900 disabled:cursor-not-allowed disabled:opacity-40 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white";
+---
+
+<div class="flex min-w-0 flex-col" data-pane={id}>
+  <div class="mb-2 flex items-center justify-between gap-2">
+    <label class="field-label !mb-0" for={`${id}-ta`}>{label}</label>
+    <div class="flex items-center gap-1.5">
+      {actions.includes("sample") && <button type="button" id={`${id}-sample`} class={btn}>Sample</button>}
+      {actions.includes("upload") && (
+        <>
+          <button type="button" id={`${id}-upload`} class={btn}>Upload</button>
+          <input type="file" id={`${id}-file`} accept={accept} class="hidden" />
+        </>
+      )}
+      {actions.includes("clear") && <button type="button" id={`${id}-clear`} class={btn}>Clear</button>}
+      {actions.includes("download") && <button type="button" id={`${id}-download`} class={btn}>Download</button>}
+      {actions.includes("copy") && (
+        <button type="button" id={`${id}-copy`} class="rounded-lg bg-orange-500 px-2.5 py-1 text-xs font-bold text-white transition-colors hover:bg-orange-600 disabled:cursor-not-allowed disabled:opacity-40">Copy</button>
+      )}
+    </div>
+  </div>
+
+  <div
+    id={`${id}-frame`}
+    class="group relative flex overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 transition-colors focus-within:border-orange-500 focus-within:ring-4 focus-within:ring-orange-500/10 dark:border-slate-700 dark:bg-slate-900/60"
+  >
+    {/* Gutter: absolutely-positioned line numbers, scrolled in step with the content. */}
+    <div
+      id={`${id}-gutter`}
+      aria-hidden="true"
+      class="shrink-0 select-none overflow-hidden border-r border-slate-200 bg-slate-100/70 px-2.5 py-3 text-right font-mono text-xs leading-5 text-slate-400 dark:border-slate-700 dark:bg-slate-800/50 dark:text-slate-500"
+      style="min-width:3rem"
+    >1</div>
+
+    {variant === "editor" ? (
+      <textarea
+        id={`${id}-ta`}
+        rows={rows}
+        placeholder={placeholder}
+        spellcheck="false"
+        autocomplete="off"
+        autocapitalize="off"
+        autocorrect="off"
+        class="min-w-0 flex-1 resize-y bg-transparent px-3 py-3 font-mono text-xs leading-5 text-slate-800 outline-none placeholder:text-slate-400 dark:text-slate-100"
+        set:text={value}
+      />
+    ) : (
+      <pre
+        id={`${id}-pre`}
+        class="min-w-0 flex-1 overflow-auto px-3 py-3 font-mono text-xs leading-5"
+        style={`max-height:${rows * 1.25}rem`}
+      ><code id={`${id}-code`} class={`language-${language} !bg-transparent !p-0`} data-lang={language}>{value}</code></pre>
+    )}
+
+    {/* Error/status ribbon — shown by initPane().setStatus(). */}
+    <div
+      id={`${id}-status`}
+      class="pointer-events-none absolute inset-x-0 bottom-0 hidden px-3 py-1.5 font-mono text-[11px] font-semibold"
+    ></div>
+  </div>
+
+  {counts && (
+    <p id={`${id}-counts`} class="mt-1.5 text-right font-mono text-[11px] text-slate-400 dark:text-slate-500">
+      0 chars · 1 line
+    </p>
+  )}
+</div>

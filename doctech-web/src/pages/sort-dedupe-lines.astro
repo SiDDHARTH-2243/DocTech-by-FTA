@@ -1,0 +1,58 @@
+---
+import CenteredTool from "../components/CenteredTool.astro";
+---
+
+<CenteredTool
+  wide
+  title="Sort & Dedupe Lines"
+  subtitle="Sort lines alphabetically, by length or number, shuffle or reverse them, and strip duplicate or empty lines — instantly, all in your browser."
+>
+  <div class="mb-4 flex items-center gap-2">
+    <span class="local-chip">🔒 100% in your browser</span>
+    <span id="sd-stats" class="text-xs text-slate-400 dark:text-slate-500">—</span>
+  </div>
+
+  <div class="space-y-5">
+    <div class="tool-panel">
+      <div class="flex flex-wrap items-end gap-x-6 gap-y-3">
+        <div>
+          <label class="field-label" for="sd-sort">Sort</label>
+          <select id="sd-sort" class="rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm outline-none focus:border-orange-500 dark:border-slate-700 dark:bg-slate-800/50 dark:text-slate-100">
+            <option value="none">Keep order</option>
+            <option value="az">A → Z</option>
+            <option value="za">Z → A</option>
+            <option value="lenAsc">Length ↑</option>
+            <option value="lenDesc">Length ↓</option>
+            <option value="numAsc">Numeric ↑</option>
+            <option value="numDesc">Numeric ↓</option>
+            <option value="reverse">Reverse</option>
+            <option value="shuffle">Shuffle</option>
+          </select>
+        </div>
+        <label class="flex cursor-pointer items-center gap-2 pb-2 text-sm font-semibold text-slate-600 dark:text-slate-300"><input type="checkbox" id="sd-dupes" class="h-4 w-4 accent-orange-500" checked /> Remove duplicates</label>
+        <label class="flex cursor-pointer items-center gap-2 pb-2 text-sm font-semibold text-slate-600 dark:text-slate-300"><input type="checkbox" id="sd-ci" class="h-4 w-4 accent-orange-500" /> Ignore case</label>
+        <label class="flex cursor-pointer items-center gap-2 pb-2 text-sm font-semibold text-slate-600 dark:text-slate-300"><input type="checkbox" id="sd-empty" class="h-4 w-4 accent-orange-500" checked /> Remove empty</label>
+        <label class="flex cursor-pointer items-center gap-2 pb-2 text-sm font-semibold text-slate-600 dark:text-slate-300"><input type="checkbox" id="sd-trim" class="h-4 w-4 accent-orange-500" checked /> Trim spaces</label>
+      </div>
+    </div>
+
+    <div class="grid gap-5 lg:grid-cols-2">
+      <div class="tool-panel flex min-w-0 flex-col">
+        <label class="field-label" for="sd-in">Input</label>
+        <textarea id="sd-in" rows="16" spellcheck="false" placeholder="One item per line…" class="w-full flex-1 resize-y rounded-xl border border-slate-200 bg-slate-50 px-3 py-3 font-mono text-sm leading-6 outline-none transition-all focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10 dark:border-slate-700 dark:bg-slate-900/60 dark:text-slate-100"></textarea>
+      </div>
+      <div class="tool-panel flex min-w-0 flex-col">
+        <label class="field-label" for="sd-out">Output</label>
+        <textarea id="sd-out" rows="16" readonly class="w-full flex-1 resize-y rounded-xl border border-slate-200 bg-slate-50 px-3 py-3 font-mono text-sm leading-6 outline-none dark:border-slate-700 dark:bg-slate-900/60 dark:text-slate-100"></textarea>
+        <div class="mt-4 grid grid-cols-2 gap-3">
+          <button type="button" id="sd-copy" class="btn-premium">Copy output</button>
+          <button type="button" id="sd-download" class="btn-premium-ghost">Download .txt</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    import "../scripts/tools/sort-dedupe-lines";
+  </script>
+</CenteredTool>

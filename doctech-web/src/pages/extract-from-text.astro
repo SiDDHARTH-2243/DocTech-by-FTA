@@ -1,0 +1,47 @@
+---
+import CenteredTool from "../components/CenteredTool.astro";
+---
+
+<CenteredTool
+  wide
+  title="Extract from Text"
+  subtitle="Pull emails, URLs, phone numbers, hashtags, @mentions, numbers and IP addresses out of any block of text — deduplicated and ready to copy."
+>
+  <div class="mb-4 flex items-center gap-2">
+    <span class="local-chip">🔒 100% in your browser</span>
+    <span class="text-xs text-slate-400 dark:text-slate-500">nothing is uploaded</span>
+  </div>
+
+  <div class="space-y-5">
+    <div class="tool-panel">
+      <div class="flex flex-wrap items-center gap-x-5 gap-y-2">
+        {[
+          ["emails", "Emails", true],
+          ["urls", "URLs", true],
+          ["phones", "Phones", false],
+          ["hashtags", "Hashtags", false],
+          ["mentions", "@Mentions", false],
+          ["numbers", "Numbers", false],
+          ["ips", "IP addresses", false],
+        ].map(([kind, label, on]) => (
+          <label class="flex cursor-pointer items-center gap-2 text-sm font-semibold text-slate-600 dark:text-slate-300">
+            <input type="checkbox" class="ex-kind h-4 w-4 accent-orange-500" data-kind={kind} checked={on as boolean} /> {label}
+          </label>
+        ))}
+        <label class="ml-auto flex cursor-pointer items-center gap-2 text-sm font-semibold text-slate-600 dark:text-slate-300"><input type="checkbox" id="ex-dedupe" class="h-4 w-4 accent-orange-500" checked /> Deduplicate</label>
+      </div>
+    </div>
+
+    <div class="grid gap-5 lg:grid-cols-2">
+      <div class="tool-panel flex min-w-0 flex-col">
+        <label class="field-label" for="ex-in">Input text</label>
+        <textarea id="ex-in" rows="16" spellcheck="false" placeholder="Paste text containing emails, links, numbers…" class="w-full flex-1 resize-y rounded-xl border border-slate-200 bg-slate-50 px-3 py-3 font-mono text-sm leading-6 outline-none transition-all focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10 dark:border-slate-700 dark:bg-slate-900/60 dark:text-slate-100"></textarea>
+      </div>
+      <div id="ex-results" class="min-w-0 space-y-4"></div>
+    </div>
+  </div>
+
+  <script>
+    import "../scripts/tools/extract-from-text";
+  </script>
+</CenteredTool>

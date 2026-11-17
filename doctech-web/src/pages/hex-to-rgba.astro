@@ -1,0 +1,48 @@
+---
+import CenteredTool from "../components/CenteredTool.astro";
+---
+
+<CenteredTool
+  title="HEX to RGBA Converter"
+  subtitle="Convert a HEX color code to RGBA and see every detail of the color — RGB, HSL, HSV, CMYK and luminance."
+>
+  <div class="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900">
+    <div class="flex flex-wrap items-end gap-4">
+      <div>
+        <label class="mb-1.5 block text-sm font-semibold" for="h2r-picker">Pick</label>
+        <input id="h2r-picker" type="color" value="#f97316" class="h-11 w-14 cursor-pointer rounded-lg border border-slate-300 bg-transparent dark:border-slate-700" />
+      </div>
+      <div class="flex-1">
+        <label class="mb-1.5 block text-sm font-semibold" for="h2r-hex">HEX code</label>
+        <input
+          id="h2r-hex"
+          type="text"
+          value="#f97316"
+          spellcheck="false"
+          class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 font-mono text-sm uppercase focus:border-orange-400 focus:ring-2 focus:ring-orange-200 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:focus:ring-orange-500/30"
+        />
+      </div>
+      <div class="w-40">
+        <label class="mb-1.5 block text-sm font-semibold" for="h2r-alpha">
+          Alpha <span id="h2r-alpha-val" class="text-orange-500">100%</span>
+        </label>
+        <input id="h2r-alpha" type="range" min="0" max="100" value="100" class="w-full accent-orange-500" />
+      </div>
+    </div>
+
+    <!-- Preview (checkerboard shows transparency) -->
+    <div
+      class="mt-5 h-24 w-full rounded-xl border border-slate-200 dark:border-slate-700"
+      style="background-image:linear-gradient(45deg,#ccc 25%,transparent 25%),linear-gradient(-45deg,#ccc 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#ccc 75%),linear-gradient(-45deg,transparent 75%,#ccc 75%);background-size:16px 16px;background-position:0 0,0 8px,8px -8px,-8px 0;"
+    >
+      <div id="h2r-swatch" class="h-full w-full rounded-xl"></div>
+    </div>
+
+    <p id="h2r-error" class="mt-3 hidden text-sm text-red-600 dark:text-red-400"></p>
+    <div id="h2r-details" class="mt-5 grid gap-2"></div>
+  </div>
+
+  <script>
+    import "../scripts/tools/hex-to-rgba";
+  </script>
+</CenteredTool>

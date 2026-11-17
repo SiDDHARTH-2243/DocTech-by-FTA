@@ -1,0 +1,35 @@
+---
+import CenteredTool from "../components/CenteredTool.astro";
+---
+
+<CenteredTool
+  wide
+  title="Color Blindness Simulator"
+  subtitle="See how a color or a whole palette looks to people with protanopia, deuteranopia, tritanopia and total color blindness — so your designs work for everyone."
+>
+  <div class="mb-4 flex items-center gap-2">
+    <span class="local-chip">🔒 100% in your browser</span>
+    <span class="text-xs text-slate-400 dark:text-slate-500">simulated with standard CVD matrices</span>
+  </div>
+
+  <div class="space-y-5">
+    <div class="tool-panel">
+      <div class="flex flex-wrap items-center gap-4">
+        <div>
+          <label class="field-label" for="cb-palette">Palette (one color per box)</label>
+          <div id="cb-palette" class="flex flex-wrap items-center gap-2"></div>
+        </div>
+        <div class="ml-auto flex items-end gap-2">
+          <button type="button" id="cb-add" class="btn-premium-ghost !w-auto px-4">＋ Add color</button>
+          <button type="button" id="cb-preset" class="btn-premium !w-auto px-4">Load a tricky palette</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="cb-results" class="space-y-4"></div>
+  </div>
+
+  <script>
+    import "../scripts/tools/color-blindness-simulator";
+  </script>
+</CenteredTool>

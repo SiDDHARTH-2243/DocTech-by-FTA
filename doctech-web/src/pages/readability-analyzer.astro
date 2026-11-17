@@ -1,0 +1,54 @@
+---
+import CenteredTool from "../components/CenteredTool.astro";
+---
+
+<CenteredTool
+  wide
+  title="Readability & Keyword Density"
+  subtitle="Score your writing with the Flesch reading-ease and grade-level formulas, see reading and speaking time, and find your most-used keywords — live as you type."
+>
+  <div class="mb-4 flex items-center gap-2">
+    <span class="local-chip">🔒 100% in your browser</span>
+    <span class="text-xs text-slate-400 dark:text-slate-500">no uploads, ever</span>
+  </div>
+
+  <div class="grid gap-5 lg:grid-cols-2">
+    <div class="tool-panel flex min-w-0 flex-col">
+      <label class="field-label" for="ra-in">Your text</label>
+      <textarea id="ra-in" rows="18" spellcheck="false" placeholder="Paste an article, essay or paragraph…" class="w-full flex-1 resize-y rounded-xl border border-slate-200 bg-slate-50 px-3 py-3 text-sm leading-6 outline-none transition-all focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10 dark:border-slate-700 dark:bg-slate-900/60 dark:text-slate-100"></textarea>
+    </div>
+
+    <div class="min-w-0 space-y-4">
+      <div class="tool-panel text-center">
+        <span class="field-label">Flesch reading ease</span>
+        <div id="ra-ease" class="font-mono text-6xl font-extrabold tabular-nums">—</div>
+        <div id="ra-ease-note" class="mt-1 text-sm font-semibold text-slate-400"></div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-3 sm:grid-cols-3">
+        {[
+          ["Grade level", "ra-grade"],
+          ["Reading time", "ra-read"],
+          ["Speaking time", "ra-speak"],
+          ["Words", "ra-words"],
+          ["Sentences", "ra-sentences"],
+          ["Complex words", "ra-complex"],
+        ].map(([label, id]) => (
+          <div class="rounded-2xl bg-slate-50 px-3 py-2.5 dark:bg-slate-800/50">
+            <div class="text-[11px] font-bold uppercase tracking-wide text-slate-400">{label}</div>
+            <div id={id} class="font-mono text-lg font-bold text-slate-700 tabular-nums dark:text-slate-100">—</div>
+          </div>
+        ))}
+      </div>
+
+      <div class="tool-panel">
+        <span class="field-label">Top keywords <span class="font-normal normal-case text-slate-400">— click to copy</span></span>
+        <div id="ra-keywords" class="space-y-1.5"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    import "../scripts/tools/readability-analyzer";
+  </script>
+</CenteredTool>

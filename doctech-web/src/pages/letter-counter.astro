@@ -1,0 +1,26 @@
+---
+import CenteredTool from "../components/CenteredTool.astro";
+---
+
+<CenteredTool
+  title="Letter Counter"
+  subtitle="Count letters, words and sentences in your text and check it against common length limits."
+>
+  <div class="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900">
+    <textarea
+      id="lc-input"
+      rows="7"
+      placeholder="Type or paste your text here…"
+      class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm focus:border-orange-400 focus:ring-2 focus:ring-orange-200 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:focus:ring-orange-500/30"
+    ></textarea>
+
+    <div id="lc-stats" class="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4"></div>
+
+    <h3 class="mt-6 mb-2 text-xs font-semibold tracking-wide text-slate-400 uppercase">Common limits</h3>
+    <div id="lc-limits" class="grid gap-2.5"></div>
+  </div>
+
+  <script>
+    import "../scripts/tools/letter-counter";
+  </script>
+</CenteredTool>

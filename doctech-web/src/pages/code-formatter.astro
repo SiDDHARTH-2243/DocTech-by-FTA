@@ -1,0 +1,72 @@
+---
+import CenteredTool from "../components/CenteredTool.astro";
+import CodePane from "../components/CodePane.astro";
+---
+
+<CenteredTool
+  wide
+  title="Code Formatter & Beautifier"
+  subtitle="Pretty-print JavaScript, TypeScript, CSS, SCSS, LESS, HTML, JSON, Markdown and YAML with Prettier — your style options, all in your browser."
+>
+  <div class="space-y-5">
+    <div class="tool-panel">
+      <div class="flex flex-wrap items-end gap-4">
+        <div>
+          <label class="field-label" for="fmt-lang">Language</label>
+          <select id="fmt-lang" class="rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm outline-none focus:border-orange-500 dark:border-slate-700 dark:bg-slate-800/50 dark:text-slate-100">
+            <option value="js">JavaScript</option>
+            <option value="ts">TypeScript</option>
+            <option value="jsx">JSX / React</option>
+            <option value="css">CSS</option>
+            <option value="scss">SCSS</option>
+            <option value="less">LESS</option>
+            <option value="html">HTML</option>
+            <option value="json">JSON</option>
+            <option value="md">Markdown</option>
+            <option value="yaml">YAML</option>
+          </select>
+        </div>
+        <div>
+          <label class="field-label" for="fmt-width">Print width</label>
+          <input id="fmt-width" type="number" min="20" max="200" value="80" class="w-24 rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm outline-none focus:border-orange-500 dark:border-slate-700 dark:bg-slate-800/50 dark:text-slate-100" />
+        </div>
+        <div>
+          <label class="field-label" for="fmt-tab">Indent</label>
+          <select id="fmt-tab" class="rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm outline-none focus:border-orange-500 dark:border-slate-700 dark:bg-slate-800/50 dark:text-slate-100">
+            <option value="2">2 spaces</option>
+            <option value="4">4 spaces</option>
+            <option value="tab">Tabs</option>
+          </select>
+        </div>
+        <div>
+          <label class="field-label" for="fmt-trailing">Trailing commas</label>
+          <select id="fmt-trailing" class="rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm outline-none focus:border-orange-500 dark:border-slate-700 dark:bg-slate-800/50 dark:text-slate-100">
+            <option value="all">All</option>
+            <option value="es5">ES5</option>
+            <option value="none">None</option>
+          </select>
+        </div>
+
+        <div id="fmt-js-opts" class="flex flex-wrap items-center gap-4">
+          <label class="flex cursor-pointer items-center gap-2 pb-2 text-sm font-semibold text-slate-600 dark:text-slate-300">
+            <input type="checkbox" id="fmt-semi" class="h-4 w-4 accent-orange-500" checked /> Semicolons
+          </label>
+          <label class="flex cursor-pointer items-center gap-2 pb-2 text-sm font-semibold text-slate-600 dark:text-slate-300">
+            <input type="checkbox" id="fmt-single" class="h-4 w-4 accent-orange-500" /> Single quotes
+          </label>
+        </div>
+
+        <button type="button" id="fmt-run" class="ml-auto rounded-xl bg-orange-500 px-5 py-2 text-sm font-bold text-white transition-colors hover:bg-orange-600">Format</button>
+      </div>
+    </div>
+
+    <div class="grid gap-5 lg:grid-cols-2">
+      <CodePane id="fmt-in" label="Input" placeholder="Paste code to format…" rows={20} actions={["sample", "upload", "clear"]} counts />
+      <CodePane id="fmt-out" label="Formatted" variant="output" language="javascript" rows={20} actions={["copy", "download"]} counts />
+    </div>
+  </div>
+
+  <script>
+    import "../scripts/tools/code-formatter";
+  </script>
+</CenteredTool>

@@ -1,0 +1,213 @@
+---
+import CenteredTool from "../components/CenteredTool.astro";
+---
+
+<CenteredTool
+  title="Glitch Text Generator"
+  subtitle="Create stunning animated glitch text effects with multiple styles, customize colors & intensity, and export production-ready CSS + HTML."
+  wide
+>
+  <div class="space-y-5">
+
+    <!-- ═══ Preview Stage (pinned so it stays visible while you tweak) ═══ -->
+    <div class="relative overflow-hidden rounded-2xl shadow-sm lg:sticky lg:top-4 lg:z-20">
+      <!-- Scanline overlay -->
+      <div class="pointer-events-none absolute inset-0 z-10 opacity-[0.03]" style="background:repeating-linear-gradient(0deg,transparent,transparent 2px,#fff 2px,#fff 4px)"></div>
+      <!-- Vignette -->
+      <div class="pointer-events-none absolute inset-0 z-10" style="background:radial-gradient(ellipse at center,transparent 50%,rgba(0,0,0,0.6) 100%)"></div>
+
+      <div id="gx-stage" class="flex min-h-[240px] items-center justify-center bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 px-6 py-10 transition-colors">
+        <div id="gx-preview"></div>
+      </div>
+
+      <!-- Stage controls overlay -->
+      <div class="absolute bottom-3 right-3 z-20 flex gap-1.5">
+        <button id="gx-bg-toggle" type="button" class="rounded-lg bg-white/10 px-2.5 py-1 text-[10px] font-semibold text-white/60 backdrop-blur-sm transition-colors hover:bg-white/20 hover:text-white" title="Toggle background">
+          <svg class="inline-block h-3 w-3 mr-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+          BG
+        </button>
+        <button id="gx-fullscreen" type="button" class="rounded-lg bg-white/10 px-2.5 py-1 text-[10px] font-semibold text-white/60 backdrop-blur-sm transition-colors hover:bg-white/20 hover:text-white" title="Fullscreen preview">
+          <svg class="inline-block h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- ═══ Controls ═══ -->
+    <div class="grid gap-4 lg:grid-cols-[1fr_320px]">
+
+      <!-- Left: Main controls -->
+      <div class="space-y-4">
+
+        <!-- Text input -->
+        <div class="rounded-2xl border border-slate-200 bg-white p-4 dark:border-slate-700 dark:bg-slate-900">
+          <label class="mb-2 flex items-center gap-2 text-xs font-bold tracking-wide text-slate-500 uppercase dark:text-slate-400" for="gx-text">
+            <svg class="h-3.5 w-3.5 text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+            Text
+          </label>
+          <input id="gx-text" type="text" value="GLITCH" class="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-lg font-bold tracking-wider outline-none transition-all focus:border-orange-400 focus:ring-2 focus:ring-orange-500/20 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100" placeholder="Enter your text…" />
+        </div>
+
+        <!-- Glitch Style Presets -->
+        <div class="rounded-2xl border border-slate-200 bg-white p-4 dark:border-slate-700 dark:bg-slate-900">
+          <div class="mb-3 flex items-center gap-2">
+            <svg class="h-3.5 w-3.5 text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+            <span class="text-xs font-bold tracking-wide text-slate-500 uppercase dark:text-slate-400">Glitch Style</span>
+          </div>
+          <div id="gx-styles" class="grid grid-cols-3 gap-2 sm:grid-cols-4"></div>
+        </div>
+
+        <!-- Color & Typography -->
+        <div class="grid gap-4 sm:grid-cols-2">
+          <!-- Colors -->
+          <div class="rounded-2xl border border-slate-200 bg-white p-4 dark:border-slate-700 dark:bg-slate-900">
+            <div class="mb-3 flex items-center gap-2">
+              <svg class="h-3.5 w-3.5 text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/></svg>
+              <span class="text-xs font-bold tracking-wide text-slate-500 uppercase dark:text-slate-400">Colors</span>
+            </div>
+            <div class="grid grid-cols-3 gap-3">
+              <div>
+                <label class="mb-1 block text-[10px] font-semibold text-slate-400" for="gx-main-color">Main</label>
+                <input id="gx-main-color" type="color" value="#ffffff" class="h-9 w-full cursor-pointer rounded-lg border border-slate-200 bg-transparent dark:border-slate-700" />
+              </div>
+              <div>
+                <label class="mb-1 block text-[10px] font-semibold text-cyan-400" for="gx-c1">Channel 1</label>
+                <input id="gx-c1" type="color" value="#00e5ff" class="h-9 w-full cursor-pointer rounded-lg border border-slate-200 bg-transparent dark:border-slate-700" />
+              </div>
+              <div>
+                <label class="mb-1 block text-[10px] font-semibold text-pink-400" for="gx-c2">Channel 2</label>
+                <input id="gx-c2" type="color" value="#ff00c1" class="h-9 w-full cursor-pointer rounded-lg border border-slate-200 bg-transparent dark:border-slate-700" />
+              </div>
+            </div>
+            <!-- Color presets -->
+            <div class="mt-3 flex flex-wrap gap-1" id="gx-color-presets">
+              <button data-colors="#00e5ff,#ff00c1" class="h-5 w-5 rounded-full ring-1 ring-slate-200 transition-transform hover:scale-110 dark:ring-slate-700" style="background:linear-gradient(135deg,#00e5ff,#ff00c1)" title="Cyber"></button>
+              <button data-colors="#ff0000,#0000ff" class="h-5 w-5 rounded-full ring-1 ring-slate-200 transition-transform hover:scale-110 dark:ring-slate-700" style="background:linear-gradient(135deg,#ff0000,#0000ff)" title="Classic"></button>
+              <button data-colors="#39ff14,#ff073a" class="h-5 w-5 rounded-full ring-1 ring-slate-200 transition-transform hover:scale-110 dark:ring-slate-700" style="background:linear-gradient(135deg,#39ff14,#ff073a)" title="Neon"></button>
+              <button data-colors="#fbbf24,#a855f7" class="h-5 w-5 rounded-full ring-1 ring-slate-200 transition-transform hover:scale-110 dark:ring-slate-700" style="background:linear-gradient(135deg,#fbbf24,#a855f7)" title="Sunset"></button>
+              <button data-colors="#22d3ee,#f97316" class="h-5 w-5 rounded-full ring-1 ring-slate-200 transition-transform hover:scale-110 dark:ring-slate-700" style="background:linear-gradient(135deg,#22d3ee,#f97316)" title="Ocean"></button>
+              <button data-colors="#e2e8f0,#64748b" class="h-5 w-5 rounded-full ring-1 ring-slate-200 transition-transform hover:scale-110 dark:ring-slate-700" style="background:linear-gradient(135deg,#e2e8f0,#64748b)" title="Silver"></button>
+            </div>
+          </div>
+
+          <!-- Typography -->
+          <div class="rounded-2xl border border-slate-200 bg-white p-4 dark:border-slate-700 dark:bg-slate-900">
+            <div class="mb-3 flex items-center gap-2">
+              <svg class="h-3.5 w-3.5 text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16"/></svg>
+              <span class="text-xs font-bold tracking-wide text-slate-500 uppercase dark:text-slate-400">Typography</span>
+            </div>
+            <div class="space-y-3">
+              <div>
+                <label class="mb-1 block text-[10px] font-semibold text-slate-400" for="gx-font-size">
+                  Font Size <span id="gx-font-size-val" class="text-orange-500">56</span>px
+                </label>
+                <input id="gx-font-size" type="range" min="24" max="120" value="56" class="w-full accent-orange-500" />
+              </div>
+              <div>
+                <label class="mb-1 block text-[10px] font-semibold text-slate-400" for="gx-letter-spacing">
+                  Letter Spacing <span id="gx-letter-spacing-val" class="text-orange-500">3</span>px
+                </label>
+                <input id="gx-letter-spacing" type="range" min="0" max="20" value="3" class="w-full accent-orange-500" />
+              </div>
+              <div>
+                <label class="mb-1 block text-[10px] font-semibold text-slate-400" for="gx-font-weight">Weight</label>
+                <select id="gx-font-weight" class="w-full rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1.5 text-xs dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100">
+                  <option value="400">Regular (400)</option>
+                  <option value="600">Semibold (600)</option>
+                  <option value="700">Bold (700)</option>
+                  <option value="800" selected>Extrabold (800)</option>
+                  <option value="900">Black (900)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Intensity & Speed controls -->
+      <div class="space-y-4">
+
+        <!-- Intensity -->
+        <div class="rounded-2xl border border-slate-200 bg-white p-4 dark:border-slate-700 dark:bg-slate-900">
+          <div class="mb-3 flex items-center gap-2">
+            <svg class="h-3.5 w-3.5 text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+            <span class="text-xs font-bold tracking-wide text-slate-500 uppercase dark:text-slate-400">Intensity</span>
+          </div>
+          <div>
+            <label class="mb-1.5 block text-[10px] font-semibold text-slate-400" for="gx-intensity">
+              Offset <span id="gx-intensity-val" class="text-orange-500">4</span>px
+            </label>
+            <input id="gx-intensity" type="range" min="1" max="20" value="4" class="w-full accent-orange-500" />
+          </div>
+          <div class="mt-3">
+            <label class="mb-1.5 block text-[10px] font-semibold text-slate-400" for="gx-speed">
+              Speed <span id="gx-speed-val" class="text-orange-500">Normal</span>
+            </label>
+            <input id="gx-speed" type="range" min="1" max="5" value="3" class="w-full accent-orange-500" />
+          </div>
+        </div>
+
+        <!-- Background Color -->
+        <div class="rounded-2xl border border-slate-200 bg-white p-4 dark:border-slate-700 dark:bg-slate-900">
+          <div class="mb-3 flex items-center gap-2">
+            <svg class="h-3.5 w-3.5 text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+            <span class="text-xs font-bold tracking-wide text-slate-500 uppercase dark:text-slate-400">Background</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <input id="gx-bg-color" type="color" value="#0f172a" class="h-9 w-12 cursor-pointer rounded-lg border border-slate-200 bg-transparent dark:border-slate-700" />
+            <span id="gx-bg-hex" class="font-mono text-xs text-slate-500 dark:text-slate-400">#0f172a</span>
+          </div>
+          <div class="mt-2 flex flex-wrap gap-1.5">
+            <button data-bg="#0f172a" class="h-6 w-6 rounded-md ring-1 ring-slate-200 transition-transform hover:scale-110 dark:ring-slate-700" style="background:#0f172a" title="Dark"></button>
+            <button data-bg="#000000" class="h-6 w-6 rounded-md ring-1 ring-slate-200 transition-transform hover:scale-110 dark:ring-slate-700" style="background:#000000" title="Black"></button>
+            <button data-bg="#1a1a2e" class="h-6 w-6 rounded-md ring-1 ring-slate-200 transition-transform hover:scale-110 dark:ring-slate-700" style="background:#1a1a2e" title="Midnight"></button>
+            <button data-bg="#0d1117" class="h-6 w-6 rounded-md ring-1 ring-slate-200 transition-transform hover:scale-110 dark:ring-slate-700" style="background:#0d1117" title="GitHub Dark"></button>
+            <button data-bg="#1e293b" class="h-6 w-6 rounded-md ring-1 ring-slate-200 transition-transform hover:scale-110 dark:ring-slate-700" style="background:#1e293b" title="Slate"></button>
+            <button data-bg="#ffffff" class="h-6 w-6 rounded-md ring-1 ring-slate-200 transition-transform hover:scale-110 dark:ring-slate-700" style="background:#ffffff" title="White"></button>
+          </div>
+        </div>
+
+        <!-- Text Transform -->
+        <div class="rounded-2xl border border-slate-200 bg-white p-4 dark:border-slate-700 dark:bg-slate-900">
+          <div class="mb-3 flex items-center gap-2">
+            <svg class="h-3.5 w-3.5 text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+            <span class="text-xs font-bold tracking-wide text-slate-500 uppercase dark:text-slate-400">Options</span>
+          </div>
+          <div class="space-y-2">
+            <label class="flex cursor-pointer items-center gap-2 text-xs font-medium text-slate-600 dark:text-slate-300">
+              <input id="gx-uppercase" type="checkbox" checked class="accent-orange-500" />
+              Force uppercase
+            </label>
+            <label class="flex cursor-pointer items-center gap-2 text-xs font-medium text-slate-600 dark:text-slate-300">
+              <input id="gx-scanlines" type="checkbox" class="accent-orange-500" />
+              Scanline overlay
+            </label>
+            <label class="flex cursor-pointer items-center gap-2 text-xs font-medium text-slate-600 dark:text-slate-300">
+              <input id="gx-text-shadow" type="checkbox" checked class="accent-orange-500" />
+              Glow effect
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ Code Output ═══ -->
+    <div class="overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-700">
+      <div class="flex items-center justify-between border-b border-slate-200 bg-slate-50 px-4 py-2 dark:border-slate-700 dark:bg-slate-800">
+        <div class="flex items-center gap-3">
+          <span class="text-xs font-semibold tracking-wide text-slate-400 uppercase">HTML + CSS</span>
+          <div class="flex gap-1">
+            <button data-code="both" class="gx-code-btn rounded-md bg-orange-500 px-2 py-0.5 text-[10px] font-semibold text-white">Both</button>
+            <button data-code="html" class="gx-code-btn rounded-md border border-slate-300 px-2 py-0.5 text-[10px] font-semibold text-slate-500 hover:bg-slate-100 dark:border-slate-600 dark:text-slate-400">HTML Only</button>
+            <button data-code="css" class="gx-code-btn rounded-md border border-slate-300 px-2 py-0.5 text-[10px] font-semibold text-slate-500 hover:bg-slate-100 dark:border-slate-600 dark:text-slate-400">CSS Only</button>
+          </div>
+        </div>
+        <button id="gx-copy" type="button" class="rounded-lg bg-orange-500 px-3 py-1 text-xs font-semibold text-white transition-colors hover:bg-orange-600">Copy</button>
+      </div>
+      <pre id="gx-css" class="max-h-72 overflow-auto px-4 py-3 font-mono text-xs leading-relaxed dark:text-slate-100"></pre>
+    </div>
+  </div>
+
+  <script>
+    import "../scripts/tools/glitch-text-generator";
+  </script>
+</CenteredTool>

@@ -1,0 +1,59 @@
+---
+import CenteredTool from "../components/CenteredTool.astro";
+---
+
+<CenteredTool
+  wide
+  title="QR Code Generator"
+  subtitle="Turn any link or text into a QR code with custom size, colors and error correction — then download it as PNG or SVG."
+>
+  <div class="lg:grid lg:grid-cols-[1fr_minmax(0,360px)] lg:items-start lg:gap-6">
+    <!-- Preview -->
+    <div class="lg:sticky lg:top-4">
+      <div class="preview-stage min-h-[340px] p-6">
+        <canvas id="qr-canvas" class="max-h-[420px] max-w-full rounded-lg"></canvas>
+      </div>
+    </div>
+
+    <!-- Controls -->
+    <div class="mt-5 space-y-5 lg:mt-0">
+      <div class="tool-panel space-y-5">
+        <div>
+          <label class="field-label" for="qr-text">Text or URL</label>
+          <textarea id="qr-text" rows="3" class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm outline-none transition-all focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10 dark:border-slate-700 dark:bg-slate-800/50 dark:text-slate-100">https://doctech.app</textarea>
+        </div>
+        <div>
+          <div class="mb-2 flex items-center justify-between">
+            <span class="text-xs font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400">Size</span>
+            <span class="rounded-md bg-orange-100 px-2 py-0.5 text-xs font-bold text-orange-700 dark:bg-orange-500/20 dark:text-orange-400"><span id="qr-size-val">320</span>px</span>
+          </div>
+          <input id="qr-size" type="range" min="128" max="1024" step="32" value="320" class="h-2 w-full cursor-pointer appearance-none rounded-full bg-slate-200 accent-orange-500 outline-none dark:bg-slate-700" />
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="field-label" for="qr-ecl">Error correction</label>
+            <select id="qr-ecl" class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm font-semibold dark:border-slate-700 dark:bg-slate-800/50 dark:text-slate-100">
+              <option value="L">Low (7%)</option>
+              <option value="M" selected>Medium (15%)</option>
+              <option value="Q">Quartile (25%)</option>
+              <option value="H">High (30%)</option>
+            </select>
+          </div>
+          <div class="flex items-end gap-4">
+            <div><label class="field-label" for="qr-fg">Dots</label><input id="qr-fg" type="color" value="#0f172a" class="h-11 w-14 cursor-pointer rounded-lg border border-slate-300 bg-transparent dark:border-slate-700" /></div>
+            <div><label class="field-label" for="qr-bg">Back</label><input id="qr-bg" type="color" value="#ffffff" class="h-11 w-14 cursor-pointer rounded-lg border border-slate-300 bg-transparent dark:border-slate-700" /></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-3">
+        <button id="qr-png" type="button" class="btn-premium">Download PNG</button>
+        <button id="qr-svg" type="button" class="btn-premium-ghost">Download SVG</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    import "../scripts/tools/qr-code-generator";
+  </script>
+</CenteredTool>

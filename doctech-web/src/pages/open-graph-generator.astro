@@ -1,0 +1,58 @@
+---
+import CenteredTool from "../components/CenteredTool.astro";
+---
+
+<CenteredTool
+  wide
+  title="Open Graph Meta Generator"
+  subtitle="Fill in your page details to generate Open Graph + Twitter Card meta tags, and preview how the link will look when shared."
+>
+  <div class="lg:grid lg:grid-cols-[minmax(0,380px)_1fr] lg:items-start lg:gap-6">
+    <!-- Preview -->
+    <div class="lg:sticky lg:top-4">
+      <div class="mb-2 text-xs font-semibold tracking-wide text-slate-400 uppercase">Share preview</div>
+      <div class="overflow-hidden rounded-2xl border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-900">
+        <div id="og-prev-img" class="flex aspect-[1.91/1] items-center justify-center bg-slate-100 text-xs text-slate-400 dark:bg-slate-950"></div>
+        <div class="border-t border-slate-200 px-4 py-3 dark:border-slate-700">
+          <div id="og-prev-domain" class="text-xs text-slate-400 uppercase"></div>
+          <div id="og-prev-title" class="mt-0.5 truncate text-sm font-semibold text-slate-800 dark:text-slate-100"></div>
+          <div id="og-prev-desc" class="mt-0.5 line-clamp-2 text-xs text-slate-500 dark:text-slate-400"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Form + code -->
+    <div class="mt-5 space-y-4 lg:mt-0">
+      <div class="grid gap-4 rounded-2xl border border-slate-200 bg-white p-5 sm:grid-cols-2 dark:border-slate-800 dark:bg-slate-900">
+        <label class="sm:col-span-2 block text-sm"><span class="mb-1 block font-semibold">Title</span><input id="og-title" type="text" value="My Awesome Page" class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100" /></label>
+        <label class="sm:col-span-2 block text-sm"><span class="mb-1 block font-semibold">Description</span><textarea id="og-desc" rows="2" class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100">A short, catchy summary of the page for social shares.</textarea></label>
+        <label class="block text-sm"><span class="mb-1 block font-semibold">Page URL</span><input id="og-url" type="text" value="https://example.com/page" class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100" /></label>
+        <label class="block text-sm"><span class="mb-1 block font-semibold">Image URL</span><input id="og-image" type="text" value="https://example.com/cover.jpg" class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100" /></label>
+        <label class="block text-sm"><span class="mb-1 block font-semibold">Site name</span><input id="og-site" type="text" value="Example" class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100" /></label>
+        <label class="block text-sm"><span class="mb-1 block font-semibold">Type</span>
+          <select id="og-type" class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100">
+            <option value="website">website</option><option value="article">article</option><option value="product">product</option><option value="profile">profile</option><option value="video.other">video</option>
+          </select>
+        </label>
+        <label class="block text-sm"><span class="mb-1 block font-semibold">Twitter card</span>
+          <select id="og-tw-card" class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100">
+            <option value="summary_large_image">summary_large_image</option><option value="summary">summary</option>
+          </select>
+        </label>
+        <label class="block text-sm"><span class="mb-1 block font-semibold">Twitter @handle</span><input id="og-tw-handle" type="text" value="@example" class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100" /></label>
+      </div>
+
+      <div class="overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-700">
+        <div class="flex items-center justify-between border-b border-slate-200 bg-slate-50 px-4 py-2 dark:border-slate-700 dark:bg-slate-800">
+          <span class="text-xs font-semibold tracking-wide text-slate-400 uppercase">Meta tags</span>
+          <button id="og-copy" type="button" class="rounded-lg bg-orange-500 px-3 py-1 text-xs font-semibold text-white hover:bg-orange-600">Copy</button>
+        </div>
+        <pre id="og-code" class="max-h-72 overflow-auto px-4 py-3 font-mono text-xs whitespace-pre-wrap dark:text-slate-100"></pre>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    import "../scripts/tools/open-graph-generator";
+  </script>
+</CenteredTool>

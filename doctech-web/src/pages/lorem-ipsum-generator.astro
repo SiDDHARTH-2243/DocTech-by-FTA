@@ -1,0 +1,44 @@
+---
+import CenteredTool from "../components/CenteredTool.astro";
+---
+
+<CenteredTool
+  title="Lorem Ipsum Generator"
+  subtitle="Create placeholder text with your desired number of paragraphs and properties."
+>
+  <div class="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900">
+    <div class="flex flex-wrap items-end gap-4">
+      <div class="w-32">
+        <label class="mb-1.5 block text-sm font-semibold" for="li-paras">Paragraphs</label>
+        <input id="li-paras" type="number" min="1" max="50" value="3" class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100" />
+      </div>
+      <div class="w-40">
+        <label class="mb-1.5 block text-sm font-semibold" for="li-sentences">Sentences / paragraph</label>
+        <input id="li-sentences" type="number" min="1" max="12" value="4" class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100" />
+      </div>
+      <label class="flex items-center gap-2 text-sm font-medium">
+        <input id="li-startlorem" type="checkbox" checked class="accent-orange-500" /> Start with “Lorem ipsum”
+      </label>
+      <label class="flex items-center gap-2 text-sm font-medium">
+        <input id="li-html" type="checkbox" class="accent-orange-500" /> Wrap in &lt;p&gt; tags
+      </label>
+      <button id="li-generate" type="button" class="rounded-xl bg-orange-500 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-orange-600">
+        Generate
+      </button>
+    </div>
+
+    <textarea
+      id="li-output"
+      rows="12"
+      readonly
+      class="mt-4 w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm leading-relaxed dark:border-slate-700 dark:bg-slate-800/50 dark:text-slate-100"
+    ></textarea>
+    <button id="li-copy" type="button" class="mt-3 rounded-xl border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 transition-colors hover:bg-slate-100 dark:border-slate-600 dark:text-slate-200 dark:hover:bg-slate-800">
+      Copy
+    </button>
+  </div>
+
+  <script>
+    import "../scripts/tools/lorem-ipsum-generator";
+  </script>
+</CenteredTool>

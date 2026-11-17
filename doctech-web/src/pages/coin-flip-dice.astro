@@ -1,0 +1,51 @@
+---
+import CenteredTool from "../components/CenteredTool.astro";
+---
+
+<CenteredTool
+  wide
+  title="Coin Flip & Dice Roller"
+  subtitle="Flip a fair coin or roll dice (d4 to d20, several at once) with a satisfying animation — great for games and quick decisions."
+>
+  <div class="lg:grid lg:grid-cols-2 lg:gap-6">
+    <!-- Coin -->
+    <div class="tool-panel flex flex-col items-center gap-5">
+      <h3 class="self-start font-bold text-slate-800 dark:text-slate-100">Coin Flip</h3>
+      <div id="coin-visual" class="flex h-40 w-40 items-center justify-center rounded-full bg-gradient-to-br from-amber-300 to-amber-500 text-5xl font-black text-amber-900 shadow-lg transition-transform duration-500">?</div>
+      <button id="coin-flip" type="button" class="btn-premium !w-auto px-8">Flip coin</button>
+      <div class="flex gap-6 text-sm font-semibold text-slate-500 dark:text-slate-400">
+        <span>Heads: <span id="coin-heads" class="text-orange-500">0</span></span>
+        <span>Tails: <span id="coin-tails" class="text-orange-500">0</span></span>
+      </div>
+    </div>
+
+    <!-- Dice -->
+    <div class="tool-panel mt-5 flex flex-col gap-5 lg:mt-0">
+      <h3 class="font-bold text-slate-800 dark:text-slate-100">Dice Roller</h3>
+      <div class="flex items-end gap-4">
+        <div class="w-28">
+          <label class="field-label" for="dice-sides">Sides</label>
+          <select id="dice-sides" class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm font-semibold dark:border-slate-700 dark:bg-slate-800/50 dark:text-slate-100">
+            <option value="4">d4</option>
+            <option value="6" selected>d6</option>
+            <option value="8">d8</option>
+            <option value="10">d10</option>
+            <option value="12">d12</option>
+            <option value="20">d20</option>
+          </select>
+        </div>
+        <div class="w-28">
+          <label class="field-label" for="dice-qty">How many</label>
+          <input id="dice-qty" type="number" min="1" max="12" value="2" class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm font-semibold dark:border-slate-700 dark:bg-slate-800/50 dark:text-slate-100" />
+        </div>
+        <button id="dice-roll" type="button" class="btn-premium !w-auto grow">🎲 Roll</button>
+      </div>
+      <div id="dice-result" class="flex min-h-[96px] flex-wrap content-start gap-3"></div>
+      <div class="text-sm font-semibold text-slate-500 dark:text-slate-400">Total: <span id="dice-total" class="text-orange-500">—</span></div>
+    </div>
+  </div>
+
+  <script>
+    import "../scripts/tools/coin-flip-dice";
+  </script>
+</CenteredTool>

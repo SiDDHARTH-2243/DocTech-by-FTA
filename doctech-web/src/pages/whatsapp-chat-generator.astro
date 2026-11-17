@@ -1,0 +1,33 @@
+---
+import CenteredTool from "../components/CenteredTool.astro";
+---
+
+<CenteredTool
+  wide
+  title="WhatsApp Chat Generator"
+  subtitle="Build a realistic WhatsApp conversation and download it as an image — great for mockups, demos and jokes with friends."
+>
+  <div class="lg:grid lg:grid-cols-[1fr_minmax(0,360px)] lg:items-start lg:gap-6">
+    <div class="lg:sticky lg:top-4">
+      <div class="flex justify-center overflow-auto rounded-2xl border border-slate-200 bg-slate-100 p-4 dark:border-slate-700 dark:bg-slate-950">
+        <canvas id="wa-canvas" class="max-h-[560px] max-w-full rounded-xl shadow"></canvas>
+      </div>
+    </div>
+    <div class="mt-5 space-y-4 lg:mt-0">
+      <div class="grid grid-cols-2 gap-3 rounded-2xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900">
+        <label class="block text-sm"><span class="mb-1 block text-xs font-semibold">Contact name</span><input id="wa-name" type="text" value="Alex" class="w-full rounded-lg border border-slate-300 bg-white px-2.5 py-1.5 text-sm dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100" /></label>
+        <label class="block text-sm"><span class="mb-1 block text-xs font-semibold">Theme</span><select id="wa-theme" class="w-full rounded-lg border border-slate-300 bg-white px-2.5 py-1.5 text-sm dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100"><option value="light">Light</option><option value="dark">Dark</option></select></label>
+        <label class="col-span-2 block text-sm"><span class="mb-1 block text-xs font-semibold">Avatar (optional)</span><input id="wa-avatar" type="file" accept="image/*" class="w-full text-xs text-slate-500 file:mr-2 file:rounded-md file:border-0 file:bg-slate-200 file:px-2 file:py-1 file:text-xs dark:text-slate-400 dark:file:bg-slate-700" /></label>
+      </div>
+      <div class="rounded-2xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900">
+        <div class="mb-2 flex items-center justify-between"><span class="text-xs font-semibold tracking-wide text-slate-400 uppercase">Messages</span><button id="wa-add" type="button" class="rounded-lg bg-slate-100 px-2.5 py-1 text-xs font-semibold text-slate-600 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-300">+ Add</button></div>
+        <div id="wa-list" class="space-y-2"></div>
+      </div>
+      <button id="wa-download" type="button" class="w-full rounded-xl bg-orange-500 px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-orange-600">Download PNG</button>
+    </div>
+  </div>
+
+  <script>
+    import "../scripts/tools/whatsapp-chat-generator";
+  </script>
+</CenteredTool>

@@ -1,0 +1,64 @@
+---
+import CenteredTool from "../components/CenteredTool.astro";
+---
+
+<CenteredTool
+  wide
+  title="SVG Pattern Generator"
+  subtitle="Build seamless SVG background patterns — pick a style, tweak colors and scale, then copy or download the SVG."
+>
+  <div class="lg:grid lg:grid-cols-[1fr_minmax(0,380px)] lg:items-start lg:gap-6">
+    <!-- Preview -->
+    <div class="lg:sticky lg:top-4">
+      <div id="pat-preview" class="min-h-[320px] overflow-hidden rounded-3xl border border-slate-200 shadow-sm dark:border-slate-800"></div>
+    </div>
+
+    <!-- Gallery + controls + code -->
+    <div class="mt-5 space-y-5 lg:mt-0">
+      <div>
+        <div class="mb-2 font-bold text-slate-800 dark:text-slate-100">Pattern</div>
+        <div id="pat-gallery" class="grid grid-cols-4 gap-2 sm:grid-cols-5"></div>
+      </div>
+
+      <div class="tool-panel grid grid-cols-2 gap-5">
+        <div class="flex items-center gap-2">
+          <label class="text-xs font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400" for="pat-fg">Color</label>
+          <input id="pat-fg" type="color" value="#f97316" class="h-8 w-12 cursor-pointer rounded border border-slate-300 bg-transparent dark:border-slate-700" />
+        </div>
+        <div class="flex items-center gap-2">
+          <label class="text-xs font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400" for="pat-bg">Background</label>
+          <input id="pat-bg" type="color" value="#0f172a" class="h-8 w-12 cursor-pointer rounded border border-slate-300 bg-transparent dark:border-slate-700" />
+        </div>
+        <div>
+          <div class="mb-2 flex items-center justify-between">
+            <span class="text-xs font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400">Scale</span>
+            <span class="rounded-md bg-orange-100 px-2 py-0.5 text-xs font-bold text-orange-700 dark:bg-orange-500/20 dark:text-orange-400"><span id="pat-size-val">24</span>px</span>
+          </div>
+          <input id="pat-size" type="range" min="10" max="60" value="24" class="h-2 w-full cursor-pointer appearance-none rounded-full bg-slate-200 accent-orange-500 outline-none dark:bg-slate-700" />
+        </div>
+        <div>
+          <div class="mb-2 flex items-center justify-between">
+            <span class="text-xs font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400">Stroke</span>
+            <span class="rounded-md bg-orange-100 px-2 py-0.5 text-xs font-bold text-orange-700 dark:bg-orange-500/20 dark:text-orange-400"><span id="pat-stroke-val">2</span></span>
+          </div>
+          <input id="pat-stroke" type="range" min="1" max="6" value="2" class="h-2 w-full cursor-pointer appearance-none rounded-full bg-slate-200 accent-orange-500 outline-none dark:bg-slate-700" />
+        </div>
+      </div>
+
+      <div class="overflow-hidden rounded-3xl border border-slate-200 shadow-sm dark:border-slate-800">
+        <div class="flex items-center justify-between border-b border-slate-200 bg-slate-50 px-4 py-2.5 dark:border-slate-800 dark:bg-slate-800/60">
+          <span class="text-xs font-semibold tracking-wide text-slate-400 uppercase">SVG</span>
+          <div class="flex gap-2">
+            <button id="pat-copy" type="button" class="rounded-lg bg-orange-500 px-3 py-1 text-xs font-bold text-white shadow-sm shadow-orange-500/30 transition-all hover:-translate-y-0.5 hover:bg-orange-600">Copy</button>
+            <button id="pat-download" type="button" class="rounded-lg border border-slate-200 px-3 py-1 text-xs font-bold text-slate-600 transition-colors hover:border-orange-400 hover:text-orange-600 dark:border-slate-700 dark:text-slate-300 dark:hover:text-orange-400">Download</button>
+          </div>
+        </div>
+        <pre id="pat-svg" class="max-h-44 overflow-auto bg-white px-4 py-3 font-mono text-xs whitespace-pre-wrap dark:bg-slate-900 dark:text-slate-100"></pre>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    import "../scripts/tools/svg-pattern-generator";
+  </script>
+</CenteredTool>

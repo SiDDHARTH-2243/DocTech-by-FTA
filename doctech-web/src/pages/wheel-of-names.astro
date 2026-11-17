@@ -1,0 +1,38 @@
+---
+import CenteredTool from "../components/CenteredTool.astro";
+---
+
+<CenteredTool
+  wide
+  title="Wheel of Names"
+  subtitle="Add names, spin the wheel and let it pick a fair random winner — perfect for giveaways, draws and classroom picks."
+>
+  <div class="lg:grid lg:grid-cols-[1fr_minmax(0,320px)] lg:items-start lg:gap-6">
+    <!-- Wheel -->
+    <div class="tool-panel flex flex-col items-center gap-5">
+      <div class="relative">
+        <canvas id="wheel-canvas" width="380" height="380" class="max-w-full"></canvas>
+        <!-- pointer -->
+        <div class="absolute -right-1 top-1/2 -translate-y-1/2 text-2xl text-orange-500">◀</div>
+      </div>
+      <button id="wheel-spin" type="button" class="btn-premium !w-auto px-10">Spin</button>
+      <div id="wheel-winner" class="min-h-[28px] text-center text-lg font-extrabold text-orange-500"></div>
+    </div>
+
+    <!-- Names -->
+    <div class="tool-panel mt-5 lg:mt-0">
+      <label class="field-label" for="wheel-names">Entries (one per line)</label>
+      <textarea id="wheel-names" rows="12" class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm outline-none transition-all focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10 dark:border-slate-700 dark:bg-slate-800/50 dark:text-slate-100">Alice
+Bob
+Charlie
+Dana
+Erin
+Frank</textarea>
+      <label class="mt-4 flex items-center gap-2 text-sm font-medium"><input id="wheel-remove" type="checkbox" class="accent-orange-500" /> Remove winner after spin</label>
+    </div>
+  </div>
+
+  <script>
+    import "../scripts/tools/wheel-of-names";
+  </script>
+</CenteredTool>

@@ -1,0 +1,47 @@
+---
+import CenteredTool from "../components/CenteredTool.astro";
+---
+
+<CenteredTool
+  wide
+  title="Named Color Finder"
+  subtitle="Search the 148 CSS named colors, or drop in any HEX/RGB/HSL to find its exact or nearest CSS name. Click any swatch to copy its name."
+>
+  <div class="mb-4 flex items-center gap-2">
+    <span class="local-chip">🔒 100% in your browser</span>
+    <span class="text-xs text-slate-400 dark:text-slate-500">148 CSS named colors, offline</span>
+  </div>
+
+  <div class="space-y-5">
+    <div class="tool-panel">
+      <div class="flex flex-wrap items-end gap-4">
+        <div class="min-w-[220px] flex-1">
+          <label class="field-label" for="nc-search">Search or paste a color</label>
+          <input id="nc-search" type="text" spellcheck="false" placeholder="tomato · #ff5c1a · rgb(255,92,26)" class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm outline-none transition-all focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10 dark:border-slate-700 dark:bg-slate-900/60 dark:text-slate-100" />
+        </div>
+        <div>
+          <label class="field-label" for="nc-picker">Pick</label>
+          <input id="nc-picker" type="color" value="#ff5c1a" class="h-11 w-14 cursor-pointer rounded-lg border border-slate-200 bg-transparent p-0 dark:border-slate-700" />
+        </div>
+      </div>
+
+      <div id="nc-match" class="mt-4 hidden items-center gap-4 rounded-2xl border border-slate-200 p-3 dark:border-slate-700">
+        <div id="nc-match-sw" class="h-16 w-16 shrink-0 rounded-xl border border-slate-200 dark:border-slate-700"></div>
+        <div class="min-w-0">
+          <div class="flex items-baseline gap-2">
+            <span id="nc-match-name" class="text-lg font-bold text-slate-800 dark:text-slate-100"></span>
+            <span id="nc-match-exact" class="rounded-full px-2 py-0.5 text-[11px] font-bold"></span>
+          </div>
+          <code id="nc-match-hex" class="font-mono text-sm text-slate-500 dark:text-slate-400"></code>
+        </div>
+      </div>
+    </div>
+
+    <p id="nc-count" class="text-xs text-slate-400"></p>
+    <div id="nc-grid" class="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-4"></div>
+  </div>
+
+  <script>
+    import "../scripts/tools/named-color-finder";
+  </script>
+</CenteredTool>

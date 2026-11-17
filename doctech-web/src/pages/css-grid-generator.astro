@@ -1,0 +1,108 @@
+---
+import CenteredTool from "../components/CenteredTool.astro";
+---
+
+<CenteredTool
+  wide
+  title="CSS Grid Generator"
+  subtitle="Size each track (fr/px/%/auto), set gaps, and drag across cells to place grid areas — then copy the CSS."
+>
+  <div class="lg:grid lg:grid-cols-[1fr_minmax(0,400px)] lg:items-start lg:gap-6">
+    <!-- LEFT: interactive preview + presets (pinned) -->
+    <div class="space-y-4 lg:sticky lg:top-4">
+      <!-- Preview: guide grid + area overlay -->
+      <div id="gd-grid-wrap" class="relative h-[340px] rounded-2xl border border-slate-200 bg-slate-50 p-3 dark:border-slate-700 dark:bg-slate-900">
+        <div id="gd-guides" class="grid h-full w-full touch-none select-none"></div>
+        <div id="gd-overlay" class="pointer-events-none absolute inset-3 grid"></div>
+      </div>
+
+      <div class="flex items-center justify-between px-1">
+        <span class="text-xs text-slate-500">
+          <span id="gd-area-count" class="font-semibold text-orange-500">0</span> areas · drag across cells to create one
+        </span>
+        <button id="gd-clear" type="button" class="rounded-lg border border-slate-300 px-2.5 py-1 text-xs font-semibold text-slate-600 hover:bg-slate-100 dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-800">Clear areas</button>
+      </div>
+
+      <!-- Presets -->
+      <div>
+        <div class="mb-2 text-sm font-semibold">Layout presets</div>
+        <div id="gd-presets" class="grid grid-cols-3 gap-2 sm:grid-cols-6"></div>
+      </div>
+
+      <!-- How to use -->
+      <div class="rounded-2xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900">
+        <p class="mb-1 text-sm font-semibold">How to use</p>
+        <p class="mb-3 text-xs text-slate-500 dark:text-slate-400">
+          Build a CSS Grid layout visually, then copy ready-to-paste code.
+        </p>
+        <ol class="list-decimal space-y-1.5 pl-4 text-xs text-slate-600 dark:text-slate-300">
+          <li>Set how many <strong>columns</strong> &amp; <strong>rows</strong> you want with the <strong>+ / −</strong> buttons.</li>
+          <li>Size each track: <strong>fr</strong> = shares leftover space, <strong>px</strong> = fixed width, <strong>%</strong> = relative, <strong>auto</strong> = fits its content.</li>
+          <li>Set the <strong>column</strong> &amp; <strong>row gaps</strong>.</li>
+          <li><strong>Drag across cells</strong> in the preview to place an item (a grid area). Click <strong>✕</strong> on it to remove.</li>
+          <li>Hit <strong>Copy</strong> — paste the CSS on your container, and give its children the <code class="rounded bg-slate-100 px-1 dark:bg-slate-800">.item-1</code>, <code class="rounded bg-slate-100 px-1 dark:bg-slate-800">.item-2</code>… classes.</li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- RIGHT: controls + CSS -->
+    <div class="mt-5 space-y-5 lg:mt-0">
+      <div class="space-y-5 rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900">
+        <!-- Columns -->
+        <div>
+          <div class="mb-2 flex items-center justify-between">
+            <span class="text-sm font-semibold">Columns</span>
+            <div class="inline-flex items-center gap-2">
+              <button id="gd-col-minus" type="button" class="h-7 w-7 rounded-lg border border-slate-300 text-sm font-bold text-slate-600 hover:bg-slate-100 dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-800">−</button>
+              <span id="gd-col-count" class="w-5 text-center text-sm font-semibold text-orange-500">3</span>
+              <button id="gd-col-plus" type="button" class="h-7 w-7 rounded-lg border border-slate-300 text-sm font-bold text-slate-600 hover:bg-slate-100 dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-800">+</button>
+            </div>
+          </div>
+          <div id="gd-col-list" class="space-y-1.5"></div>
+        </div>
+
+        <!-- Rows -->
+        <div class="border-t border-slate-100 pt-4 dark:border-slate-800">
+          <div class="mb-2 flex items-center justify-between">
+            <span class="text-sm font-semibold">Rows</span>
+            <div class="inline-flex items-center gap-2">
+              <button id="gd-row-minus" type="button" class="h-7 w-7 rounded-lg border border-slate-300 text-sm font-bold text-slate-600 hover:bg-slate-100 dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-800">−</button>
+              <span id="gd-row-count" class="w-5 text-center text-sm font-semibold text-orange-500">2</span>
+              <button id="gd-row-plus" type="button" class="h-7 w-7 rounded-lg border border-slate-300 text-sm font-bold text-slate-600 hover:bg-slate-100 dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-800">+</button>
+            </div>
+          </div>
+          <div id="gd-row-list" class="space-y-1.5"></div>
+        </div>
+
+        <!-- Gaps -->
+        <div class="grid gap-4 border-t border-slate-100 pt-4 sm:grid-cols-2 dark:border-slate-800">
+          <div>
+            <label class="mb-1.5 block text-sm font-semibold" for="gd-colgap">Column gap <span id="gd-colgap-val" class="text-orange-500">12</span>px</label>
+            <input id="gd-colgap" type="range" min="0" max="48" value="12" class="w-full accent-orange-500" />
+          </div>
+          <div>
+            <label class="mb-1.5 block text-sm font-semibold" for="gd-rowgap">Row gap <span id="gd-rowgap-val" class="text-orange-500">12</span>px</label>
+            <input id="gd-rowgap" type="range" min="0" max="48" value="12" class="w-full accent-orange-500" />
+          </div>
+        </div>
+
+        <div class="border-t border-slate-100 pt-4 dark:border-slate-800">
+          <button id="gd-reset" type="button" class="rounded-lg border border-slate-300 px-3 py-1.5 text-xs font-semibold text-slate-600 hover:bg-slate-100 dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-800">↺ Reset</button>
+        </div>
+      </div>
+
+      <!-- CSS output -->
+      <div class="overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-700">
+        <div class="flex items-center justify-between border-b border-slate-200 bg-slate-50 px-4 py-2 dark:border-slate-700 dark:bg-slate-800">
+          <span class="text-xs font-semibold tracking-wide text-slate-400 uppercase">CSS</span>
+          <button id="gd-copy" type="button" class="rounded-lg bg-orange-500 px-3 py-1 text-xs font-semibold text-white hover:bg-orange-600">Copy</button>
+        </div>
+        <pre id="gd-css" class="overflow-x-auto px-4 py-3 font-mono text-xs leading-relaxed dark:text-slate-100"></pre>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    import "../scripts/tools/css-grid-generator";
+  </script>
+</CenteredTool>

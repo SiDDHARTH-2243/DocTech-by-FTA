@@ -1,0 +1,38 @@
+---
+import CenteredTool from "../components/CenteredTool.astro";
+---
+
+<CenteredTool
+  title="UUID Generator"
+  subtitle="Generate cryptographically-random version-4 UUIDs — one at a time or in bulk — ready to copy or download."
+>
+  <div class="space-y-5">
+    <div class="tool-panel">
+      <div class="flex flex-wrap items-end gap-4">
+        <div class="w-32">
+          <label class="field-label" for="uuid-count">How many</label>
+          <input id="uuid-count" type="number" min="1" max="1000" value="5" class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm font-semibold dark:border-slate-700 dark:bg-slate-800/50 dark:text-slate-100" />
+        </div>
+        <label class="flex items-center gap-2 text-sm font-medium"><input id="uuid-upper" type="checkbox" class="accent-orange-500" /> Uppercase</label>
+        <label class="flex items-center gap-2 text-sm font-medium"><input id="uuid-hyphens" type="checkbox" checked class="accent-orange-500" /> Hyphens</label>
+        <button id="uuid-generate" type="button" class="btn-premium !w-auto grow">Generate</button>
+      </div>
+    </div>
+
+    <div class="tool-panel">
+      <div class="mb-3 flex items-center justify-between">
+        <h3 class="font-bold text-slate-800 dark:text-slate-100">UUIDs</h3>
+        <span id="uuid-count-label" class="local-badge">0</span>
+      </div>
+      <textarea id="uuid-output" rows="10" readonly class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 font-mono text-sm dark:border-slate-700 dark:bg-slate-800/50 dark:text-slate-100"></textarea>
+      <div class="mt-4 grid grid-cols-2 gap-3">
+        <button id="uuid-copy" type="button" class="btn-premium">Copy all</button>
+        <button id="uuid-download" type="button" class="btn-premium-ghost">Download .txt</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    import "../scripts/tools/uuid-generator";
+  </script>
+</CenteredTool>

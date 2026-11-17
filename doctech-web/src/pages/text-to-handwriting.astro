@@ -1,0 +1,61 @@
+---
+import CenteredTool from "../components/CenteredTool.astro";
+---
+
+<CenteredTool
+  title="Text to Handwriting Converter"
+  subtitle="Convert your text into handwriting with your chosen paper type and ink color, then download it as a PDF."
+>
+  <div class="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900">
+    <textarea
+      id="hw-input"
+      rows="5"
+      placeholder="Type the text you want in handwriting…"
+      class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm focus:border-orange-400 focus:ring-2 focus:ring-orange-200 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:focus:ring-orange-500/30"
+    >Dear friend,
+This note was written by DocTech — straight from typed text into handwriting.</textarea>
+
+    <div class="mt-4 flex flex-wrap items-end gap-4">
+      <div>
+        <label class="mb-1.5 block text-sm font-semibold" for="hw-font">Handwriting font</label>
+        <select id="hw-font" class="rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100">
+          <option value="Caveat">Caveat</option>
+          <option value="Dancing Script">Dancing Script</option>
+          <option value="Indie Flower">Indie Flower</option>
+          <option value="Shadows Into Light">Shadows Into Light</option>
+          <option value="Patrick Hand">Patrick Hand</option>
+        </select>
+      </div>
+      <div>
+        <label class="mb-1.5 block text-sm font-semibold" for="hw-paper">Paper</label>
+        <select id="hw-paper" class="rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100">
+          <option value="ruled">Ruled</option>
+          <option value="grid">Grid</option>
+          <option value="blank">Blank</option>
+        </select>
+      </div>
+      <div>
+        <label class="mb-1.5 block text-sm font-semibold" for="hw-ink">Ink</label>
+        <input id="hw-ink" type="color" value="#1d4ed8" class="h-10 w-12 cursor-pointer rounded-lg border border-slate-300 bg-transparent dark:border-slate-700" />
+      </div>
+      <div class="w-40">
+        <label class="mb-1.5 block text-sm font-semibold" for="hw-size">
+          Size <span id="hw-size-val" class="text-orange-500">32</span>
+        </label>
+        <input id="hw-size" type="range" min="20" max="48" value="32" class="w-full accent-orange-500" />
+      </div>
+    </div>
+
+    <div class="mt-5 overflow-auto rounded-lg border border-slate-200 dark:border-slate-700">
+      <canvas id="hw-canvas" class="mx-auto block max-w-full"></canvas>
+    </div>
+
+    <button id="hw-download" type="button" class="mt-4 rounded-xl bg-orange-500 px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-orange-600">
+      Download PDF
+    </button>
+  </div>
+
+  <script>
+    import "../scripts/tools/text-to-handwriting";
+  </script>
+</CenteredTool>

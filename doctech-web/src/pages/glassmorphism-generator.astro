@@ -1,0 +1,190 @@
+---
+import CenteredTool from "../components/CenteredTool.astro";
+---
+
+<CenteredTool
+  wide
+  title="Glassmorphism Generator"
+  subtitle="Craft frosted-glass effects with live preview, curated presets, and one-click CSS export — ready for production."
+>
+  <div class="lg:grid lg:grid-cols-[1fr_minmax(0,440px)] lg:items-start lg:gap-6">
+    <!-- LEFT: preview + presets -->
+    <div class="space-y-5 lg:sticky lg:top-4">
+      <!-- Preview stage -->
+      <div
+        id="gm-stage"
+        class="relative flex min-h-[380px] items-center justify-center overflow-hidden rounded-2xl transition-colors"
+      >
+        <!-- Animated background shapes -->
+        <div id="gm-bg-shapes" class="absolute inset-0 overflow-hidden"></div>
+
+        <!-- Glass card -->
+        <div id="gm-card" class="relative z-10 w-80 p-6 text-white">
+          <button
+            id="gm-settings"
+            type="button"
+            aria-label="Settings"
+            class="absolute top-3 right-3 text-white/80 transition-colors hover:text-white"
+          >
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="3"></circle>
+              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+            </svg>
+          </button>
+          <div class="mb-3 text-xs font-semibold tracking-wide uppercase opacity-80">Team</div>
+          <div id="gm-content" class="space-y-3"></div>
+        </div>
+      </div>
+
+      <!-- Element / canvas toolbar -->
+      <div
+        class="flex flex-wrap items-center gap-x-6 gap-y-3 rounded-2xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900"
+      >
+        <div>
+          <span class="mb-1 block text-xs font-semibold text-slate-500">Shape</span>
+          <div
+            id="gm-shape-group"
+            class="inline-flex rounded-lg border border-slate-300 p-0.5 dark:border-slate-700"
+          >
+            <button type="button" data-val="rounded" class="rounded-md px-2.5 py-1 text-xs font-semibold">Rounded</button>
+            <button type="button" data-val="pill" class="rounded-md px-2.5 py-1 text-xs font-semibold">Pill</button>
+            <button type="button" data-val="circle" class="rounded-md px-2.5 py-1 text-xs font-semibold">Circle</button>
+            <button type="button" data-val="square" class="rounded-md px-2.5 py-1 text-xs font-semibold">Square</button>
+          </div>
+        </div>
+        <div>
+          <label class="mb-1 block text-xs font-semibold text-slate-500" for="gm-glass-color">Glass Tint</label>
+          <div class="flex items-center gap-2">
+            <input
+              id="gm-glass-color"
+              type="color"
+              value="#ffffff"
+              class="h-9 w-12 cursor-pointer rounded border border-slate-300 bg-transparent dark:border-slate-700"
+            />
+            <span id="gm-glass-color-hex" class="font-mono text-xs text-slate-500">#ffffff</span>
+          </div>
+        </div>
+        <div>
+          <span class="mb-1 block text-xs font-semibold text-slate-500">Background</span>
+          <div
+            id="gm-bgmode-group"
+            class="inline-flex rounded-lg border border-slate-300 p-0.5 dark:border-slate-700"
+          >
+            <button type="button" data-val="gradient" class="rounded-md px-2.5 py-1 text-xs font-semibold">Gradient</button>
+            <button type="button" data-val="image" class="rounded-md px-2.5 py-1 text-xs font-semibold">Image</button>
+          </div>
+        </div>
+        <!-- Gradient pickers (visible when bgMode = gradient) -->
+        <div id="gm-bg-gradient-controls">
+          <label class="mb-1 block text-xs font-semibold text-slate-500" for="gm-bg-color-1">Colors</label>
+          <div class="flex items-center gap-1.5">
+            <input
+              id="gm-bg-color-1"
+              type="color"
+              value="#7c3aed"
+              class="h-9 w-12 cursor-pointer rounded border border-slate-300 bg-transparent dark:border-slate-700"
+            />
+            <input
+              id="gm-bg-color-2"
+              type="color"
+              value="#2563eb"
+              class="h-9 w-12 cursor-pointer rounded border border-slate-300 bg-transparent dark:border-slate-700"
+            />
+          </div>
+        </div>
+        <!-- Image controls (visible when bgMode = image) -->
+        <div id="gm-bg-image-controls" class="hidden">
+          <label class="mb-1 block text-xs font-semibold text-slate-500">Photo</label>
+          <button
+            id="gm-shuffle-bg"
+            type="button"
+            class="rounded-lg bg-orange-500 px-3 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-orange-600"
+          >🎨 Shuffle Photo</button>
+        </div>
+      </div>
+
+      <!-- Presets -->
+      <div>
+        <div class="mb-2 flex items-center justify-between">
+          <span class="text-sm font-semibold">Presets</span>
+          <div class="flex gap-2">
+            <button
+              id="gm-shuffle"
+              type="button"
+              class="rounded-lg border border-slate-300 px-3 py-1 text-xs font-semibold text-slate-600 hover:bg-slate-100 dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-800"
+            >🎲 Shuffle</button>
+            <button
+              id="gm-reset"
+              type="button"
+              class="rounded-lg border border-slate-300 px-3 py-1 text-xs font-semibold text-slate-600 hover:bg-slate-100 dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-800"
+            >Reset</button>
+          </div>
+        </div>
+        <div id="gm-presets" class="grid grid-cols-3 gap-3 sm:grid-cols-4"></div>
+      </div>
+    </div>
+
+    <!-- RIGHT: controls + code -->
+    <div class="mt-5 space-y-5 lg:mt-0">
+      <!-- Controls panel -->
+      <div class="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900">
+        <div class="mb-4 flex items-center justify-between">
+          <span class="text-sm font-semibold">Glass Properties</span>
+          <label class="flex items-center gap-2 text-xs font-medium">
+            <input id="gm-content-toggle" type="checkbox" checked class="accent-orange-500" /> Show content
+          </label>
+        </div>
+        <div class="grid gap-4 sm:grid-cols-2">
+          {
+            [
+              ["gm-blur",      "Blur",           0,  40,  12, "px"],
+              ["gm-opacity",   "Opacity",        0, 100,  25, "%"],
+              ["gm-saturate",  "Saturation",     0, 200, 180, "%"],
+              ["gm-border-a",  "Border Opacity",  0, 100,  18, "%"],
+              ["gm-radius",    "Border Radius",   0,  60,  16, "px"],
+              ["gm-shadow-a",  "Shadow Depth",    0, 100,  37, "%"],
+            ].map(([id, label, min, max, val, unit]) => (
+              <div>
+                <label class="mb-1.5 block text-sm font-semibold" for={id}>
+                  {label}{" "}
+                  <span id={`${id}-val`} class="text-orange-500">
+                    {val}
+                  </span>
+                  {unit}
+                </label>
+                <input
+                  id={id}
+                  type="range"
+                  min={min}
+                  max={max}
+                  value={val}
+                  class="w-full accent-orange-500"
+                />
+              </div>
+            ))
+          }
+        </div>
+      </div>
+
+      <!-- CSS output -->
+      <div class="overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-700">
+        <div class="flex items-center justify-between border-b border-slate-200 bg-slate-50 px-4 py-2 dark:border-slate-700 dark:bg-slate-800">
+          <div class="flex gap-2">
+            <button id="gm-tab-css" type="button" class="rounded-md px-2.5 py-1 text-xs font-semibold bg-orange-500 text-white">CSS</button>
+            <button id="gm-tab-html" type="button" class="rounded-md px-2.5 py-1 text-xs font-semibold text-slate-500 hover:text-slate-700 dark:text-slate-400">HTML</button>
+          </div>
+          <button
+            id="gm-copy"
+            type="button"
+            class="rounded-lg bg-orange-500 px-3 py-1 text-xs font-semibold text-white transition-colors hover:bg-orange-600"
+          >Copy</button>
+        </div>
+        <pre id="gm-css" class="overflow-x-auto px-4 py-3 font-mono text-xs leading-relaxed dark:text-slate-100"></pre>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    import "../scripts/tools/glassmorphism-generator";
+  </script>
+</CenteredTool>

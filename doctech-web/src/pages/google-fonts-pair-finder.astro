@@ -1,0 +1,57 @@
+---
+import CenteredTool from "../components/CenteredTool.astro";
+---
+
+<CenteredTool
+  title="Google Fonts Pair Finder"
+  subtitle="Find font pairs that look great together for your headings and body text. Lock the ones you like and regenerate the rest."
+>
+  <div class="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900">
+    <div class="flex flex-wrap items-center gap-3">
+      <button id="gf-generate" type="button" class="rounded-xl bg-orange-500 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-orange-600">
+        🎲 Generate pair
+      </button>
+      <button id="gf-swap" type="button" class="rounded-xl border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 transition-colors hover:bg-slate-100 dark:border-slate-600 dark:text-slate-200 dark:hover:bg-slate-800">
+        ⇅ Swap
+      </button>
+      <button id="gf-copy" type="button" class="rounded-xl border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 transition-colors hover:bg-slate-100 dark:border-slate-600 dark:text-slate-200 dark:hover:bg-slate-800">
+        Copy embed code
+      </button>
+      <span id="gf-offline" class="hidden rounded-full bg-amber-50 px-2.5 py-1 text-[11px] font-semibold text-amber-600 dark:bg-amber-500/10 dark:text-amber-400">
+        Offline — system fonts
+      </span>
+    </div>
+
+    <!-- Heading preview -->
+    <div class="mt-5 rounded-xl border border-slate-200 p-5 dark:border-slate-700">
+      <div class="mb-2 flex items-center justify-between">
+        <span class="text-[11px] font-semibold tracking-wide text-slate-400 uppercase">Heading</span>
+        <span class="flex items-center gap-2">
+          <code id="gf-h-name" class="text-xs text-slate-500 dark:text-slate-400"></code>
+          <button id="gf-h-lock" type="button" data-slot="heading" class="gf-lock rounded px-1.5 py-0.5 text-sm hover:bg-slate-100 dark:hover:bg-slate-800">🔓</button>
+        </span>
+      </div>
+      <p id="gf-h-sample" class="text-3xl font-bold leading-tight text-slate-900 dark:text-slate-100">The quick brown fox jumps over the lazy dog</p>
+    </div>
+
+    <!-- Body preview -->
+    <div class="mt-4 rounded-xl border border-slate-200 p-5 dark:border-slate-700">
+      <div class="mb-2 flex items-center justify-between">
+        <span class="text-[11px] font-semibold tracking-wide text-slate-400 uppercase">Body</span>
+        <span class="flex items-center gap-2">
+          <code id="gf-b-name" class="text-xs text-slate-500 dark:text-slate-400"></code>
+          <button id="gf-b-lock" type="button" data-slot="body" class="gf-lock rounded px-1.5 py-0.5 text-sm hover:bg-slate-100 dark:hover:bg-slate-800">🔓</button>
+        </span>
+      </div>
+      <p id="gf-b-sample" class="leading-relaxed text-slate-700 dark:text-slate-300">
+        Pack my box with five dozen liquor jugs. The five boxing wizards jump quickly. How razorback-jumping
+        frogs can level six piqued gymnasts! A good font pairing balances contrast and harmony — a distinctive
+        heading face with a clean, readable body face.
+      </p>
+    </div>
+  </div>
+
+  <script>
+    import "../scripts/tools/google-fonts-pair-finder";
+  </script>
+</CenteredTool>

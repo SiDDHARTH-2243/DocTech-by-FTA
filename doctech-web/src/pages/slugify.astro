@@ -1,0 +1,46 @@
+---
+import CenteredTool from "../components/CenteredTool.astro";
+---
+
+<CenteredTool
+  title="Slugify — URL Slug Generator"
+  subtitle="Turn any title into a clean, URL-safe slug — accents stripped, spaces and punctuation collapsed to a separator. Great for blog posts, filenames and IDs."
+>
+  <div class="mb-4 flex items-center gap-2">
+    <span class="local-chip">🔒 100% in your browser</span>
+    <span class="text-xs text-slate-400 dark:text-slate-500">no uploads, ever</span>
+  </div>
+
+  <div class="space-y-5">
+    <div class="tool-panel">
+      <label class="field-label" for="sl-in">Text</label>
+      <textarea id="sl-in" rows="3" spellcheck="false" placeholder="10 Amazing Tips for Café Owners in 2025!" class="w-full resize-y rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm outline-none transition-all focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10 dark:border-slate-700 dark:bg-slate-900/60 dark:text-slate-100"></textarea>
+
+      <div class="mt-4 flex flex-wrap items-end gap-x-6 gap-y-3">
+        <div>
+          <label class="field-label" for="sl-sep">Separator</label>
+          <select id="sl-sep" class="rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm outline-none focus:border-orange-500 dark:border-slate-700 dark:bg-slate-800/50 dark:text-slate-100">
+            <option value="-">Hyphen ( - )</option>
+            <option value="_">Underscore ( _ )</option>
+          </select>
+        </div>
+        <div class="w-28">
+          <label class="field-label" for="sl-max">Max length</label>
+          <input id="sl-max" type="number" min="0" max="200" value="0" placeholder="0 = none" class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm outline-none focus:border-orange-500 dark:border-slate-700 dark:bg-slate-800/50 dark:text-slate-100" />
+        </div>
+        <label class="flex cursor-pointer items-center gap-2 pb-2 text-sm font-semibold text-slate-600 dark:text-slate-300"><input type="checkbox" id="sl-lower" class="h-4 w-4 accent-orange-500" checked /> Lowercase</label>
+        <label class="flex cursor-pointer items-center gap-2 pb-2 text-sm font-semibold text-slate-600 dark:text-slate-300"><input type="checkbox" id="sl-accents" class="h-4 w-4 accent-orange-500" checked /> Strip accents</label>
+      </div>
+    </div>
+
+    <button type="button" id="sl-out" class="copy-swatch flex w-full items-center justify-between gap-3 rounded-2xl border border-slate-200 bg-white px-5 py-5 text-left dark:border-slate-800 dark:bg-slate-900">
+      <code id="sl-slug" class="min-w-0 flex-1 truncate font-mono text-lg font-bold text-orange-600 dark:text-orange-400">—</code>
+      <span class="shrink-0 text-xs font-semibold text-slate-400">click to copy</span>
+    </button>
+    <p id="sl-len" class="text-right text-xs text-slate-400 dark:text-slate-500"></p>
+  </div>
+
+  <script>
+    import "../scripts/tools/slugify";
+  </script>
+</CenteredTool>

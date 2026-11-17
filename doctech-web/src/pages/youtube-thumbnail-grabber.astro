@@ -1,0 +1,29 @@
+---
+import CenteredTool from "../components/CenteredTool.astro";
+---
+
+<CenteredTool
+  wide
+  title="YouTube Thumbnail Grabber"
+  subtitle="Paste any YouTube link to grab its thumbnail in every available resolution — preview, open or download each one."
+>
+  <div class="flex flex-col gap-2 sm:flex-row">
+    <input
+      id="yt-url"
+      type="text"
+      placeholder="https://www.youtube.com/watch?v=…  ·  youtu.be/…  ·  /shorts/…"
+      class="flex-1 rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-sm dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
+    />
+    <button id="yt-go" type="button" class="rounded-xl bg-orange-500 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-orange-600">Grab</button>
+  </div>
+
+  <p id="yt-empty" class="mt-6 rounded-2xl border border-dashed border-slate-300 px-6 py-10 text-center text-sm text-slate-400 dark:border-slate-700">
+    Paste a YouTube video URL above to see its thumbnails.
+  </p>
+
+  <div id="yt-grid" class="mt-6 grid gap-4 sm:grid-cols-2"></div>
+
+  <script>
+    import "../scripts/tools/youtube-thumbnail-grabber";
+  </script>
+</CenteredTool>

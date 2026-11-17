@@ -1,0 +1,31 @@
+---
+import CenteredTool from "../components/CenteredTool.astro";
+---
+
+<CenteredTool
+  wide
+  title="Instagram Story Generator"
+  subtitle="Design a 9:16 Instagram Story with your photo, username and a text overlay — download it ready to post."
+>
+  <div class="lg:grid lg:grid-cols-[1fr_minmax(0,360px)] lg:items-start lg:gap-6">
+    <div class="lg:sticky lg:top-4">
+      <div class="flex justify-center overflow-auto rounded-2xl border border-slate-200 bg-slate-100 p-4 dark:border-slate-700 dark:bg-slate-950">
+        <canvas id="igs-canvas" class="max-h-[600px] max-w-full rounded-xl shadow"></canvas>
+      </div>
+    </div>
+    <div class="mt-5 space-y-4 lg:mt-0">
+      <div class="grid grid-cols-2 gap-3 rounded-2xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900">
+        <label class="block text-sm"><span class="mb-1 block text-xs font-semibold">Username</span><input id="igs-username" type="text" value="yourname" class="w-full rounded-lg border border-slate-300 bg-white px-2.5 py-1.5 text-sm dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100" /></label>
+        <label class="block text-sm"><span class="mb-1 block text-xs font-semibold">Text position</span><select id="igs-pos" class="w-full rounded-lg border border-slate-300 bg-white px-2.5 py-1.5 text-sm dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100"><option value="center">Center</option><option value="top">Top</option><option value="bottom">Bottom</option></select></label>
+        <label class="block text-sm"><span class="mb-1 block text-xs font-semibold">Avatar</span><input id="igs-avatar" type="file" accept="image/*" class="w-full text-xs text-slate-500 file:mr-2 file:rounded-md file:border-0 file:bg-slate-200 file:px-2 file:py-1 file:text-xs dark:text-slate-400 dark:file:bg-slate-700" /></label>
+        <label class="block text-sm"><span class="mb-1 block text-xs font-semibold">Background photo</span><input id="igs-bg" type="file" accept="image/*" class="w-full text-xs text-slate-500 file:mr-2 file:rounded-md file:border-0 file:bg-slate-200 file:px-2 file:py-1 file:text-xs dark:text-slate-400 dark:file:bg-slate-700" /></label>
+        <label class="col-span-2 block text-sm"><span class="mb-1 block text-xs font-semibold">Text overlay</span><textarea id="igs-text" rows="2" class="w-full rounded-lg border border-slate-300 bg-white px-2.5 py-1.5 text-sm dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100">Weekend vibes ☀️</textarea></label>
+      </div>
+      <button id="igs-download" type="button" class="w-full rounded-xl bg-orange-500 px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-orange-600">Download PNG</button>
+    </div>
+  </div>
+
+  <script>
+    import "../scripts/tools/instagram-story-generator";
+  </script>
+</CenteredTool>

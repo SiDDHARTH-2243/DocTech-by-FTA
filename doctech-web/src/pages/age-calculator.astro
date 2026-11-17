@@ -1,0 +1,30 @@
+---
+import CenteredTool from "../components/CenteredTool.astro";
+---
+
+<CenteredTool
+  title="Age Calculator"
+  subtitle="Find an exact age — or the duration between any two dates — in years, months and days, plus handy totals."
+>
+  <div class="space-y-5">
+    <div class="tool-panel grid grid-cols-1 gap-4 sm:grid-cols-2">
+      <div><label class="field-label" for="age-from">Date of birth / start</label><input id="age-from" type="date" class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm font-semibold dark:border-slate-700 dark:bg-slate-800/50 dark:text-slate-100" /></div>
+      <div><label class="field-label" for="age-to">Age at / end date</label><input id="age-to" type="date" class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm font-semibold dark:border-slate-700 dark:bg-slate-800/50 dark:text-slate-100" /></div>
+    </div>
+
+    <div class="tool-panel flex flex-col items-center gap-2 py-6">
+      <div class="text-xs font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400">Age</div>
+      <div id="age-main" class="text-center text-4xl font-black text-orange-500">—</div>
+    </div>
+
+    <div class="grid grid-cols-3 gap-3">
+      <div class="tool-panel text-center"><div id="age-total-months" class="text-2xl font-black text-slate-800 dark:text-slate-100">—</div><div class="text-xs font-semibold text-slate-500 dark:text-slate-400">months</div></div>
+      <div class="tool-panel text-center"><div id="age-total-weeks" class="text-2xl font-black text-slate-800 dark:text-slate-100">—</div><div class="text-xs font-semibold text-slate-500 dark:text-slate-400">weeks</div></div>
+      <div class="tool-panel text-center"><div id="age-total-days" class="text-2xl font-black text-slate-800 dark:text-slate-100">—</div><div class="text-xs font-semibold text-slate-500 dark:text-slate-400">days</div></div>
+    </div>
+  </div>
+
+  <script>
+    import "../scripts/tools/age-calculator";
+  </script>
+</CenteredTool>
