@@ -8,7 +8,8 @@ export const IMG_ACCEPT = "image/png,image/jpeg,image/webp,image/bmp,image/gif,i
 /** Backend base URL for cloud tools (mirrors lib/pdf.ts; here so image/social
  *  pages don't import pdf.ts and bundle pdf-lib/pdfjs). */
 export const API_BASE =
-  (import.meta.env.PUBLIC_API_BASE as string | undefined) || "http://localhost:3000";
+  (import.meta.env.PUBLIC_API_BASE as string | undefined) ||
+  (import.meta.env.PROD ? "https://doctech-server.onrender.com" : "http://localhost:3000");
 
 /** Human-readable byte size. */
 export function fmtSize(bytes: number): string {

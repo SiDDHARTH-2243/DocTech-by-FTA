@@ -7,7 +7,15 @@ const { execFile } = require('child_process');
 const { PDFDocument, rgb } = require('pdf-lib');
 
 const app = express();
-app.use(cors());
+app.use(cors({
+    origin: [
+        'https://doc-tech-by-fta.vercel.app',
+        'http://localhost:4321',
+        'http://localhost:3000',
+        'http://127.0.0.1:4321',
+        'http://127.0.0.1:3000',
+    ],
+}));
 
 // Configure storage location for uploaded encrypted files
 const upload = multer({ dest: 'uploads/' });

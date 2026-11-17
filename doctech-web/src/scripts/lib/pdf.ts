@@ -10,7 +10,8 @@ export { PDFDocument, degrees, rgb, StandardFonts, pdfjsLib };
 
 /** Backend base URL for cloud tools (Express server). */
 export const API_BASE =
-  (import.meta.env.PUBLIC_API_BASE as string | undefined) || "http://localhost:3000";
+  (import.meta.env.PUBLIC_API_BASE as string | undefined) ||
+  (import.meta.env.PROD ? "https://doctech-server.onrender.com" : "http://localhost:3000");
 
 export const isPDF = (f: File): boolean =>
   f.type === "application/pdf" || f.name.toLowerCase().endsWith(".pdf");
