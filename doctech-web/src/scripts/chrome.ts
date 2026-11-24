@@ -63,12 +63,57 @@ function closeCommand() {
   document.body.classList.remove("no-scroll");
 }
 
-// theme toggle
-document.querySelector(".theme-toggle")?.addEventListener("click", () => {
-  const isDark = document.documentElement.classList.toggle("dark");
-  localStorage.setItem("theme", isDark ? "dark" : "light");
-  document.querySelector('meta[name="theme-color"]')?.setAttribute("content", isDark ? "#0d0d0f" : "#f4efe7");
-  showToast(`${isDark ? "Dark" : "Light"} mode enabled`);
+// theme toggle — circular reveal via View Transitions API
+document.querySelector(".theme-toggle")?.addEventListener("click", (e) => {
+  const toggle = e.currentTarget as HTMLElement;
+
+  const applyTheme = () => {
+    const isDark = document.documentElement.classList.toggle("dark");
+    localStorage.setItem("theme", isDark ? "dark" : "light");
+    document.querySelector('meta[name="theme-color"]')?.setAttribute("content", isDark ? "#0d0d0f" : "#f4efe7");
+    showToast(`${isDark ? "Dark" : "Light"} mode enabled`);
+  };
+
+  // Fall back to an instant toggle when the API is unavailable or the user
+  // prefers reduced motion.
+  if (
+    !(document as any).startViewTransition ||
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches
+  ) {
+    applyTheme();
+    return;
+  }
+
+  // Grab the centre of the toggle button for the reveal origin.
+  const { top, left, width, height } = toggle.getBoundingClientRect();
+  const x = left + width / 2;
+  const y = top + height / 2;
+
+  // Radius large enough to cover the farthest viewport corner.
+  const endRadius = Math.hypot(
+    Math.max(x, innerWidth - x),
+    Math.max(y, innerHeight - y),
+  );
+
+  const transition = (document as any).startViewTransition(() => {
+    applyTheme();
+  });
+
+  transition.ready.then(() => {
+    document.documentElement.animate(
+      {
+        clipPath: [
+          `circle(0px at ${x}px ${y}px)`,
+          `circle(${endRadius}px at ${x}px ${y}px)`,
+        ],
+      },
+      {
+        duration: 450,
+        easing: "cubic-bezier(0.22, 1, 0.36, 1)",
+        pseudoElement: "::view-transition-new(root)",
+      },
+    );
+  });
 });
 
 // search triggers open the palette

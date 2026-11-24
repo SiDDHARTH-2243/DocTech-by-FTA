@@ -3,6 +3,21 @@
 /* Class-based dark mode for Tailwind v4 (toggled by adding `.dark` to <html>) */
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* ── View-transition circular wipe (theme toggle) ─────────────────────────
+   Suppress the browser's default cross-fade so only the JS-driven clip-path
+   circle reveal is visible.  The new snapshot sits on top (z-index 9999). */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+::view-transition-old(root) {
+  z-index: 1;
+}
+::view-transition-new(root) {
+  z-index: 9999;
+}
+
 /* â”€â”€ Shared "premium" primitives for tool internals â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
    Opt-in component classes so every tool can share one cohesive, high-end
    look (refined panels, gradient CTA w/ shimmer, checkerboard preview stage)
